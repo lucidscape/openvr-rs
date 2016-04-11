@@ -11,4 +11,5 @@ fn main() {
 #[cfg(target_os="windows")]
 fn main() {
     println!("cargo:rustc-link-search={}\\openvr_bin\\win64", env!("CARGO_MANIFEST_DIR"));
+    println!("cargo:rustc-link-search={}\\lib\\win64", env!("CARGO_MANIFEST_DIR"));
 }

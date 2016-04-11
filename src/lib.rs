@@ -1,13 +1,13 @@
-#[link(name = "openvr_api")]
-extern {}
+#[link(name = "openvr_api", kind="static")]
+extern "C" {}
 
 #[allow(non_camel_case_types)]
 #[allow(non_snake_case)]
 #[allow(non_upper_case_globals)]
-pub mod openvr_sys;
+pub mod ffi;
 
 use std::mem;
-use openvr_sys::*;
+use ffi::*;
 
 const MAX_TRACKED_DEVICE_COUNT: usize = 16;
 

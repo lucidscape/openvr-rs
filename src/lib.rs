@@ -1,5 +1,3 @@
-#[link(name = "openvr_api", kind="static")]
-extern "C" {}
 
 #[allow(non_camel_case_types)]
 #[allow(non_snake_case)]
@@ -8,18 +6,24 @@ pub mod ffi;
 
 use std::mem;
 use ffi::*;
+use std::ffi::CStr;
 
 const MAX_TRACKED_DEVICE_COUNT: usize = 16;
 
-pub type Vector3    = (f32, f32, f32);
-pub type Vector4    = (f32, f32, f32, f32);
-pub type Quaternion = (f32, f32, f32, f32);
-pub type Matrix44   = [[f32; 4]; 4];
-pub type Matrix34   = [[f32; 4]; 3];
-pub type Color      = (f32, f32, f32, f32);
+#[link(name = "openvr_api", kind="static")]
+extern "C" {
+    pub fn VR_InitInternal(peError: *mut EVRInitError, eType: EVRApplicationType) -> usize;
+    pub fn VR_ShutdownInternal();
+    pub fn VR_IsHmdPresent() -> ::std::os::raw::c_char;
+    pub fn VR_GetStringForHmdError(error: EVRInitError) -> *mut ::std::os::raw::c_char;
+    pub fn VR_GetGenericInterface(pchInterfaceVersion: *const ::std::os::raw::c_char, peError: *mut EVRInitError) -> usize;
+    pub fn VR_IsRuntimeInstalled() -> ::std::os::raw::c_char;
+    pub fn VR_GetVRInitErrorAsSymbol(error: EVRInitError) -> *const ::std::os::raw::c_char;
+    pub fn VR_GetVRInitErrorAsEnglishDescription(error: EVRInitError) -> *const ::std::os::raw::c_char;
+}
 
 pub struct VRCompositor {
-    ptr:    *mut Struct_IVRCompositor
+    i: *mut IVRCompositor
 }
 
 impl VRCompositor {
@@ -28,12 +32,12 @@ impl VRCompositor {
     pub fn submit(
         &mut self,
         eye:            Eye,
-        texture:        *const Struct_Texture_t,
-        bounds:         *const Struct_VRTextureBounds_t,
+        texture:        *mut Texture,
+        bounds:         *mut VRTextureBounds,
         submit_flags:   EVRSubmitFlags
     ) -> EVRCompositorError {
         unsafe {
-            VR_IVRCompositor_Submit(self.ptr as i64, eye.into(), texture, bounds, submit_flags)
+            ((*self.i).Submit)(eye.into(), texture, bounds, submit_flags)
         }
     }
 
@@ -41,11 +45,10 @@ impl VRCompositor {
     /// https://github.com/ValveSoftware/openvr/wiki/IVRCompositor::WaitGetPoses
     pub fn wait_get_poses(
         &mut self,
-    ) -> [Struct_TrackedDevicePose_t; MAX_TRACKED_DEVICE_COUNT] {
+    ) -> [TrackedDevicePose; MAX_TRACKED_DEVICE_COUNT] {
         unsafe {
-            let mut render_poses = [Struct_TrackedDevicePose_t::default(); MAX_TRACKED_DEVICE_COUNT];
-            VR_IVRCompositor_WaitGetPoses(
-                self.ptr as i64,
+            let mut render_poses = [TrackedDevicePose::default(); MAX_TRACKED_DEVICE_COUNT];
+            ((*self.i).WaitGetPoses)(
                 (&mut render_poses[..]).as_mut_ptr(),
                 render_poses.len() as u32,
                 std::ptr::null_mut(),
@@ -58,19 +61,19 @@ impl VRCompositor {
 }
 
 pub struct VRChaperone {
-    _ptr:    *mut Struct_IVRChaperone
+    _i: *mut IVRChaperone
 }
 
 pub struct VRSystem {
-    vr_system: *mut Struct_IVRSystem
+    i: *mut IVRSystem
 }
 
 impl VRSystem {
-    fn new(vr_system: *mut Struct_IVRSystem) -> Self {
-        VRSystem {
-            vr_system:  vr_system
-        }
-    }
+    // fn new(vr_system: IVRSystem) -> Self {
+    //     VRSystem {
+    //         i:  vr_system
+    //     }
+    // }
 
     /// Provides the game with the minimum size that it should use for its offscreen render
     /// target to minimize pixel stretching. This size is matched with the projection matrix
@@ -80,31 +83,30 @@ impl VRSystem {
         unsafe {
             let mut width = 0;
             let mut height = 0;
-            VR_IVRSystem_GetRecommendedRenderTargetSize(self.vr_system as i64, &mut width, &mut height);
+            ((*self.i).GetRecommendedRenderTargetSize)(&mut width, &mut height);
             (width, height)
         }
     }
 
 
-    /// Returns the viewport in pixels in display space that the game should render into for
-    // the specified eye - (x, y, width, height).
-    pub fn get_eye_output_viewport(&self, eye: Eye) -> (u32, u32, u32, u32) {
-        unsafe {
-            let mut x = 0;
-            let mut y = 0;
-            let mut width = 0;
-            let mut height = 0;
-            VR_IVRExtendedDisplay_GetEyeOutputViewport(
-                self.vr_system as i64,
-                eye.into(),
-                &mut x,
-                &mut y,
-                &mut width,
-                &mut height);
-
-            (x, y, width, height)
-        }
-    }
+    // /// Returns the viewport in pixels in display space that the game should render into for
+    // /// the specified eye - (x, y, width, height).
+    // pub fn get_eye_output_viewport(&self, eye: Eye) -> (u32, u32, u32, u32) {
+    //     unsafe {
+    //         let mut x = 0;
+    //         let mut y = 0;
+    //         let mut width = 0;
+    //         let mut height = 0;
+    //         self.i.GetEyeOutputViewport(
+    //             eye.into(),
+    //             &mut x,
+    //             &mut y,
+    //             &mut width,
+    //             &mut height);
+    //
+    //         (x, y, width, height)
+    //     }
+    // }
 
     /// Returns the projection matrix to use for the specified eye.
     pub fn get_projection_matrix(
@@ -113,29 +115,21 @@ impl VRSystem {
         near_z:             f32,
         far_z:              f32,
         api:                EGraphicsAPIConvention
-    ) -> Matrix44 {
+    ) -> HmdMatrix44 {
         unsafe {
-            mem::transmute(
-                VR_IVRSystem_GetProjectionMatrix(
-                    self.vr_system as i64,
-                    eye.into(),
-                    near_z,
-                    far_z,
-                    api
-                )
+            ((*self.i).GetProjectionMatrix)(
+                eye.into(),
+                near_z,
+                far_z,
+                api
             )
         }
     }
 
     /// Returns the transform between the view space and eye space.
-    pub fn get_eye_to_head_transform(&self, eye: Eye) -> Matrix34 {
+    pub fn get_eye_to_head_transform(&self, eye: Eye) -> HmdMatrix34 {
         unsafe {
-            mem::transmute(
-                VR_IVRSystem_GetEyeToHeadTransform(
-                    self.vr_system as i64,
-                    eye.into(),
-                )
-            )
+            ((*self.i).GetEyeToHeadTransform)(eye.into())
         }
     }
 
@@ -145,11 +139,10 @@ impl VRSystem {
         &self,
         origin: ETrackingUniverseOrigin,
         predicted_seconds_to_photons_from_now:  f32,
-        tracked_device_pose_array: &mut [Struct_TrackedDevicePose_t]
+        tracked_device_pose_array: &mut [TrackedDevicePose]
     ) {
         unsafe {
-            VR_IVRSystem_GetDeviceToAbsoluteTrackingPose(
-                self.vr_system as i64,
+            ((*self.i).GetDeviceToAbsoluteTrackingPose)(
                 origin,
                 predicted_seconds_to_photons_from_now,
                 tracked_device_pose_array.as_mut_ptr(),
@@ -157,19 +150,6 @@ impl VRSystem {
             )
         }
     }
-}
-
-impl Drop for VRSystem {
-    fn drop(&mut self) {
-        unsafe {
-            VR_ShutdownInternal();
-        }
-    }
-}
-
-pub struct VRContext {
-    // pub compositor: VRCompositor,
-    pub system:     VRSystem
 }
 
 #[derive(Clone, Copy, PartialEq)]
@@ -205,94 +185,52 @@ impl Into<TrackedDeviceClass> for TrackedDeviceType {
     }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
-#[repr(i32)]
-pub enum InitError {
-    None = 0,
-    Unknown = 1,
-    InitInstallationNotFound = 100,
-    InitInstallationCorrupt = 101,
-    InitVRClientDLLNotFound = 102,
-    InitFileNotFound = 103,
-    InitFactoryNotFound = 104,
-    InitInterfaceNotFound = 105,
-    InitInvalidInterface = 106,
-    InitUserConfigDirectoryInvalid = 107,
-    InitHmdNotFound = 108,
-    InitNotInitialized = 109,
-    InitPathRegistryNotFound = 110,
-    InitNoConfigPath = 111,
-    InitNoLogPath = 112,
-    InitPathRegistryNotWritable = 113,
-    InitAppInfoInitFailed = 114,
-    InitRetry = 115,
-    InitInitCanceledByUser = 116,
-    InitAnotherAppLaunching = 117,
-    InitSettingsInitFailed = 118,
-    InitShuttingDown = 119,
-    InitTooManyObjects = 120,
-    InitNoServerForBackgroundApp = 121,
-    InitNotSupportedWithCompositor = 122,
-    InitNotAvailableToUtilityApps = 123,
-    DriverFailed = 200,
-    DriverUnknown = 201,
-    DriverHmdUnknown = 202,
-    DriverNotLoaded = 203,
-    DriverRuntimeOutOfDate = 204,
-    DriverHmdInUse = 205,
-    DriverNotCalibrated = 206,
-    DriverCalibrationInvalid = 207,
-    DriverHmdDisplayNotFound = 208,
-    IPCServerInitFailed = 300,
-    IPCConnectFailed = 301,
-    IPCSharedStateInitFailed = 302,
-    IPCCompositorInitFailed = 303,
-    IPCMutexInitFailed = 304,
-    IPCFailed = 305,
-    CompositorFailed = 400,
-    CompositorD3D11HardwareRequired = 401,
-    VendorSpecificUnableToConnectToOculusRuntime = 1000,
-    VendorSpecificHmdFoundCantOpenDevice = 1101,
-    VendorSpecificHmdFoundUnableToRequestConfigStart = 1102,
-    VendorSpecificHmdFoundNoStoredConfig = 1103,
-    VendorSpecificHmdFoundConfigTooBig = 1104,
-    VendorSpecificHmdFoundConfigTooSmall = 1105,
-    VendorSpecificHmdFoundUnableToInitZLib = 1106,
-    VendorSpecificHmdFoundCantReadFirmwareVersion = 1107,
-    VendorSpecificHmdFoundUnableToSendUserDataStart = 1108,
-    VendorSpecificHmdFoundUnableToGetUserDataStart = 1109,
-    VendorSpecificHmdFoundUnableToGetUserDataNext = 1110,
-    VendorSpecificHmdFoundUserDataAddressRange = 1111,
-    VendorSpecificHmdFoundUserDataError = 1112,
-    VendorSpecificHmdFoundConfigFailedSanityCheck = 1113,
-    SteamSteamInstallationNotFound = 2000,
-}
-
-impl std::fmt::Display for InitError {
+impl std::fmt::Display for EVRInitError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{:?}", self)
-    }
-}
-
-impl std::error::Error for InitError {
-    fn description(&self) -> &str {
-        match *self {
-            InitError::InitPathRegistryNotFound => "Path registry not found, ensure that SteamVR is installed.",
-            _ => "Unknown error"
+        unsafe {
+            let err = CStr::from_ptr(VR_GetVRInitErrorAsEnglishDescription(*self));
+            write!(f, "{}", err.to_string_lossy())
         }
     }
 }
 
-pub fn init() -> Result<VRContext, InitError> {
+impl std::error::Error for EVRInitError {
+    fn description(&self) -> &str {
+        "init error"
+    }
+}
+
+pub struct VRContext {
+    pub system:            VRSystem,
+    // chaperone:         VRChaperone,
+    // chaperone_setup:    IVRChaperoneSetup,
+    // compositor:         IVRCompositor,
+    // overlay:            IVROverlay,
+    // render_models:      IVRRenderModels,
+    // IVRExtendedDisplay: *mut IVRExtendedDisplay,
+    // IVRSettings: *mut IVRSettings,
+    // IVRApplications: *mut IVRApplications,
+}
+
+impl Drop for VRContext {
+    fn drop(&mut self) {
+        unsafe {
+            VR_ShutdownInternal();
+        }
+    }
+}
+
+pub fn initialize() -> Result<VRContext, EVRInitError> {
     unsafe {
-        let mut err = Enum_EVRInitError::EVRInitError_VRInitError_None;
-        let hmd = VR_InitInternal(&mut err, Enum_EVRApplicationType::EVRApplicationType_VRApplication_Scene);
-        let err: InitError = mem::transmute(err);
-        if err != InitError::None {
+        let mut err = EVRInitError::None;
+        let _hmd = VR_InitInternal(&mut err, EVRApplicationType::VRApplication_Scene);
+        if err != EVRInitError::None {
             Err(err)
         } else {
 
-            let system = VRSystem::new(hmd as *mut Struct_IVRSystem);
+            let system = VRSystem {
+                i: VR_GetGenericInterface(IVRSystem_Version.as_ptr() as *const i8, &mut err) as *mut _
+            };
 
             Ok(VRContext {
                 system: system
@@ -337,14 +275,16 @@ mod tests {
 
     #[test]
     fn vr_init() {
-        match init() {
-            Err(err) => {
-                println!("init failed: {} - {}", err, err.description());
-                assert!(false);
-            }
-            Ok(context) => {
-                context.system.get_recommended_render_target_size();
-            }
-        }
+        // NOTE: initializing seems to fail if a window has not been created
+
+        // match init() {
+        //     Err(err) => {
+        //         println!("init failed: {} - {}", err, err.description());
+        //         assert!(false);
+        //     }
+        //     Ok(context) => {
+        //         context.system.get_recommended_render_target_size();
+        //     }
+        // }
     }
 }

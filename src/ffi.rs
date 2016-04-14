@@ -1,1008 +1,93 @@
 // This file is auto-generated
 
-struct IVRApplications {
-    ptr: *mut IVRApplications
-}
-
-impl IVRApplications {
-    unsafe fn AddApplicationManifest(&self, pchApplicationManifestFullPath: *const c_char, bTemporary: bool) {
-        AddApplicationManifest(self.ptr, pchApplicationManifestFullPath, bTemporary)
-    }
-
-    unsafe fn RemoveApplicationManifest(&self, pchApplicationManifestFullPath: *const c_char) {
-        RemoveApplicationManifest(self.ptr, pchApplicationManifestFullPath)
-    }
-
-    unsafe fn IsApplicationInstalled(&self, pchAppKey: *const c_char) {
-        IsApplicationInstalled(self.ptr, pchAppKey)
-    }
-
-    unsafe fn GetApplicationCount(&self, ) {
-        GetApplicationCount(self.ptr, )
-    }
-
-    unsafe fn GetApplicationKeyByIndex(&self, unApplicationIndex: u32, pchAppKeyBuffer: *mut c_char, unAppKeyBufferLen: u32) {
-        GetApplicationKeyByIndex(self.ptr, unApplicationIndex, pchAppKeyBuffer, unAppKeyBufferLen)
-    }
-
-    unsafe fn GetApplicationKeyByProcessId(&self, unProcessId: u32, pchAppKeyBuffer: *mut c_char, unAppKeyBufferLen: u32) {
-        GetApplicationKeyByProcessId(self.ptr, unProcessId, pchAppKeyBuffer, unAppKeyBufferLen)
-    }
-
-    unsafe fn LaunchApplication(&self, pchAppKey: *const c_char) {
-        LaunchApplication(self.ptr, pchAppKey)
-    }
-
-    unsafe fn LaunchTemplateApplication(&self, pchTemplateAppKey: *const c_char, pchNewAppKey: *const c_char, pKeys: *mut  AppOverrideKeys_t, unKeys: u32) {
-        LaunchTemplateApplication(self.ptr, pchTemplateAppKey, pchNewAppKey, pKeys, unKeys)
-    }
-
-    unsafe fn LaunchDashboardOverlay(&self, pchAppKey: *const c_char) {
-        LaunchDashboardOverlay(self.ptr, pchAppKey)
-    }
-
-    unsafe fn CancelApplicationLaunch(&self, pchAppKey: *const c_char) {
-        CancelApplicationLaunch(self.ptr, pchAppKey)
-    }
-
-    unsafe fn IdentifyApplication(&self, unProcessId: u32, pchAppKey: *const c_char) {
-        IdentifyApplication(self.ptr, unProcessId, pchAppKey)
-    }
-
-    unsafe fn GetApplicationProcessId(&self, pchAppKey: *const c_char) {
-        GetApplicationProcessId(self.ptr, pchAppKey)
-    }
-
-    unsafe fn GetApplicationsErrorNameFromEnum(&self, error: EVRApplicationError) {
-        GetApplicationsErrorNameFromEnum(self.ptr, error)
-    }
-
-    unsafe fn GetApplicationPropertyString(&self, pchAppKey: *const c_char, eProperty: EVRApplicationProperty, pchPropertyValueBuffer: *mut c_char, unPropertyValueBufferLen: u32, peError: *mut EVRApplicationError) {
-        GetApplicationPropertyString(self.ptr, pchAppKey, eProperty, pchPropertyValueBuffer, unPropertyValueBufferLen, peError)
-    }
-
-    unsafe fn GetApplicationPropertyBool(&self, pchAppKey: *const c_char, eProperty: EVRApplicationProperty, peError: *mut EVRApplicationError) {
-        GetApplicationPropertyBool(self.ptr, pchAppKey, eProperty, peError)
-    }
-
-    unsafe fn GetApplicationPropertyUint64(&self, pchAppKey: *const c_char, eProperty: EVRApplicationProperty, peError: *mut EVRApplicationError) {
-        GetApplicationPropertyUint64(self.ptr, pchAppKey, eProperty, peError)
-    }
-
-    unsafe fn SetApplicationAutoLaunch(&self, pchAppKey: *const c_char, bAutoLaunch: bool) {
-        SetApplicationAutoLaunch(self.ptr, pchAppKey, bAutoLaunch)
-    }
-
-    unsafe fn GetApplicationAutoLaunch(&self, pchAppKey: *const c_char) {
-        GetApplicationAutoLaunch(self.ptr, pchAppKey)
-    }
-
-    unsafe fn GetStartingApplication(&self, pchAppKeyBuffer: *mut c_char, unAppKeyBufferLen: u32) {
-        GetStartingApplication(self.ptr, pchAppKeyBuffer, unAppKeyBufferLen)
-    }
-
-    unsafe fn GetTransitionState(&self, ) {
-        GetTransitionState(self.ptr, )
-    }
-
-    unsafe fn PerformApplicationPrelaunchCheck(&self, pchAppKey: *const c_char) {
-        PerformApplicationPrelaunchCheck(self.ptr, pchAppKey)
-    }
-
-    unsafe fn GetApplicationsTransitionStateNameFromEnum(&self, state: EVRApplicationTransitionState) {
-        GetApplicationsTransitionStateNameFromEnum(self.ptr, state)
-    }
-
-    unsafe fn IsQuitUserPromptRequested(&self, ) {
-        IsQuitUserPromptRequested(self.ptr, )
-    }
-
-    unsafe fn LaunchInternalProcess(&self, pchBinaryPath: *const c_char, pchArguments: *const c_char, pchWorkingDirectory: *const c_char) {
-        LaunchInternalProcess(self.ptr, pchBinaryPath, pchArguments, pchWorkingDirectory)
-    }
-
-}
-
-struct IVRChaperone {
-    ptr: *mut IVRChaperone
-}
-
-impl IVRChaperone {
-    unsafe fn GetCalibrationState(&self, ) {
-        GetCalibrationState(self.ptr, )
-    }
-
-    unsafe fn GetPlayAreaSize(&self, pSizeX: *mut f32, pSizeZ: *mut f32) {
-        GetPlayAreaSize(self.ptr, pSizeX, pSizeZ)
-    }
-
-    unsafe fn GetPlayAreaRect(&self, rect: *mut HmdQuad_t) {
-        GetPlayAreaRect(self.ptr, rect)
-    }
-
-    unsafe fn ReloadInfo(&self, ) {
-        ReloadInfo(self.ptr, )
-    }
-
-    unsafe fn SetSceneColor(&self, color: HmdColor_t) {
-        SetSceneColor(self.ptr, color)
-    }
-
-    unsafe fn GetBoundsColor(&self, pOutputColorArray: *mut HmdColor_t, nNumOutputColors: int, flCollisionBoundsFadeDistance: f32, pOutputCameraColor: *mut HmdColor_t) {
-        GetBoundsColor(self.ptr, pOutputColorArray, nNumOutputColors, flCollisionBoundsFadeDistance, pOutputCameraColor)
-    }
-
-    unsafe fn AreBoundsVisible(&self, ) {
-        AreBoundsVisible(self.ptr, )
-    }
-
-    unsafe fn ForceBoundsVisible(&self, bForce: bool) {
-        ForceBoundsVisible(self.ptr, bForce)
-    }
-
-}
-
-struct IVRChaperoneSetup {
-    ptr: *mut IVRChaperoneSetup
-}
-
-impl IVRChaperoneSetup {
-    unsafe fn CommitWorkingCopy(&self, configFile: EChaperoneConfigFile) {
-        CommitWorkingCopy(self.ptr, configFile)
-    }
-
-    unsafe fn RevertWorkingCopy(&self, ) {
-        RevertWorkingCopy(self.ptr, )
-    }
-
-    unsafe fn GetWorkingPlayAreaSize(&self, pSizeX: *mut f32, pSizeZ: *mut f32) {
-        GetWorkingPlayAreaSize(self.ptr, pSizeX, pSizeZ)
-    }
-
-    unsafe fn GetWorkingPlayAreaRect(&self, rect: *mut HmdQuad_t) {
-        GetWorkingPlayAreaRect(self.ptr, rect)
-    }
-
-    unsafe fn GetWorkingCollisionBoundsInfo(&self, pQuadsBuffer: *mut HmdQuad_t, punQuadsCount: *mut u32) {
-        GetWorkingCollisionBoundsInfo(self.ptr, pQuadsBuffer, punQuadsCount)
-    }
-
-    unsafe fn GetLiveCollisionBoundsInfo(&self, pQuadsBuffer: *mut HmdQuad_t, punQuadsCount: *mut u32) {
-        GetLiveCollisionBoundsInfo(self.ptr, pQuadsBuffer, punQuadsCount)
-    }
-
-    unsafe fn GetWorkingSeatedZeroPoseToRawTrackingPose(&self, pmatSeatedZeroPoseToRawTrackingPose: *mut HmdMatrix34_t) {
-        GetWorkingSeatedZeroPoseToRawTrackingPose(self.ptr, pmatSeatedZeroPoseToRawTrackingPose)
-    }
-
-    unsafe fn GetWorkingStandingZeroPoseToRawTrackingPose(&self, pmatStandingZeroPoseToRawTrackingPose: *mut HmdMatrix34_t) {
-        GetWorkingStandingZeroPoseToRawTrackingPose(self.ptr, pmatStandingZeroPoseToRawTrackingPose)
-    }
-
-    unsafe fn SetWorkingPlayAreaSize(&self, sizeX: f32, sizeZ: f32) {
-        SetWorkingPlayAreaSize(self.ptr, sizeX, sizeZ)
-    }
-
-    unsafe fn SetWorkingCollisionBoundsInfo(&self, pQuadsBuffer: *mut HmdQuad_t, unQuadsCount: u32) {
-        SetWorkingCollisionBoundsInfo(self.ptr, pQuadsBuffer, unQuadsCount)
-    }
-
-    unsafe fn SetWorkingSeatedZeroPoseToRawTrackingPose(&self, pMatSeatedZeroPoseToRawTrackingPose: *mut  HmdMatrix34_t) {
-        SetWorkingSeatedZeroPoseToRawTrackingPose(self.ptr, pMatSeatedZeroPoseToRawTrackingPose)
-    }
-
-    unsafe fn SetWorkingStandingZeroPoseToRawTrackingPose(&self, pMatStandingZeroPoseToRawTrackingPose: *mut  HmdMatrix34_t) {
-        SetWorkingStandingZeroPoseToRawTrackingPose(self.ptr, pMatStandingZeroPoseToRawTrackingPose)
-    }
-
-    unsafe fn ReloadFromDisk(&self, configFile: EChaperoneConfigFile) {
-        ReloadFromDisk(self.ptr, configFile)
-    }
-
-    unsafe fn GetLiveSeatedZeroPoseToRawTrackingPose(&self, pmatSeatedZeroPoseToRawTrackingPose: *mut HmdMatrix34_t) {
-        GetLiveSeatedZeroPoseToRawTrackingPose(self.ptr, pmatSeatedZeroPoseToRawTrackingPose)
-    }
-
-    unsafe fn SetWorkingCollisionBoundsTagsInfo(&self, pTagsBuffer: *mut u8, unTagCount: u32) {
-        SetWorkingCollisionBoundsTagsInfo(self.ptr, pTagsBuffer, unTagCount)
-    }
-
-    unsafe fn GetLiveCollisionBoundsTagsInfo(&self, pTagsBuffer: *mut u8, punTagCount: *mut u32) {
-        GetLiveCollisionBoundsTagsInfo(self.ptr, pTagsBuffer, punTagCount)
-    }
-
-    unsafe fn SetWorkingPhysicalBoundsInfo(&self, pQuadsBuffer: *mut HmdQuad_t, unQuadsCount: u32) {
-        SetWorkingPhysicalBoundsInfo(self.ptr, pQuadsBuffer, unQuadsCount)
-    }
-
-    unsafe fn GetLivePhysicalBoundsInfo(&self, pQuadsBuffer: *mut HmdQuad_t, punQuadsCount: *mut u32) {
-        GetLivePhysicalBoundsInfo(self.ptr, pQuadsBuffer, punQuadsCount)
-    }
-
-    unsafe fn ExportLiveToBuffer(&self, pBuffer: *mut c_char, pnBufferLength: *mut u32) {
-        ExportLiveToBuffer(self.ptr, pBuffer, pnBufferLength)
-    }
-
-    unsafe fn ImportFromBufferToWorking(&self, pBuffer: *const c_char, nImportFlags: u32) {
-        ImportFromBufferToWorking(self.ptr, pBuffer, nImportFlags)
-    }
-
-}
-
-struct IVRCompositor {
-    ptr: *mut IVRCompositor
-}
-
-impl IVRCompositor {
-    unsafe fn SetTrackingSpace(&self, eOrigin: ETrackingUniverseOrigin) {
-        SetTrackingSpace(self.ptr, eOrigin)
-    }
-
-    unsafe fn GetTrackingSpace(&self, ) {
-        GetTrackingSpace(self.ptr, )
-    }
-
-    unsafe fn WaitGetPoses(&self, pRenderPoseArray: *mut TrackedDevicePose_t, unRenderPoseArrayCount: u32, pGamePoseArray: *mut TrackedDevicePose_t, unGamePoseArrayCount: u32) {
-        WaitGetPoses(self.ptr, pRenderPoseArray, unRenderPoseArrayCount, pGamePoseArray, unGamePoseArrayCount)
-    }
-
-    unsafe fn GetLastPoses(&self, pRenderPoseArray: *mut TrackedDevicePose_t, unRenderPoseArrayCount: u32, pGamePoseArray: *mut TrackedDevicePose_t, unGamePoseArrayCount: u32) {
-        GetLastPoses(self.ptr, pRenderPoseArray, unRenderPoseArrayCount, pGamePoseArray, unGamePoseArrayCount)
-    }
-
-    unsafe fn GetLastPoseForTrackedDeviceIndex(&self, unDeviceIndex: TrackedDeviceIndex_t, pOutputPose: *mut TrackedDevicePose_t, pOutputGamePose: *mut TrackedDevicePose_t) {
-        GetLastPoseForTrackedDeviceIndex(self.ptr, unDeviceIndex, pOutputPose, pOutputGamePose)
-    }
-
-    unsafe fn Submit(&self, eEye: EVREye, pTexture: *mut  Texture_t, pBounds: *mut  VRTextureBounds_t, nSubmitFlags: EVRSubmitFlags) {
-        Submit(self.ptr, eEye, pTexture, pBounds, nSubmitFlags)
-    }
-
-    unsafe fn ClearLastSubmittedFrame(&self, ) {
-        ClearLastSubmittedFrame(self.ptr, )
-    }
-
-    unsafe fn PostPresentHandoff(&self, ) {
-        PostPresentHandoff(self.ptr, )
-    }
-
-    unsafe fn GetFrameTiming(&self, pTiming: *mut Compositor_FrameTiming, unFramesAgo: u32) {
-        GetFrameTiming(self.ptr, pTiming, unFramesAgo)
-    }
-
-    unsafe fn GetFrameTimeRemaining(&self, ) {
-        GetFrameTimeRemaining(self.ptr, )
-    }
-
-    unsafe fn FadeToColor(&self, fSeconds: f32, fRed: f32, fGreen: f32, fBlue: f32, fAlpha: f32, bBackground: bool) {
-        FadeToColor(self.ptr, fSeconds, fRed, fGreen, fBlue, fAlpha, bBackground)
-    }
-
-    unsafe fn FadeGrid(&self, fSeconds: f32, bFadeIn: bool) {
-        FadeGrid(self.ptr, fSeconds, bFadeIn)
-    }
-
-    unsafe fn SetSkyboxOverride(&self, pTextures: *mut  Texture_t, unTextureCount: u32) {
-        SetSkyboxOverride(self.ptr, pTextures, unTextureCount)
-    }
-
-    unsafe fn ClearSkyboxOverride(&self, ) {
-        ClearSkyboxOverride(self.ptr, )
-    }
-
-    unsafe fn CompositorBringToFront(&self, ) {
-        CompositorBringToFront(self.ptr, )
-    }
-
-    unsafe fn CompositorGoToBack(&self, ) {
-        CompositorGoToBack(self.ptr, )
-    }
-
-    unsafe fn CompositorQuit(&self, ) {
-        CompositorQuit(self.ptr, )
-    }
-
-    unsafe fn IsFullscreen(&self, ) {
-        IsFullscreen(self.ptr, )
-    }
-
-    unsafe fn GetCurrentSceneFocusProcess(&self, ) {
-        GetCurrentSceneFocusProcess(self.ptr, )
-    }
-
-    unsafe fn GetLastFrameRenderer(&self, ) {
-        GetLastFrameRenderer(self.ptr, )
-    }
-
-    unsafe fn CanRenderScene(&self, ) {
-        CanRenderScene(self.ptr, )
-    }
-
-    unsafe fn ShowMirrorWindow(&self, ) {
-        ShowMirrorWindow(self.ptr, )
-    }
-
-    unsafe fn HideMirrorWindow(&self, ) {
-        HideMirrorWindow(self.ptr, )
-    }
-
-    unsafe fn IsMirrorWindowVisible(&self, ) {
-        IsMirrorWindowVisible(self.ptr, )
-    }
-
-    unsafe fn CompositorDumpImages(&self, ) {
-        CompositorDumpImages(self.ptr, )
-    }
-
-    unsafe fn ShouldAppRenderWithLowResources(&self, ) {
-        ShouldAppRenderWithLowResources(self.ptr, )
-    }
-
-    unsafe fn ForceInterleavedReprojectionOn(&self, bOverride: bool) {
-        ForceInterleavedReprojectionOn(self.ptr, bOverride)
-    }
-
-}
-
-struct IVRExtendedDisplay {
-    ptr: *mut IVRExtendedDisplay
-}
-
-impl IVRExtendedDisplay {
-    unsafe fn GetWindowBounds(&self, pnX: *mut i32, pnY: *mut i32, pnWidth: *mut u32, pnHeight: *mut u32) {
-        GetWindowBounds(self.ptr, pnX, pnY, pnWidth, pnHeight)
-    }
-
-    unsafe fn GetEyeOutputViewport(&self, eEye: EVREye, pnX: *mut u32, pnY: *mut u32, pnWidth: *mut u32, pnHeight: *mut u32) {
-        GetEyeOutputViewport(self.ptr, eEye, pnX, pnY, pnWidth, pnHeight)
-    }
-
-    unsafe fn GetDXGIOutputInfo(&self, pnAdapterIndex: *mut i32, pnAdapterOutputIndex: *mut i32) {
-        GetDXGIOutputInfo(self.ptr, pnAdapterIndex, pnAdapterOutputIndex)
-    }
-
-}
-
-struct IVRNotifications {
-    ptr: *mut IVRNotifications
-}
-
-impl IVRNotifications {
-    unsafe fn CreateNotification(&self, ulOverlayHandle: VROverlayHandle_t, ulUserValue: uint64_t, ty: EVRNotificationType, pchText: *const c_char, style: EVRNotificationStyle, pImage: *mut  NotificationBitmap_t, pNotificationId: *mut VRNotificationId) {
-        CreateNotification(self.ptr, ulOverlayHandle, ulUserValue, ty, pchText, style, pImage, pNotificationId)
-    }
-
-    unsafe fn RemoveNotification(&self, notificationId: VRNotificationId) {
-        RemoveNotification(self.ptr, notificationId)
-    }
-
-}
-
-struct IVROverlay {
-    ptr: *mut IVROverlay
-}
-
-impl IVROverlay {
-    unsafe fn FindOverlay(&self, pchOverlayKey: *const c_char, pOverlayHandle: *mut VROverlayHandle_t) {
-        FindOverlay(self.ptr, pchOverlayKey, pOverlayHandle)
-    }
-
-    unsafe fn CreateOverlay(&self, pchOverlayKey: *const c_char, pchOverlayFriendlyName: *const c_char, pOverlayHandle: *mut VROverlayHandle_t) {
-        CreateOverlay(self.ptr, pchOverlayKey, pchOverlayFriendlyName, pOverlayHandle)
-    }
-
-    unsafe fn DestroyOverlay(&self, ulOverlayHandle: VROverlayHandle_t) {
-        DestroyOverlay(self.ptr, ulOverlayHandle)
-    }
-
-    unsafe fn SetHighQualityOverlay(&self, ulOverlayHandle: VROverlayHandle_t) {
-        SetHighQualityOverlay(self.ptr, ulOverlayHandle)
-    }
-
-    unsafe fn GetHighQualityOverlay(&self, ) {
-        GetHighQualityOverlay(self.ptr, )
-    }
-
-    unsafe fn GetOverlayKey(&self, ulOverlayHandle: VROverlayHandle_t, pchValue: *mut c_char, unBufferSize: u32, pError: *mut EVROverlayError) {
-        GetOverlayKey(self.ptr, ulOverlayHandle, pchValue, unBufferSize, pError)
-    }
-
-    unsafe fn GetOverlayName(&self, ulOverlayHandle: VROverlayHandle_t, pchValue: *mut c_char, unBufferSize: u32, pError: *mut EVROverlayError) {
-        GetOverlayName(self.ptr, ulOverlayHandle, pchValue, unBufferSize, pError)
-    }
-
-    unsafe fn GetOverlayImageData(&self, ulOverlayHandle: VROverlayHandle_t, pvBuffer: *mut libc::c_void, unBufferSize: u32, punWidth: *mut u32, punHeight: *mut u32) {
-        GetOverlayImageData(self.ptr, ulOverlayHandle, pvBuffer, unBufferSize, punWidth, punHeight)
-    }
-
-    unsafe fn GetOverlayErrorNameFromEnum(&self, error: EVROverlayError) {
-        GetOverlayErrorNameFromEnum(self.ptr, error)
-    }
-
-    unsafe fn SetOverlayRenderingPid(&self, ulOverlayHandle: VROverlayHandle_t, unPID: u32) {
-        SetOverlayRenderingPid(self.ptr, ulOverlayHandle, unPID)
-    }
-
-    unsafe fn GetOverlayRenderingPid(&self, ulOverlayHandle: VROverlayHandle_t) {
-        GetOverlayRenderingPid(self.ptr, ulOverlayHandle)
-    }
-
-    unsafe fn SetOverlayFlag(&self, ulOverlayHandle: VROverlayHandle_t, eOverlayFlag: VROverlayFlags, bEnabled: bool) {
-        SetOverlayFlag(self.ptr, ulOverlayHandle, eOverlayFlag, bEnabled)
-    }
-
-    unsafe fn GetOverlayFlag(&self, ulOverlayHandle: VROverlayHandle_t, eOverlayFlag: VROverlayFlags, pbEnabled: *mut bool) {
-        GetOverlayFlag(self.ptr, ulOverlayHandle, eOverlayFlag, pbEnabled)
-    }
-
-    unsafe fn SetOverlayColor(&self, ulOverlayHandle: VROverlayHandle_t, fRed: f32, fGreen: f32, fBlue: f32) {
-        SetOverlayColor(self.ptr, ulOverlayHandle, fRed, fGreen, fBlue)
-    }
-
-    unsafe fn GetOverlayColor(&self, ulOverlayHandle: VROverlayHandle_t, pfRed: *mut f32, pfGreen: *mut f32, pfBlue: *mut f32) {
-        GetOverlayColor(self.ptr, ulOverlayHandle, pfRed, pfGreen, pfBlue)
-    }
-
-    unsafe fn SetOverlayAlpha(&self, ulOverlayHandle: VROverlayHandle_t, fAlpha: f32) {
-        SetOverlayAlpha(self.ptr, ulOverlayHandle, fAlpha)
-    }
-
-    unsafe fn GetOverlayAlpha(&self, ulOverlayHandle: VROverlayHandle_t, pfAlpha: *mut f32) {
-        GetOverlayAlpha(self.ptr, ulOverlayHandle, pfAlpha)
-    }
-
-    unsafe fn SetOverlayWidthInMeters(&self, ulOverlayHandle: VROverlayHandle_t, fWidthInMeters: f32) {
-        SetOverlayWidthInMeters(self.ptr, ulOverlayHandle, fWidthInMeters)
-    }
-
-    unsafe fn GetOverlayWidthInMeters(&self, ulOverlayHandle: VROverlayHandle_t, pfWidthInMeters: *mut f32) {
-        GetOverlayWidthInMeters(self.ptr, ulOverlayHandle, pfWidthInMeters)
-    }
-
-    unsafe fn SetOverlayAutoCurveDistanceRangeInMeters(&self, ulOverlayHandle: VROverlayHandle_t, fMinDistanceInMeters: f32, fMaxDistanceInMeters: f32) {
-        SetOverlayAutoCurveDistanceRangeInMeters(self.ptr, ulOverlayHandle, fMinDistanceInMeters, fMaxDistanceInMeters)
-    }
-
-    unsafe fn GetOverlayAutoCurveDistanceRangeInMeters(&self, ulOverlayHandle: VROverlayHandle_t, pfMinDistanceInMeters: *mut f32, pfMaxDistanceInMeters: *mut f32) {
-        GetOverlayAutoCurveDistanceRangeInMeters(self.ptr, ulOverlayHandle, pfMinDistanceInMeters, pfMaxDistanceInMeters)
-    }
-
-    unsafe fn SetOverlayTextureColorSpace(&self, ulOverlayHandle: VROverlayHandle_t, eTextureColorSpace: EColorSpace) {
-        SetOverlayTextureColorSpace(self.ptr, ulOverlayHandle, eTextureColorSpace)
-    }
-
-    unsafe fn GetOverlayTextureColorSpace(&self, ulOverlayHandle: VROverlayHandle_t, peTextureColorSpace: *mut EColorSpace) {
-        GetOverlayTextureColorSpace(self.ptr, ulOverlayHandle, peTextureColorSpace)
-    }
-
-    unsafe fn SetOverlayTextureBounds(&self, ulOverlayHandle: VROverlayHandle_t, pOverlayTextureBounds: *mut  VRTextureBounds_t) {
-        SetOverlayTextureBounds(self.ptr, ulOverlayHandle, pOverlayTextureBounds)
-    }
-
-    unsafe fn GetOverlayTextureBounds(&self, ulOverlayHandle: VROverlayHandle_t, pOverlayTextureBounds: *mut VRTextureBounds_t) {
-        GetOverlayTextureBounds(self.ptr, ulOverlayHandle, pOverlayTextureBounds)
-    }
-
-    unsafe fn GetOverlayTransformType(&self, ulOverlayHandle: VROverlayHandle_t, peTransformType: *mut VROverlayTransformType) {
-        GetOverlayTransformType(self.ptr, ulOverlayHandle, peTransformType)
-    }
-
-    unsafe fn SetOverlayTransformAbsolute(&self, ulOverlayHandle: VROverlayHandle_t, eTrackingOrigin: ETrackingUniverseOrigin, pmatTrackingOriginToOverlayTransform: *mut  HmdMatrix34_t) {
-        SetOverlayTransformAbsolute(self.ptr, ulOverlayHandle, eTrackingOrigin, pmatTrackingOriginToOverlayTransform)
-    }
-
-    unsafe fn GetOverlayTransformAbsolute(&self, ulOverlayHandle: VROverlayHandle_t, peTrackingOrigin: *mut ETrackingUniverseOrigin, pmatTrackingOriginToOverlayTransform: *mut HmdMatrix34_t) {
-        GetOverlayTransformAbsolute(self.ptr, ulOverlayHandle, peTrackingOrigin, pmatTrackingOriginToOverlayTransform)
-    }
-
-    unsafe fn SetOverlayTransformTrackedDeviceRelative(&self, ulOverlayHandle: VROverlayHandle_t, unTrackedDevice: TrackedDeviceIndex_t, pmatTrackedDeviceToOverlayTransform: *mut  HmdMatrix34_t) {
-        SetOverlayTransformTrackedDeviceRelative(self.ptr, ulOverlayHandle, unTrackedDevice, pmatTrackedDeviceToOverlayTransform)
-    }
-
-    unsafe fn GetOverlayTransformTrackedDeviceRelative(&self, ulOverlayHandle: VROverlayHandle_t, punTrackedDevice: *mut TrackedDeviceIndex_t, pmatTrackedDeviceToOverlayTransform: *mut HmdMatrix34_t) {
-        GetOverlayTransformTrackedDeviceRelative(self.ptr, ulOverlayHandle, punTrackedDevice, pmatTrackedDeviceToOverlayTransform)
-    }
-
-    unsafe fn SetOverlayTransformTrackedDeviceComponent(&self, ulOverlayHandle: VROverlayHandle_t, unDeviceIndex: TrackedDeviceIndex_t, pchComponentName: *const c_char) {
-        SetOverlayTransformTrackedDeviceComponent(self.ptr, ulOverlayHandle, unDeviceIndex, pchComponentName)
-    }
-
-    unsafe fn GetOverlayTransformTrackedDeviceComponent(&self, ulOverlayHandle: VROverlayHandle_t, punDeviceIndex: *mut TrackedDeviceIndex_t, pchComponentName: *mut c_char, unComponentNameSize: u32) {
-        GetOverlayTransformTrackedDeviceComponent(self.ptr, ulOverlayHandle, punDeviceIndex, pchComponentName, unComponentNameSize)
-    }
-
-    unsafe fn ShowOverlay(&self, ulOverlayHandle: VROverlayHandle_t) {
-        ShowOverlay(self.ptr, ulOverlayHandle)
-    }
-
-    unsafe fn HideOverlay(&self, ulOverlayHandle: VROverlayHandle_t) {
-        HideOverlay(self.ptr, ulOverlayHandle)
-    }
-
-    unsafe fn IsOverlayVisible(&self, ulOverlayHandle: VROverlayHandle_t) {
-        IsOverlayVisible(self.ptr, ulOverlayHandle)
-    }
-
-    unsafe fn GetTransformForOverlayCoordinates(&self, ulOverlayHandle: VROverlayHandle_t, eTrackingOrigin: ETrackingUniverseOrigin, coordinatesInOverlay: HmdVector2_t, pmatTransform: *mut HmdMatrix34_t) {
-        GetTransformForOverlayCoordinates(self.ptr, ulOverlayHandle, eTrackingOrigin, coordinatesInOverlay, pmatTransform)
-    }
-
-    unsafe fn PollNextOverlayEvent(&self, ulOverlayHandle: VROverlayHandle_t, pEvent: *mut VREvent_t, uncbVREvent: u32) {
-        PollNextOverlayEvent(self.ptr, ulOverlayHandle, pEvent, uncbVREvent)
-    }
-
-    unsafe fn GetOverlayInputMethod(&self, ulOverlayHandle: VROverlayHandle_t, peInputMethod: *mut VROverlayInputMethod) {
-        GetOverlayInputMethod(self.ptr, ulOverlayHandle, peInputMethod)
-    }
-
-    unsafe fn SetOverlayInputMethod(&self, ulOverlayHandle: VROverlayHandle_t, eInputMethod: VROverlayInputMethod) {
-        SetOverlayInputMethod(self.ptr, ulOverlayHandle, eInputMethod)
-    }
-
-    unsafe fn GetOverlayMouseScale(&self, ulOverlayHandle: VROverlayHandle_t, pvecMouseScale: *mut HmdVector2_t) {
-        GetOverlayMouseScale(self.ptr, ulOverlayHandle, pvecMouseScale)
-    }
-
-    unsafe fn SetOverlayMouseScale(&self, ulOverlayHandle: VROverlayHandle_t, pvecMouseScale: *mut  HmdVector2_t) {
-        SetOverlayMouseScale(self.ptr, ulOverlayHandle, pvecMouseScale)
-    }
-
-    unsafe fn ComputeOverlayIntersection(&self, ulOverlayHandle: VROverlayHandle_t, pParams: *mut  VROverlayIntersectionParams_t, pResults: *mut VROverlayIntersectionResults_t) {
-        ComputeOverlayIntersection(self.ptr, ulOverlayHandle, pParams, pResults)
-    }
-
-    unsafe fn HandleControllerOverlayInteractionAsMouse(&self, ulOverlayHandle: VROverlayHandle_t, unControllerDeviceIndex: TrackedDeviceIndex_t) {
-        HandleControllerOverlayInteractionAsMouse(self.ptr, ulOverlayHandle, unControllerDeviceIndex)
-    }
-
-    unsafe fn IsHoverTargetOverlay(&self, ulOverlayHandle: VROverlayHandle_t) {
-        IsHoverTargetOverlay(self.ptr, ulOverlayHandle)
-    }
-
-    unsafe fn GetGamepadFocusOverlay(&self, ) {
-        GetGamepadFocusOverlay(self.ptr, )
-    }
-
-    unsafe fn SetGamepadFocusOverlay(&self, ulNewFocusOverlay: VROverlayHandle_t) {
-        SetGamepadFocusOverlay(self.ptr, ulNewFocusOverlay)
-    }
-
-    unsafe fn SetOverlayNeighbor(&self, eDirection: EOverlayDirection, ulFrom: VROverlayHandle_t, ulTo: VROverlayHandle_t) {
-        SetOverlayNeighbor(self.ptr, eDirection, ulFrom, ulTo)
-    }
-
-    unsafe fn MoveGamepadFocusToNeighbor(&self, eDirection: EOverlayDirection, ulFrom: VROverlayHandle_t) {
-        MoveGamepadFocusToNeighbor(self.ptr, eDirection, ulFrom)
-    }
-
-    unsafe fn SetOverlayTexture(&self, ulOverlayHandle: VROverlayHandle_t, pTexture: *mut  Texture_t) {
-        SetOverlayTexture(self.ptr, ulOverlayHandle, pTexture)
-    }
-
-    unsafe fn ClearOverlayTexture(&self, ulOverlayHandle: VROverlayHandle_t) {
-        ClearOverlayTexture(self.ptr, ulOverlayHandle)
-    }
-
-    unsafe fn SetOverlayRaw(&self, ulOverlayHandle: VROverlayHandle_t, pvBuffer: *mut libc::c_void, unWidth: u32, unHeight: u32, unDepth: u32) {
-        SetOverlayRaw(self.ptr, ulOverlayHandle, pvBuffer, unWidth, unHeight, unDepth)
-    }
-
-    unsafe fn SetOverlayFromFile(&self, ulOverlayHandle: VROverlayHandle_t, pchFilePath: *const c_char) {
-        SetOverlayFromFile(self.ptr, ulOverlayHandle, pchFilePath)
-    }
-
-    unsafe fn GetOverlayTexture(&self, ulOverlayHandle: VROverlayHandle_t, pNativeTextureHandle: *mut *mut libc::c_void, pNativeTextureRef: *mut libc::c_void, pWidth: *mut u32, pHeight: *mut u32, pNativeFormat: *mut u32, pAPI: *mut EGraphicsAPIConvention, pColorSpace: *mut EColorSpace) {
-        GetOverlayTexture(self.ptr, ulOverlayHandle, pNativeTextureHandle, pNativeTextureRef, pWidth, pHeight, pNativeFormat, pAPI, pColorSpace)
-    }
-
-    unsafe fn ReleaseNativeOverlayHandle(&self, ulOverlayHandle: VROverlayHandle_t, pNativeTextureHandle: *mut libc::c_void) {
-        ReleaseNativeOverlayHandle(self.ptr, ulOverlayHandle, pNativeTextureHandle)
-    }
-
-    unsafe fn CreateDashboardOverlay(&self, pchOverlayKey: *const c_char, pchOverlayFriendlyName: *const c_char, pMainHandle: *mut VROverlayHandle_t, pThumbnailHandle: *mut VROverlayHandle_t) {
-        CreateDashboardOverlay(self.ptr, pchOverlayKey, pchOverlayFriendlyName, pMainHandle, pThumbnailHandle)
-    }
-
-    unsafe fn IsDashboardVisible(&self, ) {
-        IsDashboardVisible(self.ptr, )
-    }
-
-    unsafe fn IsActiveDashboardOverlay(&self, ulOverlayHandle: VROverlayHandle_t) {
-        IsActiveDashboardOverlay(self.ptr, ulOverlayHandle)
-    }
-
-    unsafe fn SetDashboardOverlaySceneProcess(&self, ulOverlayHandle: VROverlayHandle_t, unProcessId: u32) {
-        SetDashboardOverlaySceneProcess(self.ptr, ulOverlayHandle, unProcessId)
-    }
-
-    unsafe fn GetDashboardOverlaySceneProcess(&self, ulOverlayHandle: VROverlayHandle_t, punProcessId: *mut u32) {
-        GetDashboardOverlaySceneProcess(self.ptr, ulOverlayHandle, punProcessId)
-    }
-
-    unsafe fn ShowDashboard(&self, pchOverlayToShow: *const c_char) {
-        ShowDashboard(self.ptr, pchOverlayToShow)
-    }
-
-    unsafe fn GetPrimaryDashboardDevice(&self, ) {
-        GetPrimaryDashboardDevice(self.ptr, )
-    }
-
-    unsafe fn ShowKeyboard(&self, eInputMode: EGamepadTextInputMode, eLineInputMode: EGamepadTextInputLineMode, pchDescription: *const c_char, unCharMax: u32, pchExistingText: *const c_char, bUseMinimalMode: bool, uUserValue: uint64_t) {
-        ShowKeyboard(self.ptr, eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText, bUseMinimalMode, uUserValue)
-    }
-
-    unsafe fn ShowKeyboardForOverlay(&self, ulOverlayHandle: VROverlayHandle_t, eInputMode: EGamepadTextInputMode, eLineInputMode: EGamepadTextInputLineMode, pchDescription: *const c_char, unCharMax: u32, pchExistingText: *const c_char, bUseMinimalMode: bool, uUserValue: uint64_t) {
-        ShowKeyboardForOverlay(self.ptr, ulOverlayHandle, eInputMode, eLineInputMode, pchDescription, unCharMax, pchExistingText, bUseMinimalMode, uUserValue)
-    }
-
-    unsafe fn GetKeyboardText(&self, pchText: *mut c_char, cchText: u32) {
-        GetKeyboardText(self.ptr, pchText, cchText)
-    }
-
-    unsafe fn HideKeyboard(&self, ) {
-        HideKeyboard(self.ptr, )
-    }
-
-    unsafe fn SetKeyboardTransformAbsolute(&self, eTrackingOrigin: ETrackingUniverseOrigin, pmatTrackingOriginToKeyboardTransform: *mut  HmdMatrix34_t) {
-        SetKeyboardTransformAbsolute(self.ptr, eTrackingOrigin, pmatTrackingOriginToKeyboardTransform)
-    }
-
-    unsafe fn SetKeyboardPositionForOverlay(&self, ulOverlayHandle: VROverlayHandle_t, avoidRect: HmdRect2_t) {
-        SetKeyboardPositionForOverlay(self.ptr, ulOverlayHandle, avoidRect)
-    }
-
-}
-
-struct IVRRenderModels {
-    ptr: *mut IVRRenderModels
-}
-
-impl IVRRenderModels {
-    unsafe fn LoadRenderModel_Async(&self, pchRenderModelName: *const c_char, ppRenderModel: *mut *mut RenderModel_t) {
-        LoadRenderModel_Async(self.ptr, pchRenderModelName, ppRenderModel)
-    }
-
-    unsafe fn FreeRenderModel(&self, pRenderModel: *mut RenderModel_t) {
-        FreeRenderModel(self.ptr, pRenderModel)
-    }
-
-    unsafe fn LoadTexture_Async(&self, textureId: TextureID_t, ppTexture: *mut *mut RenderModel_TextureMap_t) {
-        LoadTexture_Async(self.ptr, textureId, ppTexture)
-    }
-
-    unsafe fn FreeTexture(&self, pTexture: *mut RenderModel_TextureMap_t) {
-        FreeTexture(self.ptr, pTexture)
-    }
-
-    unsafe fn LoadTextureD3D11_Async(&self, textureId: TextureID_t, pD3D11Device: *mut libc::c_void, ppD3D11Texture2D: *mut *mut libc::c_void) {
-        LoadTextureD3D11_Async(self.ptr, textureId, pD3D11Device, ppD3D11Texture2D)
-    }
-
-    unsafe fn LoadIntoTextureD3D11_Async(&self, textureId: TextureID_t, pDstTexture: *mut libc::c_void) {
-        LoadIntoTextureD3D11_Async(self.ptr, textureId, pDstTexture)
-    }
-
-    unsafe fn FreeTextureD3D11(&self, pD3D11Texture2D: *mut libc::c_void) {
-        FreeTextureD3D11(self.ptr, pD3D11Texture2D)
-    }
-
-    unsafe fn GetRenderModelName(&self, unRenderModelIndex: u32, pchRenderModelName: *mut c_char, unRenderModelNameLen: u32) {
-        GetRenderModelName(self.ptr, unRenderModelIndex, pchRenderModelName, unRenderModelNameLen)
-    }
-
-    unsafe fn GetRenderModelCount(&self, ) {
-        GetRenderModelCount(self.ptr, )
-    }
-
-    unsafe fn GetComponentCount(&self, pchRenderModelName: *const c_char) {
-        GetComponentCount(self.ptr, pchRenderModelName)
-    }
-
-    unsafe fn GetComponentName(&self, pchRenderModelName: *const c_char, unComponentIndex: u32, pchComponentName: *mut c_char, unComponentNameLen: u32) {
-        GetComponentName(self.ptr, pchRenderModelName, unComponentIndex, pchComponentName, unComponentNameLen)
-    }
-
-    unsafe fn GetComponentButtonMask(&self, pchRenderModelName: *const c_char, pchComponentName: *const c_char) {
-        GetComponentButtonMask(self.ptr, pchRenderModelName, pchComponentName)
-    }
-
-    unsafe fn GetComponentRenderModelName(&self, pchRenderModelName: *const c_char, pchComponentName: *const c_char, pchComponentRenderModelName: *mut c_char, unComponentRenderModelNameLen: u32) {
-        GetComponentRenderModelName(self.ptr, pchRenderModelName, pchComponentName, pchComponentRenderModelName, unComponentRenderModelNameLen)
-    }
-
-    unsafe fn GetComponentState(&self, pchRenderModelName: *const c_char, pchComponentName: *const c_char, pControllerState: *mut  VRControllerState_t, pState: *mut  RenderModel_ControllerMode_State_t, pComponentState: *mut RenderModel_ComponentState_t) {
-        GetComponentState(self.ptr, pchRenderModelName, pchComponentName, pControllerState, pState, pComponentState)
-    }
-
-    unsafe fn RenderModelHasComponent(&self, pchRenderModelName: *const c_char, pchComponentName: *const c_char) {
-        RenderModelHasComponent(self.ptr, pchRenderModelName, pchComponentName)
-    }
-
-}
-
-struct IVRSettings {
-    ptr: *mut IVRSettings
-}
-
-impl IVRSettings {
-    unsafe fn GetSettingsErrorNameFromEnum(&self, eError: EVRSettingsError) {
-        GetSettingsErrorNameFromEnum(self.ptr, eError)
-    }
-
-    unsafe fn Sync(&self, bForce: bool, peError: *mut EVRSettingsError) {
-        Sync(self.ptr, bForce, peError)
-    }
-
-    unsafe fn GetBool(&self, pchSection: *const c_char, pchSettingsKey: *const c_char, bDefaultValue: bool, peError: *mut EVRSettingsError) {
-        GetBool(self.ptr, pchSection, pchSettingsKey, bDefaultValue, peError)
-    }
-
-    unsafe fn SetBool(&self, pchSection: *const c_char, pchSettingsKey: *const c_char, bValue: bool, peError: *mut EVRSettingsError) {
-        SetBool(self.ptr, pchSection, pchSettingsKey, bValue, peError)
-    }
-
-    unsafe fn GetInt32(&self, pchSection: *const c_char, pchSettingsKey: *const c_char, nDefaultValue: i32, peError: *mut EVRSettingsError) {
-        GetInt32(self.ptr, pchSection, pchSettingsKey, nDefaultValue, peError)
-    }
-
-    unsafe fn SetInt32(&self, pchSection: *const c_char, pchSettingsKey: *const c_char, nValue: i32, peError: *mut EVRSettingsError) {
-        SetInt32(self.ptr, pchSection, pchSettingsKey, nValue, peError)
-    }
-
-    unsafe fn GetFloat(&self, pchSection: *const c_char, pchSettingsKey: *const c_char, flDefaultValue: f32, peError: *mut EVRSettingsError) {
-        GetFloat(self.ptr, pchSection, pchSettingsKey, flDefaultValue, peError)
-    }
-
-    unsafe fn SetFloat(&self, pchSection: *const c_char, pchSettingsKey: *const c_char, flValue: f32, peError: *mut EVRSettingsError) {
-        SetFloat(self.ptr, pchSection, pchSettingsKey, flValue, peError)
-    }
-
-    unsafe fn GetString(&self, pchSection: *const c_char, pchSettingsKey: *const c_char, pchValue: *mut c_char, unValueLen: u32, pchDefaultValue: *const c_char, peError: *mut EVRSettingsError) {
-        GetString(self.ptr, pchSection, pchSettingsKey, pchValue, unValueLen, pchDefaultValue, peError)
-    }
-
-    unsafe fn SetString(&self, pchSection: *const c_char, pchSettingsKey: *const c_char, pchValue: *const c_char, peError: *mut EVRSettingsError) {
-        SetString(self.ptr, pchSection, pchSettingsKey, pchValue, peError)
-    }
-
-    unsafe fn RemoveSection(&self, pchSection: *const c_char, peError: *mut EVRSettingsError) {
-        RemoveSection(self.ptr, pchSection, peError)
-    }
-
-    unsafe fn RemoveKeyInSection(&self, pchSection: *const c_char, pchSettingsKey: *const c_char, peError: *mut EVRSettingsError) {
-        RemoveKeyInSection(self.ptr, pchSection, pchSettingsKey, peError)
-    }
-
-}
-
-struct IVRSystem {
-    ptr: *mut IVRSystem
-}
-
-impl IVRSystem {
-    unsafe fn GetRecommendedRenderTargetSize(&self, pnWidth: *mut u32, pnHeight: *mut u32) {
-        GetRecommendedRenderTargetSize(self.ptr, pnWidth, pnHeight)
-    }
-
-    unsafe fn GetProjectionMatrix(&self, eEye: EVREye, fNearZ: f32, fFarZ: f32, eProjType: EGraphicsAPIConvention) {
-        GetProjectionMatrix(self.ptr, eEye, fNearZ, fFarZ, eProjType)
-    }
-
-    unsafe fn GetProjectionRaw(&self, eEye: EVREye, pfLeft: *mut f32, pfRight: *mut f32, pfTop: *mut f32, pfBottom: *mut f32) {
-        GetProjectionRaw(self.ptr, eEye, pfLeft, pfRight, pfTop, pfBottom)
-    }
-
-    unsafe fn ComputeDistortion(&self, eEye: EVREye, fU: f32, fV: f32) {
-        ComputeDistortion(self.ptr, eEye, fU, fV)
-    }
-
-    unsafe fn GetEyeToHeadTransform(&self, eEye: EVREye) {
-        GetEyeToHeadTransform(self.ptr, eEye)
-    }
-
-    unsafe fn GetTimeSinceLastVsync(&self, pfSecondsSinceLastVsync: *mut f32, pulFrameCounter: *mut uint64_t) {
-        GetTimeSinceLastVsync(self.ptr, pfSecondsSinceLastVsync, pulFrameCounter)
-    }
-
-    unsafe fn GetD3D9AdapterIndex(&self, ) {
-        GetD3D9AdapterIndex(self.ptr, )
-    }
-
-    unsafe fn GetDXGIOutputInfo(&self, pnAdapterIndex: *mut i32) {
-        GetDXGIOutputInfo(self.ptr, pnAdapterIndex)
-    }
-
-    unsafe fn IsDisplayOnDesktop(&self, ) {
-        IsDisplayOnDesktop(self.ptr, )
-    }
-
-    unsafe fn SetDisplayVisibility(&self, bIsVisibleOnDesktop: bool) {
-        SetDisplayVisibility(self.ptr, bIsVisibleOnDesktop)
-    }
-
-    unsafe fn GetDeviceToAbsoluteTrackingPose(&self, eOrigin: ETrackingUniverseOrigin, fPredictedSecondsToPhotonsFromNow: f32, pTrackedDevicePoseArray: *mut TrackedDevicePose_t, unTrackedDevicePoseArrayCount: u32) {
-        GetDeviceToAbsoluteTrackingPose(self.ptr, eOrigin, fPredictedSecondsToPhotonsFromNow, pTrackedDevicePoseArray, unTrackedDevicePoseArrayCount)
-    }
-
-    unsafe fn ResetSeatedZeroPose(&self, ) {
-        ResetSeatedZeroPose(self.ptr, )
-    }
-
-    unsafe fn GetSeatedZeroPoseToStandingAbsoluteTrackingPose(&self, ) {
-        GetSeatedZeroPoseToStandingAbsoluteTrackingPose(self.ptr, )
-    }
-
-    unsafe fn GetRawZeroPoseToStandingAbsoluteTrackingPose(&self, ) {
-        GetRawZeroPoseToStandingAbsoluteTrackingPose(self.ptr, )
-    }
-
-    unsafe fn GetSortedTrackedDeviceIndicesOfClass(&self, eTrackedDeviceClass: ETrackedDeviceClass, punTrackedDeviceIndexArray: *mut TrackedDeviceIndex_t, unTrackedDeviceIndexArrayCount: u32, unRelativeToTrackedDeviceIndex: TrackedDeviceIndex_t) {
-        GetSortedTrackedDeviceIndicesOfClass(self.ptr, eTrackedDeviceClass, punTrackedDeviceIndexArray, unTrackedDeviceIndexArrayCount, unRelativeToTrackedDeviceIndex)
-    }
-
-    unsafe fn GetTrackedDeviceActivityLevel(&self, unDeviceId: TrackedDeviceIndex_t) {
-        GetTrackedDeviceActivityLevel(self.ptr, unDeviceId)
-    }
-
-    unsafe fn ApplyTransform(&self, pOutputPose: *mut TrackedDevicePose_t, pTrackedDevicePose: *mut  TrackedDevicePose_t, pTransform: *mut  HmdMatrix34_t) {
-        ApplyTransform(self.ptr, pOutputPose, pTrackedDevicePose, pTransform)
-    }
-
-    unsafe fn GetTrackedDeviceIndexForControllerRole(&self, unDeviceType: ETrackedControllerRole) {
-        GetTrackedDeviceIndexForControllerRole(self.ptr, unDeviceType)
-    }
-
-    unsafe fn GetControllerRoleForTrackedDeviceIndex(&self, unDeviceIndex: TrackedDeviceIndex_t) {
-        GetControllerRoleForTrackedDeviceIndex(self.ptr, unDeviceIndex)
-    }
-
-    unsafe fn GetTrackedDeviceClass(&self, unDeviceIndex: TrackedDeviceIndex_t) {
-        GetTrackedDeviceClass(self.ptr, unDeviceIndex)
-    }
-
-    unsafe fn IsTrackedDeviceConnected(&self, unDeviceIndex: TrackedDeviceIndex_t) {
-        IsTrackedDeviceConnected(self.ptr, unDeviceIndex)
-    }
-
-    unsafe fn GetBoolTrackedDeviceProperty(&self, unDeviceIndex: TrackedDeviceIndex_t, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) {
-        GetBoolTrackedDeviceProperty(self.ptr, unDeviceIndex, prop, pError)
-    }
-
-    unsafe fn GetFloatTrackedDeviceProperty(&self, unDeviceIndex: TrackedDeviceIndex_t, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) {
-        GetFloatTrackedDeviceProperty(self.ptr, unDeviceIndex, prop, pError)
-    }
-
-    unsafe fn GetInt32TrackedDeviceProperty(&self, unDeviceIndex: TrackedDeviceIndex_t, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) {
-        GetInt32TrackedDeviceProperty(self.ptr, unDeviceIndex, prop, pError)
-    }
-
-    unsafe fn GetUint64TrackedDeviceProperty(&self, unDeviceIndex: TrackedDeviceIndex_t, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) {
-        GetUint64TrackedDeviceProperty(self.ptr, unDeviceIndex, prop, pError)
-    }
-
-    unsafe fn GetMatrix34TrackedDeviceProperty(&self, unDeviceIndex: TrackedDeviceIndex_t, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) {
-        GetMatrix34TrackedDeviceProperty(self.ptr, unDeviceIndex, prop, pError)
-    }
-
-    unsafe fn GetStringTrackedDeviceProperty(&self, unDeviceIndex: TrackedDeviceIndex_t, prop: ETrackedDeviceProperty, pchValue: *mut c_char, unBufferSize: u32, pError: *mut ETrackedPropertyError) {
-        GetStringTrackedDeviceProperty(self.ptr, unDeviceIndex, prop, pchValue, unBufferSize, pError)
-    }
-
-    unsafe fn GetPropErrorNameFromEnum(&self, error: ETrackedPropertyError) {
-        GetPropErrorNameFromEnum(self.ptr, error)
-    }
-
-    unsafe fn PollNextEvent(&self, pEvent: *mut VREvent_t, uncbVREvent: u32) {
-        PollNextEvent(self.ptr, pEvent, uncbVREvent)
-    }
-
-    unsafe fn PollNextEventWithPose(&self, eOrigin: ETrackingUniverseOrigin, pEvent: *mut VREvent_t, uncbVREvent: u32, pTrackedDevicePose: *mut TrackedDevicePose_t) {
-        PollNextEventWithPose(self.ptr, eOrigin, pEvent, uncbVREvent, pTrackedDevicePose)
-    }
-
-    unsafe fn GetEventTypeNameFromEnum(&self, eType: EVREventType) {
-        GetEventTypeNameFromEnum(self.ptr, eType)
-    }
-
-    unsafe fn GetHiddenAreaMesh(&self, eEye: EVREye) {
-        GetHiddenAreaMesh(self.ptr, eEye)
-    }
-
-    unsafe fn GetControllerState(&self, unControllerDeviceIndex: TrackedDeviceIndex_t, pControllerState: *mut VRControllerState_t) {
-        GetControllerState(self.ptr, unControllerDeviceIndex, pControllerState)
-    }
-
-    unsafe fn GetControllerStateWithPose(&self, eOrigin: ETrackingUniverseOrigin, unControllerDeviceIndex: TrackedDeviceIndex_t, pControllerState: *mut VRControllerState_t, pTrackedDevicePose: *mut TrackedDevicePose_t) {
-        GetControllerStateWithPose(self.ptr, eOrigin, unControllerDeviceIndex, pControllerState, pTrackedDevicePose)
-    }
-
-    unsafe fn TriggerHapticPulse(&self, unControllerDeviceIndex: TrackedDeviceIndex_t, unAxisId: u32, usDurationMicroSec: u16) {
-        TriggerHapticPulse(self.ptr, unControllerDeviceIndex, unAxisId, usDurationMicroSec)
-    }
-
-    unsafe fn GetButtonIdNameFromEnum(&self, eButtonId: EVRButtonId) {
-        GetButtonIdNameFromEnum(self.ptr, eButtonId)
-    }
-
-    unsafe fn GetControllerAxisTypeNameFromEnum(&self, eAxisType: EVRControllerAxisType) {
-        GetControllerAxisTypeNameFromEnum(self.ptr, eAxisType)
-    }
-
-    unsafe fn CaptureInputFocus(&self, ) {
-        CaptureInputFocus(self.ptr, )
-    }
-
-    unsafe fn ReleaseInputFocus(&self, ) {
-        ReleaseInputFocus(self.ptr, )
-    }
-
-    unsafe fn IsInputFocusCapturedByAnotherProcess(&self, ) {
-        IsInputFocusCapturedByAnotherProcess(self.ptr, )
-    }
-
-    unsafe fn DriverDebugRequest(&self, unDeviceIndex: TrackedDeviceIndex_t, pchRequest: *const c_char, pchResponseBuffer: *mut c_char, unResponseBufferSize: u32) {
-        DriverDebugRequest(self.ptr, unDeviceIndex, pchRequest, pchResponseBuffer, unResponseBufferSize)
-    }
-
-    unsafe fn PerformFirmwareUpdate(&self, unDeviceIndex: TrackedDeviceIndex_t) {
-        PerformFirmwareUpdate(self.ptr, unDeviceIndex)
-    }
-
-    unsafe fn AcknowledgeQuit_Exiting(&self, ) {
-        AcknowledgeQuit_Exiting(self.ptr, )
-    }
-
-    unsafe fn AcknowledgeQuit_UserPrompt(&self, ) {
-        AcknowledgeQuit_UserPrompt(self.ptr, )
-    }
-
-}
-
-enum EVREye {
+use std::os::raw::{c_char, c_void, c_int};
+use std::mem;
+
+pub type glSharedTextureHandle = *mut c_void;
+pub type glInt = i32;
+pub type glUInt = u32;
+pub type TrackedDeviceIndex = u32;
+pub type VRControllerState = VRControllerState001;
+pub type VROverlayHandle = u64;
+pub type VRComponentProperties = u32;
+pub type TextureID = i32;
+pub type VRNotificationId = u32;
+pub type HmdError = EVRInitError;
+pub type Hmd_Eye = EVREye;
+pub type GraphicsAPIConvention = EGraphicsAPIConvention;
+pub type ColorSpace = EColorSpace;
+pub type HmdTrackingResult = ETrackingResult;
+pub type TrackedDeviceClass = ETrackedDeviceClass;
+pub type TrackingUniverseOrigin = ETrackingUniverseOrigin;
+pub type TrackedDeviceProperty = ETrackedDeviceProperty;
+pub type TrackedPropertyError = ETrackedPropertyError;
+pub type VRSubmitFlags = EVRSubmitFlags;
+pub type VRState = EVRState;
+pub type CollisionBoundsStyle = ECollisionBoundsStyle;
+pub type VROverlayError = EVROverlayError;
+pub type VRFirmwareError = EVRFirmwareError;
+pub type VRCompositorError = EVRCompositorError;
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVREye {
     Eye_Left = 0,
     Eye_Right = 1,
 }
 
-enum EGraphicsAPIConvention {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EGraphicsAPIConvention {
     API_DirectX = 0,
     API_OpenGL = 1,
 }
 
-enum EColorSpace {
-    ColorSpace_Auto = 0,
-    ColorSpace_Gamma = 1,
-    ColorSpace_Linear = 2,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EColorSpace {
+    Auto = 0,
+    Gamma = 1,
+    Linear = 2,
 }
 
-enum ETrackingResult {
-    TrackingResult_Uninitialized = 1,
-    TrackingResult_Calibrating_InProgress = 100,
-    TrackingResult_Calibrating_OutOfRange = 101,
-    TrackingResult_Running_OK = 200,
-    TrackingResult_Running_OutOfRange = 201,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum ETrackingResult {
+    Uninitialized = 1,
+    Calibrating_InProgress = 100,
+    Calibrating_OutOfRange = 101,
+    Running_OK = 200,
+    Running_OutOfRange = 201,
 }
 
-enum ETrackedDeviceClass {
-    TrackedDeviceClass_Invalid = 0,
-    TrackedDeviceClass_HMD = 1,
-    TrackedDeviceClass_Controller = 2,
-    TrackedDeviceClass_TrackingReference = 4,
-    TrackedDeviceClass_Other = 1000,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum ETrackedDeviceClass {
+    Invalid = 0,
+    HMD = 1,
+    Controller = 2,
+    TrackingReference = 4,
+    Other = 1000,
 }
 
-enum ETrackedControllerRole {
-    TrackedControllerRole_Invalid = 0,
-    TrackedControllerRole_LeftHand = 1,
-    TrackedControllerRole_RightHand = 2,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum ETrackedControllerRole {
+    Invalid = 0,
+    LeftHand = 1,
+    RightHand = 2,
 }
 
-enum ETrackingUniverseOrigin {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum ETrackingUniverseOrigin {
     TrackingUniverseSeated = 0,
     TrackingUniverseStanding = 1,
     TrackingUniverseRawAndUncalibrated = 2,
 }
 
-enum ETrackedDeviceProperty {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum ETrackedDeviceProperty {
     Prop_TrackingSystemName_String = 1000,
     Prop_ModelNumber_String = 1001,
     Prop_SerialNumber_String = 1002,
@@ -1086,7 +171,9 @@ enum ETrackedDeviceProperty {
     Prop_VendorSpecific_Reserved_End = 10999,
 }
 
-enum ETrackedPropertyError {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum ETrackedPropertyError {
     TrackedProp_Success = 0,
     TrackedProp_WrongDataType = 1,
     TrackedProp_WrongDeviceClass = 2,
@@ -1099,23 +186,29 @@ enum ETrackedPropertyError {
     TrackedProp_NotYetAvailable = 9,
 }
 
-enum EVRSubmitFlags {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRSubmitFlags {
     Submit_Default = 0,
     Submit_LensDistortionAlreadyApplied = 1,
     Submit_GlRenderBuffer = 2,
 }
 
-enum EVRState {
-    VRState_Undefined = -1,
-    VRState_Off = 0,
-    VRState_Searching = 1,
-    VRState_Searching_Alert = 2,
-    VRState_Ready = 3,
-    VRState_Ready_Alert = 4,
-    VRState_NotReady = 5,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRState {
+    Undefined = -1,
+    Off = 0,
+    Searching = 1,
+    Searching_Alert = 2,
+    Ready = 3,
+    Ready_Alert = 4,
+    NotReady = 5,
 }
 
-enum EVREventType {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVREventType {
     VREvent_None = 0,
     VREvent_TrackedDeviceActivated = 100,
     VREvent_TrackedDeviceDeactivated = 101,
@@ -1199,7 +292,9 @@ enum EVREventType {
     VREvent_VendorSpecific_Reserved_End = 19999,
 }
 
-enum EDeviceActivityLevel {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EDeviceActivityLevel {
     k_EDeviceActivityLevel_Unknown = -1,
     k_EDeviceActivityLevel_Idle = 0,
     k_EDeviceActivityLevel_UserInteraction = 1,
@@ -1207,7 +302,9 @@ enum EDeviceActivityLevel {
     k_EDeviceActivityLevel_Standby = 3,
 }
 
-enum EVRButtonId {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRButtonId {
     k_EButton_System = 0,
     k_EButton_ApplicationMenu = 1,
     k_EButton_Grip = 2,
@@ -1221,31 +318,36 @@ enum EVRButtonId {
     k_EButton_Axis2 = 34,
     k_EButton_Axis3 = 35,
     k_EButton_Axis4 = 36,
-    k_EButton_SteamVR_Touchpad = 32,
-    k_EButton_SteamVR_Trigger = 33,
-    k_EButton_Dashboard_Back = 2,
     k_EButton_Max = 64,
 }
 
-enum EVRMouseButton {
-    VRMouseButton_Left = 1,
-    VRMouseButton_Right = 2,
-    VRMouseButton_Middle = 4,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRMouseButton {
+    Left = 1,
+    Right = 2,
+    Middle = 4,
 }
 
-enum EVRControllerAxisType {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRControllerAxisType {
     k_eControllerAxis_None = 0,
     k_eControllerAxis_TrackPad = 1,
     k_eControllerAxis_Joystick = 2,
     k_eControllerAxis_Trigger = 3,
 }
 
-enum EVRControllerEventOutputType {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRControllerEventOutputType {
     ControllerEventOutput_OSEvents = 0,
     ControllerEventOutput_VREvents = 1,
 }
 
-enum ECollisionBoundsStyle {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum ECollisionBoundsStyle {
     COLLISION_BOUNDS_STYLE_BEGINNER = 0,
     COLLISION_BOUNDS_STYLE_INTERMEDIATE = 1,
     COLLISION_BOUNDS_STYLE_SQUARES = 2,
@@ -1254,29 +356,33 @@ enum ECollisionBoundsStyle {
     COLLISION_BOUNDS_STYLE_COUNT = 5,
 }
 
-enum EVROverlayError {
-    VROverlayError_None = 0,
-    VROverlayError_UnknownOverlay = 10,
-    VROverlayError_InvalidHandle = 11,
-    VROverlayError_PermissionDenied = 12,
-    VROverlayError_OverlayLimitExceeded = 13,
-    VROverlayError_WrongVisibilityType = 14,
-    VROverlayError_KeyTooLong = 15,
-    VROverlayError_NameTooLong = 16,
-    VROverlayError_KeyInUse = 17,
-    VROverlayError_WrongTransformType = 18,
-    VROverlayError_InvalidTrackedDevice = 19,
-    VROverlayError_InvalidParameter = 20,
-    VROverlayError_ThumbnailCantBeDestroyed = 21,
-    VROverlayError_ArrayTooSmall = 22,
-    VROverlayError_RequestFailed = 23,
-    VROverlayError_InvalidTexture = 24,
-    VROverlayError_UnableToLoadFile = 25,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVROverlayError {
+    None = 0,
+    UnknownOverlay = 10,
+    InvalidHandle = 11,
+    PermissionDenied = 12,
+    OverlayLimitExceeded = 13,
+    WrongVisibilityType = 14,
+    KeyTooLong = 15,
+    NameTooLong = 16,
+    KeyInUse = 17,
+    WrongTransformType = 18,
+    InvalidTrackedDevice = 19,
+    InvalidParameter = 20,
+    ThumbnailCantBeDestroyed = 21,
+    ArrayTooSmall = 22,
+    RequestFailed = 23,
+    InvalidTexture = 24,
+    UnableToLoadFile = 25,
     VROVerlayError_KeyboardAlreadyInUse = 26,
-    VROverlayError_NoNeighbor = 27,
+    NoNeighbor = 27,
 }
 
-enum EVRApplicationType {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRApplicationType {
     VRApplication_Other = 0,
     VRApplication_Scene = 1,
     VRApplication_Overlay = 2,
@@ -1284,127 +390,141 @@ enum EVRApplicationType {
     VRApplication_Utility = 4,
 }
 
-enum EVRFirmwareError {
-    VRFirmwareError_None = 0,
-    VRFirmwareError_Success = 1,
-    VRFirmwareError_Fail = 2,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRFirmwareError {
+    None = 0,
+    Success = 1,
+    Fail = 2,
 }
 
-enum EVRNotificationError {
-    VRNotificationError_OK = 0,
-    VRNotificationError_InvalidNotificationId = 100,
-    VRNotificationError_NotificationQueueFull = 101,
-    VRNotificationError_InvalidOverlayHandle = 102,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRNotificationError {
+    OK = 0,
+    InvalidNotificationId = 100,
+    NotificationQueueFull = 101,
+    InvalidOverlayHandle = 102,
 }
 
-enum EVRInitError {
-    VRInitError_None = 0,
-    VRInitError_Unknown = 1,
-    VRInitError_Init_InstallationNotFound = 100,
-    VRInitError_Init_InstallationCorrupt = 101,
-    VRInitError_Init_VRClientDLLNotFound = 102,
-    VRInitError_Init_FileNotFound = 103,
-    VRInitError_Init_FactoryNotFound = 104,
-    VRInitError_Init_InterfaceNotFound = 105,
-    VRInitError_Init_InvalidInterface = 106,
-    VRInitError_Init_UserConfigDirectoryInvalid = 107,
-    VRInitError_Init_HmdNotFound = 108,
-    VRInitError_Init_NotInitialized = 109,
-    VRInitError_Init_PathRegistryNotFound = 110,
-    VRInitError_Init_NoConfigPath = 111,
-    VRInitError_Init_NoLogPath = 112,
-    VRInitError_Init_PathRegistryNotWritable = 113,
-    VRInitError_Init_AppInfoInitFailed = 114,
-    VRInitError_Init_Retry = 115,
-    VRInitError_Init_InitCanceledByUser = 116,
-    VRInitError_Init_AnotherAppLaunching = 117,
-    VRInitError_Init_SettingsInitFailed = 118,
-    VRInitError_Init_ShuttingDown = 119,
-    VRInitError_Init_TooManyObjects = 120,
-    VRInitError_Init_NoServerForBackgroundApp = 121,
-    VRInitError_Init_NotSupportedWithCompositor = 122,
-    VRInitError_Init_NotAvailableToUtilityApps = 123,
-    VRInitError_Driver_Failed = 200,
-    VRInitError_Driver_Unknown = 201,
-    VRInitError_Driver_HmdUnknown = 202,
-    VRInitError_Driver_NotLoaded = 203,
-    VRInitError_Driver_RuntimeOutOfDate = 204,
-    VRInitError_Driver_HmdInUse = 205,
-    VRInitError_Driver_NotCalibrated = 206,
-    VRInitError_Driver_CalibrationInvalid = 207,
-    VRInitError_Driver_HmdDisplayNotFound = 208,
-    VRInitError_IPC_ServerInitFailed = 300,
-    VRInitError_IPC_ConnectFailed = 301,
-    VRInitError_IPC_SharedStateInitFailed = 302,
-    VRInitError_IPC_CompositorInitFailed = 303,
-    VRInitError_IPC_MutexInitFailed = 304,
-    VRInitError_IPC_Failed = 305,
-    VRInitError_Compositor_Failed = 400,
-    VRInitError_Compositor_D3D11HardwareRequired = 401,
-    VRInitError_VendorSpecific_UnableToConnectToOculusRuntime = 1000,
-    VRInitError_VendorSpecific_HmdFound_CantOpenDevice = 1101,
-    VRInitError_VendorSpecific_HmdFound_UnableToRequestConfigStart = 1102,
-    VRInitError_VendorSpecific_HmdFound_NoStoredConfig = 1103,
-    VRInitError_VendorSpecific_HmdFound_ConfigTooBig = 1104,
-    VRInitError_VendorSpecific_HmdFound_ConfigTooSmall = 1105,
-    VRInitError_VendorSpecific_HmdFound_UnableToInitZLib = 1106,
-    VRInitError_VendorSpecific_HmdFound_CantReadFirmwareVersion = 1107,
-    VRInitError_VendorSpecific_HmdFound_UnableToSendUserDataStart = 1108,
-    VRInitError_VendorSpecific_HmdFound_UnableToGetUserDataStart = 1109,
-    VRInitError_VendorSpecific_HmdFound_UnableToGetUserDataNext = 1110,
-    VRInitError_VendorSpecific_HmdFound_UserDataAddressRange = 1111,
-    VRInitError_VendorSpecific_HmdFound_UserDataError = 1112,
-    VRInitError_VendorSpecific_HmdFound_ConfigFailedSanityCheck = 1113,
-    VRInitError_Steam_SteamInstallationNotFound = 2000,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRInitError {
+    None = 0,
+    Unknown = 1,
+    Init_InstallationNotFound = 100,
+    Init_InstallationCorrupt = 101,
+    Init_VRClientDLLNotFound = 102,
+    Init_FileNotFound = 103,
+    Init_FactoryNotFound = 104,
+    Init_InterfaceNotFound = 105,
+    Init_InvalidInterface = 106,
+    Init_UserConfigDirectoryInvalid = 107,
+    Init_HmdNotFound = 108,
+    Init_NotInitialized = 109,
+    Init_PathRegistryNotFound = 110,
+    Init_NoConfigPath = 111,
+    Init_NoLogPath = 112,
+    Init_PathRegistryNotWritable = 113,
+    Init_AppInfoInitFailed = 114,
+    Init_Retry = 115,
+    Init_InitCanceledByUser = 116,
+    Init_AnotherAppLaunching = 117,
+    Init_SettingsInitFailed = 118,
+    Init_ShuttingDown = 119,
+    Init_TooManyObjects = 120,
+    Init_NoServerForBackgroundApp = 121,
+    Init_NotSupportedWithCompositor = 122,
+    Init_NotAvailableToUtilityApps = 123,
+    Driver_Failed = 200,
+    Driver_Unknown = 201,
+    Driver_HmdUnknown = 202,
+    Driver_NotLoaded = 203,
+    Driver_RuntimeOutOfDate = 204,
+    Driver_HmdInUse = 205,
+    Driver_NotCalibrated = 206,
+    Driver_CalibrationInvalid = 207,
+    Driver_HmdDisplayNotFound = 208,
+    IPC_ServerInitFailed = 300,
+    IPC_ConnectFailed = 301,
+    IPC_SharedStateInitFailed = 302,
+    IPC_CompositorInitFailed = 303,
+    IPC_MutexInitFailed = 304,
+    IPC_Failed = 305,
+    Compositor_Failed = 400,
+    Compositor_D3D11HardwareRequired = 401,
+    VendorSpecific_UnableToConnectToOculusRuntime = 1000,
+    VendorSpecific_HmdFound_CantOpenDevice = 1101,
+    VendorSpecific_HmdFound_UnableToRequestConfigStart = 1102,
+    VendorSpecific_HmdFound_NoStoredConfig = 1103,
+    VendorSpecific_HmdFound_ConfigTooBig = 1104,
+    VendorSpecific_HmdFound_ConfigTooSmall = 1105,
+    VendorSpecific_HmdFound_UnableToInitZLib = 1106,
+    VendorSpecific_HmdFound_CantReadFirmwareVersion = 1107,
+    VendorSpecific_HmdFound_UnableToSendUserDataStart = 1108,
+    VendorSpecific_HmdFound_UnableToGetUserDataStart = 1109,
+    VendorSpecific_HmdFound_UnableToGetUserDataNext = 1110,
+    VendorSpecific_HmdFound_UserDataAddressRange = 1111,
+    VendorSpecific_HmdFound_UserDataError = 1112,
+    VendorSpecific_HmdFound_ConfigFailedSanityCheck = 1113,
+    Steam_SteamInstallationNotFound = 2000,
 }
 
-enum EVRApplicationError {
-    VRApplicationError_None = 0,
-    VRApplicationError_AppKeyAlreadyExists = 100,
-    VRApplicationError_NoManifest = 101,
-    VRApplicationError_NoApplication = 102,
-    VRApplicationError_InvalidIndex = 103,
-    VRApplicationError_UnknownApplication = 104,
-    VRApplicationError_IPCFailed = 105,
-    VRApplicationError_ApplicationAlreadyRunning = 106,
-    VRApplicationError_InvalidManifest = 107,
-    VRApplicationError_InvalidApplication = 108,
-    VRApplicationError_LaunchFailed = 109,
-    VRApplicationError_ApplicationAlreadyStarting = 110,
-    VRApplicationError_LaunchInProgress = 111,
-    VRApplicationError_OldApplicationQuitting = 112,
-    VRApplicationError_TransitionAborted = 113,
-    VRApplicationError_IsTemplate = 114,
-    VRApplicationError_BufferTooSmall = 200,
-    VRApplicationError_PropertyNotSet = 201,
-    VRApplicationError_UnknownProperty = 202,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRApplicationError {
+    None = 0,
+    AppKeyAlreadyExists = 100,
+    NoManifest = 101,
+    NoApplication = 102,
+    InvalidIndex = 103,
+    UnknownApplication = 104,
+    IPCFailed = 105,
+    ApplicationAlreadyRunning = 106,
+    InvalidManifest = 107,
+    InvalidApplication = 108,
+    LaunchFailed = 109,
+    ApplicationAlreadyStarting = 110,
+    LaunchInProgress = 111,
+    OldApplicationQuitting = 112,
+    TransitionAborted = 113,
+    IsTemplate = 114,
+    BufferTooSmall = 200,
+    PropertyNotSet = 201,
+    UnknownProperty = 202,
 }
 
-enum EVRApplicationProperty {
-    VRApplicationProperty_Name_String = 0,
-    VRApplicationProperty_LaunchType_String = 11,
-    VRApplicationProperty_WorkingDirectory_String = 12,
-    VRApplicationProperty_BinaryPath_String = 13,
-    VRApplicationProperty_Arguments_String = 14,
-    VRApplicationProperty_URL_String = 15,
-    VRApplicationProperty_Description_String = 50,
-    VRApplicationProperty_NewsURL_String = 51,
-    VRApplicationProperty_ImagePath_String = 52,
-    VRApplicationProperty_Source_String = 53,
-    VRApplicationProperty_IsDashboardOverlay_Bool = 60,
-    VRApplicationProperty_IsTemplate_Bool = 61,
-    VRApplicationProperty_IsInstanced_Bool = 62,
-    VRApplicationProperty_LastLaunchTime_Uint64 = 70,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRApplicationProperty {
+    Name_String = 0,
+    LaunchType_String = 11,
+    WorkingDirectory_String = 12,
+    BinaryPath_String = 13,
+    Arguments_String = 14,
+    URL_String = 15,
+    Description_String = 50,
+    NewsURL_String = 51,
+    ImagePath_String = 52,
+    Source_String = 53,
+    IsDashboardOverlay_Bool = 60,
+    IsTemplate_Bool = 61,
+    IsInstanced_Bool = 62,
+    LastLaunchTime_Uint64 = 70,
 }
 
-enum EVRApplicationTransitionState {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRApplicationTransitionState {
     VRApplicationTransition_None = 0,
     VRApplicationTransition_OldAppQuitSent = 10,
     VRApplicationTransition_WaitingForExternalLaunch = 11,
     VRApplicationTransition_NewAppLaunched = 20,
 }
 
-enum ChaperoneCalibrationState {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum ChaperoneCalibrationState {
     ChaperoneCalibrationState_OK = 1,
     ChaperoneCalibrationState_Warning = 100,
     ChaperoneCalibrationState_Warning_BaseStationMayHaveMoved = 101,
@@ -1417,40 +537,52 @@ enum ChaperoneCalibrationState {
     ChaperoneCalibrationState_Error_CollisionBoundsInvalid = 204,
 }
 
-enum EChaperoneConfigFile {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EChaperoneConfigFile {
     EChaperoneConfigFile_Live = 1,
     EChaperoneConfigFile_Temp = 2,
 }
 
-enum EChaperoneImportFlags {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EChaperoneImportFlags {
     EChaperoneImport_BoundsOnly = 1,
 }
 
-enum EVRCompositorError {
-    VRCompositorError_None = 0,
-    VRCompositorError_IncompatibleVersion = 100,
-    VRCompositorError_DoNotHaveFocus = 101,
-    VRCompositorError_InvalidTexture = 102,
-    VRCompositorError_IsNotSceneApplication = 103,
-    VRCompositorError_TextureIsOnWrongDevice = 104,
-    VRCompositorError_TextureUsesUnsupportedFormat = 105,
-    VRCompositorError_SharedTexturesNotSupported = 106,
-    VRCompositorError_IndexOutOfRange = 107,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRCompositorError {
+    None = 0,
+    IncompatibleVersion = 100,
+    DoNotHaveFocus = 101,
+    InvalidTexture = 102,
+    IsNotSceneApplication = 103,
+    TextureIsOnWrongDevice = 104,
+    TextureUsesUnsupportedFormat = 105,
+    SharedTexturesNotSupported = 106,
+    IndexOutOfRange = 107,
 }
 
-enum VROverlayInputMethod {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum VROverlayInputMethod {
     VROverlayInputMethod_None = 0,
     VROverlayInputMethod_Mouse = 1,
 }
 
-enum VROverlayTransformType {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum VROverlayTransformType {
     VROverlayTransform_Absolute = 0,
     VROverlayTransform_TrackedDeviceRelative = 1,
     VROverlayTransform_SystemOverlay = 2,
     VROverlayTransform_TrackedComponent = 3,
 }
 
-enum VROverlayFlags {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum VROverlayFlags {
     VROverlayFlags_None = 0,
     VROverlayFlags_Curved = 1,
     VROverlayFlags_RGSS4X = 2,
@@ -1462,52 +594,66 @@ enum VROverlayFlags {
     VROverlayFlags_ShowTouchPadScrollWheel = 8,
 }
 
-enum EGamepadTextInputMode {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EGamepadTextInputMode {
     k_EGamepadTextInputModeNormal = 0,
     k_EGamepadTextInputModePassword = 1,
     k_EGamepadTextInputModeSubmit = 2,
 }
 
-enum EGamepadTextInputLineMode {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EGamepadTextInputLineMode {
     k_EGamepadTextInputLineModeSingleLine = 0,
     k_EGamepadTextInputLineModeMultipleLines = 1,
 }
 
-enum EOverlayDirection {
-    OverlayDirection_Up = 0,
-    OverlayDirection_Down = 1,
-    OverlayDirection_Left = 2,
-    OverlayDirection_Right = 3,
-    OverlayDirection_Count = 4,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EOverlayDirection {
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3,
+    Count = 4,
 }
 
-enum EVRRenderModelError {
-    VRRenderModelError_None = 0,
-    VRRenderModelError_Loading = 100,
-    VRRenderModelError_NotSupported = 200,
-    VRRenderModelError_InvalidArg = 300,
-    VRRenderModelError_InvalidModel = 301,
-    VRRenderModelError_NoShapes = 302,
-    VRRenderModelError_MultipleShapes = 303,
-    VRRenderModelError_TooManyIndices = 304,
-    VRRenderModelError_MultipleTextures = 305,
-    VRRenderModelError_InvalidTexture = 400,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRRenderModelError {
+    None = 0,
+    Loading = 100,
+    NotSupported = 200,
+    InvalidArg = 300,
+    InvalidModel = 301,
+    NoShapes = 302,
+    MultipleShapes = 303,
+    TooManyIndices = 304,
+    MultipleTextures = 305,
+    InvalidTexture = 400,
 }
 
-enum EVRComponentProperty {
-    VRComponentProperty_IsStatic = 1,
-    VRComponentProperty_IsVisible = 2,
-    VRComponentProperty_IsTouched = 4,
-    VRComponentProperty_IsPressed = 8,
-    VRComponentProperty_IsScrolled = 16,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRComponentProperty {
+    IsStatic = 1,
+    IsVisible = 2,
+    IsTouched = 4,
+    IsPressed = 8,
+    IsScrolled = 16,
 }
 
-enum EVRNotificationType {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRNotificationType {
     EVRNotificationType_Transient = 0,
     EVRNotificationType_Persistent = 1,
 }
 
-enum EVRNotificationStyle {
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRNotificationStyle {
     EVRNotificationStyle_None = 0,
     EVRNotificationStyle_Application = 100,
     EVRNotificationStyle_Contact_Disabled = 200,
@@ -1515,208 +661,348 @@ enum EVRNotificationStyle {
     EVRNotificationStyle_Contact_Active = 202,
 }
 
-enum EVRSettingsError {
-    VRSettingsError_None = 0,
-    VRSettingsError_IPCFailed = 1,
-    VRSettingsError_WriteFailed = 2,
-    VRSettingsError_ReadFailed = 3,
+#[repr(C)]
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum EVRSettingsError {
+    None = 0,
+    IPCFailed = 1,
+    WriteFailed = 2,
+    ReadFailed = 3,
 }
 
-const k_unTrackingStringSize:  uint32_t = 32;
-const k_unMaxDriverDebugResponseSize:  uint32_t = 32768;
-const k_unTrackedDeviceIndex_Hmd:  uint32_t = 0;
-const k_unMaxTrackedDeviceCount:  uint32_t = 16;
-const k_unTrackedDeviceIndexInvalid:  uint32_t = 4294967295;
-const k_unMaxPropertyStringSize:  uint32_t = 32768;
-const k_unControllerStateAxisCount:  uint32_t = 5;
-const k_ulOverlayHandleInvalid:  VROverlayHandle_t = 0;
-const IVRSystem_Version: *mut  char = IVRSystem_012;
-const IVRExtendedDisplay_Version: *mut  char = IVRExtendedDisplay_001;
-const k_unMaxApplicationKeyLength:  uint32_t = 128;
-const IVRApplications_Version: *mut  char = IVRApplications_005;
-const IVRChaperone_Version: *mut  char = IVRChaperone_003;
-const IVRChaperoneSetup_Version: *mut  char = IVRChaperoneSetup_005;
-const IVRCompositor_Version: *mut  char = IVRCompositor_013;
-const k_unVROverlayMaxKeyLength:  uint32_t = 128;
-const k_unVROverlayMaxNameLength:  uint32_t = 128;
-const k_unMaxOverlayCount:  uint32_t = 32;
-const IVROverlay_Version: *mut  char = IVROverlay_011;
-const k_pch_Controller_Component_GDC2015: *mut  char = gdc2015;
-const k_pch_Controller_Component_Base: *mut  char = base;
-const k_pch_Controller_Component_Tip: *mut  char = tip;
-const k_pch_Controller_Component_HandGrip: *mut  char = handgrip;
-const k_pch_Controller_Component_Status: *mut  char = status;
-const IVRRenderModels_Version: *mut  char = IVRRenderModels_005;
-const k_unNotificationTextMaxSize:  uint32_t = 256;
-const IVRNotifications_Version: *mut  char = IVRNotifications_002;
-const k_unMaxSettingsKeyLength:  uint32_t = 128;
-const k_pch_SteamVR_Section: *mut  char = steamvr;
-const k_pch_SteamVR_RequireHmd_String: *mut  char = requireHmd;
-const k_pch_SteamVR_ForcedDriverKey_String: *mut  char = forcedDriver;
-const k_pch_SteamVR_ForcedHmdKey_String: *mut  char = forcedHmd;
-const k_pch_SteamVR_DisplayDebug_Bool: *mut  char = displayDebug;
-const k_pch_SteamVR_DebugProcessPipe_String: *mut  char = debugProcessPipe;
-const k_pch_SteamVR_EnableDistortion_Bool: *mut  char = enableDistortion;
-const k_pch_SteamVR_DisplayDebugX_Int32: *mut  char = displayDebugX;
-const k_pch_SteamVR_DisplayDebugY_Int32: *mut  char = displayDebugY;
-const k_pch_SteamVR_SendSystemButtonToAllApps_Bool: *mut  char = sendSystemButtonToAllApps;
-const k_pch_SteamVR_LogLevel_Int32: *mut  char = loglevel;
-const k_pch_SteamVR_IPD_Float: *mut  char = ipd;
-const k_pch_SteamVR_Background_String: *mut  char = background;
-const k_pch_SteamVR_GridColor_String: *mut  char = gridColor;
-const k_pch_SteamVR_PlayAreaColor_String: *mut  char = playAreaColor;
-const k_pch_SteamVR_ActivateMultipleDrivers_Bool: *mut  char = activateMultipleDrivers;
-const k_pch_SteamVR_PowerOffOnExit_Bool: *mut  char = powerOffOnExit;
-const k_pch_SteamVR_StandbyAppRunningTimeout_Float: *mut  char = standbyAppRunningTimeout;
-const k_pch_SteamVR_StandbyNoAppTimeout_Float: *mut  char = standbyNoAppTimeout;
-const k_pch_SteamVR_DirectMode_Bool: *mut  char = directMode;
-const k_pch_SteamVR_DirectModeEdidVid_Int32: *mut  char = directModeEdidVid;
-const k_pch_SteamVR_DirectModeEdidPid_Int32: *mut  char = directModeEdidPid;
-const k_pch_SteamVR_UsingSpeakers_Bool: *mut  char = usingSpeakers;
-const k_pch_SteamVR_SpeakersForwardYawOffsetDegrees_Float: *mut  char = speakersForwardYawOffsetDegrees;
-const k_pch_SteamVR_BaseStationPowerManagement_Bool: *mut  char = basestationPowerManagement;
-const k_pch_SteamVR_NeverKillProcesses_Bool: *mut  char = neverKillProcesses;
-const k_pch_Lighthouse_Section: *mut  char = driver_lighthouse;
-const k_pch_Lighthouse_DisableIMU_Bool: *mut  char = disableimu;
-const k_pch_Lighthouse_UseDisambiguation_String: *mut  char = usedisambiguation;
-const k_pch_Lighthouse_DisambiguationDebug_Int32: *mut  char = disambiguationdebug;
-const k_pch_Lighthouse_PrimaryBasestation_Int32: *mut  char = primarybasestation;
-const k_pch_Lighthouse_LighthouseName_String: *mut  char = lighthousename;
-const k_pch_Lighthouse_MaxIncidenceAngleDegrees_Float: *mut  char = maxincidenceangledegrees;
-const k_pch_Lighthouse_UseLighthouseDirect_Bool: *mut  char = uselighthousedirect;
-const k_pch_Lighthouse_DBHistory_Bool: *mut  char = dbhistory;
-const k_pch_Lighthouse_OriginOffsetX_Float: *mut  char = originoffsetx;
-const k_pch_Lighthouse_OriginOffsetY_Float: *mut  char = originoffsety;
-const k_pch_Lighthouse_OriginOffsetZ_Float: *mut  char = originoffsetz;
-const k_pch_Lighthouse_HeadingOffset_Float: *mut  char = headingoffset;
-const k_pch_Null_Section: *mut  char = driver_null;
-const k_pch_Null_EnableNullDriver_Bool: *mut  char = enable;
-const k_pch_Null_SerialNumber_String: *mut  char = serialNumber;
-const k_pch_Null_ModelNumber_String: *mut  char = modelNumber;
-const k_pch_Null_WindowX_Int32: *mut  char = windowX;
-const k_pch_Null_WindowY_Int32: *mut  char = windowY;
-const k_pch_Null_WindowWidth_Int32: *mut  char = windowWidth;
-const k_pch_Null_WindowHeight_Int32: *mut  char = windowHeight;
-const k_pch_Null_RenderWidth_Int32: *mut  char = renderWidth;
-const k_pch_Null_RenderHeight_Int32: *mut  char = renderHeight;
-const k_pch_Null_SecondsFromVsyncToPhotons_Float: *mut  char = secondsFromVsyncToPhotons;
-const k_pch_Null_DisplayFrequency_Float: *mut  char = displayFrequency;
-const k_pch_UserInterface_Section: *mut  char = userinterface;
-const k_pch_UserInterface_StatusAlwaysOnTop_Bool: *mut  char = StatusAlwaysOnTop;
-const k_pch_Notifications_Section: *mut  char = notifications;
-const k_pch_Notifications_DoNotDisturb_Bool: *mut  char = DoNotDisturb;
-const k_pch_Keyboard_Section: *mut  char = keyboard;
-const k_pch_Keyboard_TutorialCompletions: *mut  char = TutorialCompletions;
-const k_pch_Perf_Section: *mut  char = perfcheck;
-const k_pch_Perf_HeuristicActive_Bool: *mut  char = heuristicActive;
-const k_pch_Perf_NotifyInHMD_Bool: *mut  char = warnInHMD;
-const k_pch_Perf_NotifyOnlyOnce_Bool: *mut  char = warnOnlyOnce;
-const k_pch_Perf_AllowTimingStore_Bool: *mut  char = allowTimingStore;
-const k_pch_Perf_SaveTimingsOnExit_Bool: *mut  char = saveTimingsOnExit;
-const k_pch_Perf_TestData_Float: *mut  char = perfTestData;
-const k_pch_Camera_Section: *mut  char = camera;
-const IVRSettings_Version: *mut  char = IVRSettings_001;
-const k_pch_audio_Section: *mut  char = audio;
-const k_pch_audio_OnPlaybackDevice_String: *mut  char = onPlaybackDevice;
-const k_pch_audio_OnRecordDevice_String: *mut  char = onRecordDevice;
-const k_pch_audio_OffPlaybackDevice_String: *mut  char = offPlaybackDevice;
-const k_pch_audio_OffRecordDevice_String: *mut  char = offRecordDevice;
-const k_pch_audio_VIVEHDMIGain: *mut  char = viveHDMIGain;
+pub const k_unTrackingStringSize: u32 = 32;
+pub const k_unMaxDriverDebugResponseSize: u32 = 32768;
+pub const k_unTrackedDeviceIndex_Hmd: u32 = 0;
+pub const k_unMaxTrackedDeviceCount: u32 = 16;
+pub const k_unTrackedDeviceIndexInvalid: u32 = 4294967295;
+pub const k_unMaxPropertyStringSize: u32 = 32768;
+pub const k_unControllerStateAxisCount: u32 = 5;
+pub const k_ulOverlayHandleInvalid: VROverlayHandle = 0;
+pub const IVRSystem_Version: &'static str = "IVRSystem_012";
+pub const IVRExtendedDisplay_Version: &'static str = "IVRExtendedDisplay_001";
+pub const k_unMaxApplicationKeyLength: u32 = 128;
+pub const IVRApplications_Version: &'static str = "IVRApplications_005";
+pub const IVRChaperone_Version: &'static str = "IVRChaperone_003";
+pub const IVRChaperoneSetup_Version: &'static str = "IVRChaperoneSetup_005";
+pub const IVRCompositor_Version: &'static str = "IVRCompositor_013";
+pub const k_unVROverlayMaxKeyLength: u32 = 128;
+pub const k_unVROverlayMaxNameLength: u32 = 128;
+pub const k_unMaxOverlayCount: u32 = 32;
+pub const IVROverlay_Version: &'static str = "IVROverlay_011";
+pub const k_pch_Controller_Component_GDC2015: &'static str = "gdc2015";
+pub const k_pch_Controller_Component_Base: &'static str = "base";
+pub const k_pch_Controller_Component_Tip: &'static str = "tip";
+pub const k_pch_Controller_Component_HandGrip: &'static str = "handgrip";
+pub const k_pch_Controller_Component_Status: &'static str = "status";
+pub const IVRRenderModels_Version: &'static str = "IVRRenderModels_005";
+pub const k_unNotificationTextMaxSize: u32 = 256;
+pub const IVRNotifications_Version: &'static str = "IVRNotifications_002";
+pub const k_unMaxSettingsKeyLength: u32 = 128;
+pub const k_pch_SteamVR_Section: &'static str = "steamvr";
+pub const k_pch_SteamVR_RequireHmd_String: &'static str = "requireHmd";
+pub const k_pch_SteamVR_ForcedDriverKey_String: &'static str = "forcedDriver";
+pub const k_pch_SteamVR_ForcedHmdKey_String: &'static str = "forcedHmd";
+pub const k_pch_SteamVR_DisplayDebug_Bool: &'static str = "displayDebug";
+pub const k_pch_SteamVR_DebugProcessPipe_String: &'static str = "debugProcessPipe";
+pub const k_pch_SteamVR_EnableDistortion_Bool: &'static str = "enableDistortion";
+pub const k_pch_SteamVR_DisplayDebugX_Int32: &'static str = "displayDebugX";
+pub const k_pch_SteamVR_DisplayDebugY_Int32: &'static str = "displayDebugY";
+pub const k_pch_SteamVR_SendSystemButtonToAllApps_Bool: &'static str = "sendSystemButtonToAllApps";
+pub const k_pch_SteamVR_LogLevel_Int32: &'static str = "loglevel";
+pub const k_pch_SteamVR_IPD_Float: &'static str = "ipd";
+pub const k_pch_SteamVR_Background_String: &'static str = "background";
+pub const k_pch_SteamVR_GridColor_String: &'static str = "gridColor";
+pub const k_pch_SteamVR_PlayAreaColor_String: &'static str = "playAreaColor";
+pub const k_pch_SteamVR_ActivateMultipleDrivers_Bool: &'static str = "activateMultipleDrivers";
+pub const k_pch_SteamVR_PowerOffOnExit_Bool: &'static str = "powerOffOnExit";
+pub const k_pch_SteamVR_StandbyAppRunningTimeout_Float: &'static str = "standbyAppRunningTimeout";
+pub const k_pch_SteamVR_StandbyNoAppTimeout_Float: &'static str = "standbyNoAppTimeout";
+pub const k_pch_SteamVR_DirectMode_Bool: &'static str = "directMode";
+pub const k_pch_SteamVR_DirectModeEdidVid_Int32: &'static str = "directModeEdidVid";
+pub const k_pch_SteamVR_DirectModeEdidPid_Int32: &'static str = "directModeEdidPid";
+pub const k_pch_SteamVR_UsingSpeakers_Bool: &'static str = "usingSpeakers";
+pub const k_pch_SteamVR_SpeakersForwardYawOffsetDegrees_Float: &'static str = "speakersForwardYawOffsetDegrees";
+pub const k_pch_SteamVR_BaseStationPowerManagement_Bool: &'static str = "basestationPowerManagement";
+pub const k_pch_SteamVR_NeverKillProcesses_Bool: &'static str = "neverKillProcesses";
+pub const k_pch_Lighthouse_Section: &'static str = "driver_lighthouse";
+pub const k_pch_Lighthouse_DisableIMU_Bool: &'static str = "disableimu";
+pub const k_pch_Lighthouse_UseDisambiguation_String: &'static str = "usedisambiguation";
+pub const k_pch_Lighthouse_DisambiguationDebug_Int32: &'static str = "disambiguationdebug";
+pub const k_pch_Lighthouse_PrimaryBasestation_Int32: &'static str = "primarybasestation";
+pub const k_pch_Lighthouse_LighthouseName_String: &'static str = "lighthousename";
+pub const k_pch_Lighthouse_MaxIncidenceAngleDegrees_Float: &'static str = "maxincidenceangledegrees";
+pub const k_pch_Lighthouse_UseLighthouseDirect_Bool: &'static str = "uselighthousedirect";
+pub const k_pch_Lighthouse_DBHistory_Bool: &'static str = "dbhistory";
+pub const k_pch_Lighthouse_OriginOffsetX_Float: &'static str = "originoffsetx";
+pub const k_pch_Lighthouse_OriginOffsetY_Float: &'static str = "originoffsety";
+pub const k_pch_Lighthouse_OriginOffsetZ_Float: &'static str = "originoffsetz";
+pub const k_pch_Lighthouse_HeadingOffset_Float: &'static str = "headingoffset";
+pub const k_pch_Null_Section: &'static str = "driver_null";
+pub const k_pch_Null_EnableNullDriver_Bool: &'static str = "enable";
+pub const k_pch_Null_SerialNumber_String: &'static str = "serialNumber";
+pub const k_pch_Null_ModelNumber_String: &'static str = "modelNumber";
+pub const k_pch_Null_WindowX_Int32: &'static str = "windowX";
+pub const k_pch_Null_WindowY_Int32: &'static str = "windowY";
+pub const k_pch_Null_WindowWidth_Int32: &'static str = "windowWidth";
+pub const k_pch_Null_WindowHeight_Int32: &'static str = "windowHeight";
+pub const k_pch_Null_RenderWidth_Int32: &'static str = "renderWidth";
+pub const k_pch_Null_RenderHeight_Int32: &'static str = "renderHeight";
+pub const k_pch_Null_SecondsFromVsyncToPhotons_Float: &'static str = "secondsFromVsyncToPhotons";
+pub const k_pch_Null_DisplayFrequency_Float: &'static str = "displayFrequency";
+pub const k_pch_UserInterface_Section: &'static str = "userinterface";
+pub const k_pch_UserInterface_StatusAlwaysOnTop_Bool: &'static str = "StatusAlwaysOnTop";
+pub const k_pch_Notifications_Section: &'static str = "notifications";
+pub const k_pch_Notifications_DoNotDisturb_Bool: &'static str = "DoNotDisturb";
+pub const k_pch_Keyboard_Section: &'static str = "keyboard";
+pub const k_pch_Keyboard_TutorialCompletions: &'static str = "TutorialCompletions";
+pub const k_pch_Perf_Section: &'static str = "perfcheck";
+pub const k_pch_Perf_HeuristicActive_Bool: &'static str = "heuristicActive";
+pub const k_pch_Perf_NotifyInHMD_Bool: &'static str = "warnInHMD";
+pub const k_pch_Perf_NotifyOnlyOnce_Bool: &'static str = "warnOnlyOnce";
+pub const k_pch_Perf_AllowTimingStore_Bool: &'static str = "allowTimingStore";
+pub const k_pch_Perf_SaveTimingsOnExit_Bool: &'static str = "saveTimingsOnExit";
+pub const k_pch_Perf_TestData_Float: &'static str = "perfTestData";
+pub const k_pch_Camera_Section: &'static str = "camera";
+pub const IVRSettings_Version: &'static str = "IVRSettings_001";
+pub const k_pch_audio_Section: &'static str = "audio";
+pub const k_pch_audio_OnPlaybackDevice_String: &'static str = "onPlaybackDevice";
+pub const k_pch_audio_OnRecordDevice_String: &'static str = "onRecordDevice";
+pub const k_pch_audio_OffPlaybackDevice_String: &'static str = "offPlaybackDevice";
+pub const k_pch_audio_OffRecordDevice_String: &'static str = "offRecordDevice";
+pub const k_pch_audio_VIVEHDMIGain: &'static str = "viveHDMIGain";
 
 
-struct HmdMatrix34_t {
-    m: float [3][4],
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdMatrix34 {
+    m: [[f32; 4]; 3],
 }
 
-struct HmdMatrix44_t {
-    m: float [4][4],
+impl Default for HmdMatrix34 {
+    fn default() -> HmdMatrix34 {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct HmdVector3_t {
-    v: float [3],
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdMatrix44 {
+    m: [[f32; 4]; 4],
 }
 
-struct HmdVector4_t {
-    v: float [4],
+impl Default for HmdMatrix44 {
+    fn default() -> HmdMatrix44 {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct HmdVector3d_t {
-    v: double [3],
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdVector3 {
+    v: [f32; 3],
 }
 
-struct HmdVector2_t {
-    v: float [2],
+impl Default for HmdVector3 {
+    fn default() -> HmdVector3 {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct HmdQuaternion_t {
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdVector4 {
+    v: [f32; 4],
+}
+
+impl Default for HmdVector4 {
+    fn default() -> HmdVector4 {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdVector3d {
+    v: [f64; 3],
+}
+
+impl Default for HmdVector3d {
+    fn default() -> HmdVector3d {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdVector2 {
+    v: [f32; 2],
+}
+
+impl Default for HmdVector2 {
+    fn default() -> HmdVector2 {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdQuaternion {
     w: f64,
     x: f64,
     y: f64,
     z: f64,
 }
 
-struct HmdColor_t {
+impl Default for HmdQuaternion {
+    fn default() -> HmdQuaternion {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdColor {
     r: f32,
     g: f32,
     b: f32,
     a: f32,
 }
 
-struct HmdQuad_t {
-    vCorners: HmdVector3_t [4],
+impl Default for HmdColor {
+    fn default() -> HmdColor {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct HmdRect2_t {
-    vTopLeft: HmdVector2_t,
-    vBottomRight: HmdVector2_t,
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdQuad {
+    vCorners: [HmdVector3; 4],
 }
 
-struct DistortionCoordinates_t {
-    rfRed: float [2],
-    rfGreen: float [2],
-    rfBlue: float [2],
+impl Default for HmdQuad {
+    fn default() -> HmdQuad {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct Texture_t {
-    handle: *mut libc::c_void,
-    eType: enum EGraphicsAPIConvention,
-    eColorSpace: enum EColorSpace,
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HmdRect2 {
+    vTopLeft: HmdVector2,
+    vBottomRight: HmdVector2,
 }
 
-struct TrackedDevicePose_t {
-    mDeviceToAbsoluteTracking: HmdMatrix34_t,
-    vVelocity: HmdVector3_t,
-    vAngularVelocity: HmdVector3_t,
-    eTrackingResult: enum ETrackingResult,
-    bPoseIsValid: _Bool,
-    bDeviceIsConnected: _Bool,
+impl Default for HmdRect2 {
+    fn default() -> HmdRect2 {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct VRTextureBounds_t {
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct DistortionCoordinates {
+    rfRed: [f32; 2],
+    rfGreen: [f32; 2],
+    rfBlue: [f32; 2],
+}
+
+impl Default for DistortionCoordinates {
+    fn default() -> DistortionCoordinates {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct Texture {
+    handle: *mut c_void,
+    eType: EGraphicsAPIConvention,
+    eColorSpace: EColorSpace,
+}
+
+impl Default for Texture {
+    fn default() -> Texture {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct TrackedDevicePose {
+    mDeviceToAbsoluteTracking: HmdMatrix34,
+    vVelocity: HmdVector3,
+    vAngularVelocity: HmdVector3,
+    eTrackingResult: ETrackingResult,
+    bPoseIsValid: bool,
+    bDeviceIsConnected: bool,
+}
+
+impl Default for TrackedDevicePose {
+    fn default() -> TrackedDevicePose {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VRTextureBounds {
     uMin: f32,
     vMin: f32,
     uMax: f32,
     vMax: f32,
 }
 
-struct VREvent_Controller_t {
+impl Default for VRTextureBounds {
+    fn default() -> VRTextureBounds {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Controller {
     button: u32,
 }
 
-struct VREvent_Mouse_t {
+impl Default for VREvent_Controller {
+    fn default() -> VREvent_Controller {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Mouse {
     x: f32,
     y: f32,
     button: u32,
 }
 
-struct VREvent_Scroll_t {
+impl Default for VREvent_Mouse {
+    fn default() -> VREvent_Mouse {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Scroll {
     xdelta: f32,
     ydelta: f32,
     repeatCount: u32,
 }
 
-struct VREvent_TouchPadMove_t {
-    bFingerDown: _Bool,
+impl Default for VREvent_Scroll {
+    fn default() -> VREvent_Scroll {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_TouchPadMove {
+    bFingerDown: bool,
     flSecondsFingerDown: f32,
     fValueXFirst: f32,
     fValueYFirst: f32,
@@ -1724,97 +1010,225 @@ struct VREvent_TouchPadMove_t {
     fValueYRaw: f32,
 }
 
-struct VREvent_Notification_t {
-    ulUserValue: uint64_t,
+impl Default for VREvent_TouchPadMove {
+    fn default() -> VREvent_TouchPadMove {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Notification {
+    ulUserValue: u64,
     notificationId: u32,
 }
 
-struct VREvent_Process_t {
+impl Default for VREvent_Notification {
+    fn default() -> VREvent_Notification {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Process {
     pid: u32,
     oldPid: u32,
-    bForced: _Bool,
+    bForced: bool,
 }
 
-struct VREvent_Overlay_t {
-    overlayHandle: uint64_t,
+impl Default for VREvent_Process {
+    fn default() -> VREvent_Process {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct VREvent_Status_t {
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Overlay {
+    overlayHandle: u64,
+}
+
+impl Default for VREvent_Overlay {
+    fn default() -> VREvent_Overlay {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Status {
     statusState: u32,
 }
 
-struct VREvent_Keyboard_t {
-    cNewInput: char [8],
-    uUserValue: uint64_t,
+impl Default for VREvent_Status {
+    fn default() -> VREvent_Status {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct VREvent_Ipd_t {
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Keyboard {
+    cNewInput: [c_char; 8],
+    uUserValue: u64,
+}
+
+impl Default for VREvent_Keyboard {
+    fn default() -> VREvent_Keyboard {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Ipd {
     ipdMeters: f32,
 }
 
-struct VREvent_Chaperone_t {
-    m_nPreviousUniverse: uint64_t,
-    m_nCurrentUniverse: uint64_t,
+impl Default for VREvent_Ipd {
+    fn default() -> VREvent_Ipd {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct VREvent_Reserved_t {
-    reserved0: uint64_t,
-    reserved1: uint64_t,
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Chaperone {
+    m_nPreviousUniverse: u64,
+    m_nCurrentUniverse: u64,
 }
 
-struct VREvent_PerformanceTest_t {
+impl Default for VREvent_Chaperone {
+    fn default() -> VREvent_Chaperone {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Reserved {
+    reserved0: u64,
+    reserved1: u64,
+}
+
+impl Default for VREvent_Reserved {
+    fn default() -> VREvent_Reserved {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_PerformanceTest {
     m_nFidelityLevel: u32,
 }
 
-struct VREvent_SeatedZeroPoseReset_t {
-    bResetBySystemMenu: _Bool,
+impl Default for VREvent_PerformanceTest {
+    fn default() -> VREvent_PerformanceTest {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct (anonymous) {
-    reserved: VREvent_Reserved_t,
-    controller: VREvent_Controller_t,
-    mouse: VREvent_Mouse_t,
-    scroll: VREvent_Scroll_t,
-    process: VREvent_Process_t,
-    notification: VREvent_Notification_t,
-    overlay: VREvent_Overlay_t,
-    status: VREvent_Status_t,
-    keyboard: VREvent_Keyboard_t,
-    ipd: VREvent_Ipd_t,
-    chaperone: VREvent_Chaperone_t,
-    performanceTest: VREvent_PerformanceTest_t,
-    touchPadMove: VREvent_TouchPadMove_t,
-    seatedZeroPoseReset: VREvent_SeatedZeroPoseReset_t,
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_SeatedZeroPoseReset {
+    bResetBySystemMenu: bool,
 }
 
-struct VREvent_t {
+impl Default for VREvent_SeatedZeroPoseReset {
+    fn default() -> VREvent_SeatedZeroPoseReset {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent_Data {
+    reserved: VREvent_Reserved,
+    controller: VREvent_Controller,
+    mouse: VREvent_Mouse,
+    scroll: VREvent_Scroll,
+    process: VREvent_Process,
+    notification: VREvent_Notification,
+    overlay: VREvent_Overlay,
+    status: VREvent_Status,
+    keyboard: VREvent_Keyboard,
+    ipd: VREvent_Ipd,
+    chaperone: VREvent_Chaperone,
+    performanceTest: VREvent_PerformanceTest,
+    touchPadMove: VREvent_TouchPadMove,
+    seatedZeroPoseReset: VREvent_SeatedZeroPoseReset,
+}
+
+impl Default for VREvent_Data {
+    fn default() -> VREvent_Data {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VREvent {
     eventType: u32,
-    trackedDeviceIndex: TrackedDeviceIndex_t,
+    trackedDeviceIndex: TrackedDeviceIndex,
     eventAgeSeconds: f32,
-    data: VREvent_Data_t,
+    data: VREvent_Data,
 }
 
-struct HiddenAreaMesh_t {
-    pVertexData: *mut  HmdVector2_t,
+impl Default for VREvent {
+    fn default() -> VREvent {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct HiddenAreaMesh {
+    pVertexData: *mut HmdVector2,
     unTriangleCount: u32,
 }
 
-struct VRControllerAxis_t {
+impl Default for HiddenAreaMesh {
+    fn default() -> HiddenAreaMesh {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VRControllerAxis {
     x: f32,
     y: f32,
 }
 
-struct VRControllerState001_t {
-    unPacketNum: u32,
-    ulButtonPressed: uint64_t,
-    ulButtonTouched: uint64_t,
-    rAxis: VRControllerAxis_t [5],
+impl Default for VRControllerAxis {
+    fn default() -> VRControllerAxis {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct Compositor_OverlaySettings {
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VRControllerState001 {
+    unPacketNum: u32,
+    ulButtonPressed: u64,
+    ulButtonTouched: u64,
+    rAxis: [VRControllerAxis; 5],
+}
+
+impl Default for VRControllerState001 {
+    fn default() -> VRControllerState001 {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct Compositor_OverlaySettings {
     size: u32,
-    curved: _Bool,
-    antialias: _Bool,
+    curved: bool,
+    antialias: bool,
     scale: f32,
     distance: f32,
     alpha: f32,
@@ -1825,15 +1239,31 @@ struct Compositor_OverlaySettings {
     gridDivs: f32,
     gridWidth: f32,
     gridScale: f32,
-    transform: HmdMatrix44_t,
+    transform: HmdMatrix44,
 }
 
-struct AppOverrideKeys_t {
+impl Default for Compositor_OverlaySettings {
+    fn default() -> Compositor_OverlaySettings {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct AppOverrideKeys {
     pchKey: *const c_char,
     pchValue: *const c_char,
 }
 
-struct Compositor_FrameTiming {
+impl Default for AppOverrideKeys {
+    fn default() -> AppOverrideKeys {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct Compositor_FrameTiming {
     m_nSize: u32,
     m_nFrameIndex: u32,
     m_nNumFramePresents: u32,
@@ -1854,61 +1284,133 @@ struct Compositor_FrameTiming {
     m_flCompositorUpdateStartMs: f32,
     m_flCompositorUpdateEndMs: f32,
     m_flCompositorRenderStartMs: f32,
-    m_HmdPose: TrackedDevicePose_t,
+    m_HmdPose: TrackedDevicePose,
     m_nFidelityLevel: i32,
 }
 
-struct VROverlayIntersectionParams_t {
-    vSource: HmdVector3_t,
-    vDirection: HmdVector3_t,
-    eOrigin: enum ETrackingUniverseOrigin,
+impl Default for Compositor_FrameTiming {
+    fn default() -> Compositor_FrameTiming {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct VROverlayIntersectionResults_t {
-    vPoint: HmdVector3_t,
-    vNormal: HmdVector3_t,
-    vUVs: HmdVector2_t,
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VROverlayIntersectionParams {
+    vSource: HmdVector3,
+    vDirection: HmdVector3,
+    eOrigin: ETrackingUniverseOrigin,
+}
+
+impl Default for VROverlayIntersectionParams {
+    fn default() -> VROverlayIntersectionParams {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct VROverlayIntersectionResults {
+    vPoint: HmdVector3,
+    vNormal: HmdVector3,
+    vUVs: HmdVector2,
     fDistance: f32,
 }
 
-struct RenderModel_ComponentState_t {
-    mTrackingToComponentRenderModel: HmdMatrix34_t,
-    mTrackingToComponentLocal: HmdMatrix34_t,
+impl Default for VROverlayIntersectionResults {
+    fn default() -> VROverlayIntersectionResults {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct RenderModel_ComponentState {
+    mTrackingToComponentRenderModel: HmdMatrix34,
+    mTrackingToComponentLocal: HmdMatrix34,
     uProperties: VRComponentProperties,
 }
 
-struct RenderModel_Vertex_t {
-    vPosition: HmdVector3_t,
-    vNormal: HmdVector3_t,
-    rfTextureCoord: float [2],
+impl Default for RenderModel_ComponentState {
+    fn default() -> RenderModel_ComponentState {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct RenderModel_TextureMap_t {
-    unWidth: uint16_t,
-    unHeight: uint16_t,
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct RenderModel_Vertex {
+    vPosition: HmdVector3,
+    vNormal: HmdVector3,
+    rfTextureCoord: [f32; 2],
+}
+
+impl Default for RenderModel_Vertex {
+    fn default() -> RenderModel_Vertex {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct RenderModel_TextureMap {
+    unWidth: u16,
+    unHeight: u16,
     rubTextureMapData: *const u8,
 }
 
-struct RenderModel_t {
-    rVertexData: *mut  RenderModel_Vertex_t,
+impl Default for RenderModel_TextureMap {
+    fn default() -> RenderModel_TextureMap {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct RenderModel {
+    rVertexData: *mut RenderModel_Vertex,
     unVertexCount: u32,
     rIndexData: *const u16,
     unTriangleCount: u32,
-    diffuseTextureId: TextureID_t,
+    diffuseTextureId: TextureID,
 }
 
-struct RenderModel_ControllerMode_State_t {
-    bScrollWheelVisible: _Bool,
+impl Default for RenderModel {
+    fn default() -> RenderModel {
+        unsafe { mem::zeroed() }
+    }
 }
 
-struct NotificationBitmap_t {
-    bytes: *mut libc::c_void,
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct RenderModel_ControllerMode_State {
+    bScrollWheelVisible: bool,
+}
+
+impl Default for RenderModel_ControllerMode_State {
+    fn default() -> RenderModel_ControllerMode_State {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct NotificationBitmap {
+    bytes: *mut c_void,
     width: i32,
     height: i32,
     depth: i32,
 }
 
-struct COpenVRContext {
+impl Default for NotificationBitmap {
+    fn default() -> NotificationBitmap {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct COpenVRContext {
     m_pVRSystem: *mut IVRSystem,
     m_pVRChaperone: *mut IVRChaperone,
     m_pVRChaperoneSetup: *mut IVRChaperoneSetup,
@@ -1919,3 +1421,262 @@ struct COpenVRContext {
     m_pVRSettings: *mut IVRSettings,
     m_pVRApplications: *mut IVRApplications,
 }
+
+impl Default for COpenVRContext {
+    fn default() -> COpenVRContext {
+        unsafe { mem::zeroed() }
+    }
+}
+
+pub struct IVRApplications {
+    pub AddApplicationManifest: fn(pchApplicationManifestFullPath: *const c_char, bTemporary: bool) -> EVRApplicationError,
+    pub RemoveApplicationManifest: fn(pchApplicationManifestFullPath: *const c_char) -> EVRApplicationError,
+    pub IsApplicationInstalled: fn(pchAppKey: *const c_char) -> bool,
+    pub GetApplicationCount: fn() -> u32,
+    pub GetApplicationKeyByIndex: fn(unApplicationIndex: u32, pchAppKeyBuffer: *mut c_char, unAppKeyBufferLen: u32) -> EVRApplicationError,
+    pub GetApplicationKeyByProcessId: fn(unProcessId: u32, pchAppKeyBuffer: *mut c_char, unAppKeyBufferLen: u32) -> EVRApplicationError,
+    pub LaunchApplication: fn(pchAppKey: *const c_char) -> EVRApplicationError,
+    pub LaunchTemplateApplication: fn(pchTemplateAppKey: *const c_char, pchNewAppKey: *const c_char, pKeys: *mut AppOverrideKeys, unKeys: u32) -> EVRApplicationError,
+    pub LaunchDashboardOverlay: fn(pchAppKey: *const c_char) -> EVRApplicationError,
+    pub CancelApplicationLaunch: fn(pchAppKey: *const c_char) -> bool,
+    pub IdentifyApplication: fn(unProcessId: u32, pchAppKey: *const c_char) -> EVRApplicationError,
+    pub GetApplicationProcessId: fn(pchAppKey: *const c_char) -> u32,
+    pub GetApplicationsErrorNameFromEnum: fn(error: EVRApplicationError) -> *const c_char,
+    pub GetApplicationPropertyString: fn(pchAppKey: *const c_char, eProperty: EVRApplicationProperty, pchPropertyValueBuffer: *mut c_char, unPropertyValueBufferLen: u32, peError: *mut EVRApplicationError) -> u32,
+    pub GetApplicationPropertyBool: fn(pchAppKey: *const c_char, eProperty: EVRApplicationProperty, peError: *mut EVRApplicationError) -> bool,
+    pub GetApplicationPropertyUint64: fn(pchAppKey: *const c_char, eProperty: EVRApplicationProperty, peError: *mut EVRApplicationError) -> u64,
+    pub SetApplicationAutoLaunch: fn(pchAppKey: *const c_char, bAutoLaunch: bool) -> EVRApplicationError,
+    pub GetApplicationAutoLaunch: fn(pchAppKey: *const c_char) -> bool,
+    pub GetStartingApplication: fn(pchAppKeyBuffer: *mut c_char, unAppKeyBufferLen: u32) -> EVRApplicationError,
+    pub GetTransitionState: fn() -> EVRApplicationTransitionState,
+    pub PerformApplicationPrelaunchCheck: fn(pchAppKey: *const c_char) -> EVRApplicationError,
+    pub GetApplicationsTransitionStateNameFromEnum: fn(state: EVRApplicationTransitionState) -> *const c_char,
+    pub IsQuitUserPromptRequested: fn() -> bool,
+    pub LaunchInternalProcess: fn(pchBinaryPath: *const c_char, pchArguments: *const c_char, pchWorkingDirectory: *const c_char) -> EVRApplicationError,
+}
+
+pub struct IVRChaperone {
+    pub GetCalibrationState: fn() -> ChaperoneCalibrationState,
+    pub GetPlayAreaSize: fn(pSizeX: *mut f32, pSizeZ: *mut f32) -> bool,
+    pub GetPlayAreaRect: fn(rect: *mut HmdQuad) -> bool,
+    pub ReloadInfo: fn(),
+    pub SetSceneColor: fn(color: HmdColor),
+    pub GetBoundsColor: fn(pOutputColorArray: *mut HmdColor, nNumOutputColors: c_int, flCollisionBoundsFadeDistance: f32, pOutputCameraColor: *mut HmdColor),
+    pub AreBoundsVisible: fn() -> bool,
+    pub ForceBoundsVisible: fn(bForce: bool),
+}
+
+pub struct IVRChaperoneSetup {
+    pub CommitWorkingCopy: fn(configFile: EChaperoneConfigFile) -> bool,
+    pub RevertWorkingCopy: fn(),
+    pub GetWorkingPlayAreaSize: fn(pSizeX: *mut f32, pSizeZ: *mut f32) -> bool,
+    pub GetWorkingPlayAreaRect: fn(rect: *mut HmdQuad) -> bool,
+    pub GetWorkingCollisionBoundsInfo: fn(pQuadsBuffer: *mut HmdQuad, punQuadsCount: *mut u32) -> bool,
+    pub GetLiveCollisionBoundsInfo: fn(pQuadsBuffer: *mut HmdQuad, punQuadsCount: *mut u32) -> bool,
+    pub GetWorkingSeatedZeroPoseToRawTrackingPose: fn(pmatSeatedZeroPoseToRawTrackingPose: *mut HmdMatrix34) -> bool,
+    pub GetWorkingStandingZeroPoseToRawTrackingPose: fn(pmatStandingZeroPoseToRawTrackingPose: *mut HmdMatrix34) -> bool,
+    pub SetWorkingPlayAreaSize: fn(sizeX: f32, sizeZ: f32),
+    pub SetWorkingCollisionBoundsInfo: fn(pQuadsBuffer: *mut HmdQuad, unQuadsCount: u32),
+    pub SetWorkingSeatedZeroPoseToRawTrackingPose: fn(pMatSeatedZeroPoseToRawTrackingPose: *mut HmdMatrix34),
+    pub SetWorkingStandingZeroPoseToRawTrackingPose: fn(pMatStandingZeroPoseToRawTrackingPose: *mut HmdMatrix34),
+    pub ReloadFromDisk: fn(configFile: EChaperoneConfigFile),
+    pub GetLiveSeatedZeroPoseToRawTrackingPose: fn(pmatSeatedZeroPoseToRawTrackingPose: *mut HmdMatrix34) -> bool,
+    pub SetWorkingCollisionBoundsTagsInfo: fn(pTagsBuffer: *mut u8, unTagCount: u32),
+    pub GetLiveCollisionBoundsTagsInfo: fn(pTagsBuffer: *mut u8, punTagCount: *mut u32) -> bool,
+    pub SetWorkingPhysicalBoundsInfo: fn(pQuadsBuffer: *mut HmdQuad, unQuadsCount: u32) -> bool,
+    pub GetLivePhysicalBoundsInfo: fn(pQuadsBuffer: *mut HmdQuad, punQuadsCount: *mut u32) -> bool,
+    pub ExportLiveToBuffer: fn(pBuffer: *mut c_char, pnBufferLength: *mut u32) -> bool,
+    pub ImportFromBufferToWorking: fn(pBuffer: *const c_char, nImportFlags: u32) -> bool,
+}
+
+pub struct IVRCompositor {
+    pub SetTrackingSpace: fn(eOrigin: ETrackingUniverseOrigin),
+    pub GetTrackingSpace: fn() -> ETrackingUniverseOrigin,
+    pub WaitGetPoses: fn(pRenderPoseArray: *mut TrackedDevicePose, unRenderPoseArrayCount: u32, pGamePoseArray: *mut TrackedDevicePose, unGamePoseArrayCount: u32) -> EVRCompositorError,
+    pub GetLastPoses: fn(pRenderPoseArray: *mut TrackedDevicePose, unRenderPoseArrayCount: u32, pGamePoseArray: *mut TrackedDevicePose, unGamePoseArrayCount: u32) -> EVRCompositorError,
+    pub GetLastPoseForTrackedDeviceIndex: fn(unDeviceIndex: TrackedDeviceIndex, pOutputPose: *mut TrackedDevicePose, pOutputGamePose: *mut TrackedDevicePose) -> EVRCompositorError,
+    pub Submit: fn(eEye: EVREye, pTexture: *mut Texture, pBounds: *mut VRTextureBounds, nSubmitFlags: EVRSubmitFlags) -> EVRCompositorError,
+    pub ClearLastSubmittedFrame: fn(),
+    pub PostPresentHandoff: fn(),
+    pub GetFrameTiming: fn(pTiming: *mut Compositor_FrameTiming, unFramesAgo: u32) -> bool,
+    pub GetFrameTimeRemaining: fn() -> f32,
+    pub FadeToColor: fn(fSeconds: f32, fRed: f32, fGreen: f32, fBlue: f32, fAlpha: f32, bBackground: bool),
+    pub FadeGrid: fn(fSeconds: f32, bFadeIn: bool),
+    pub SetSkyboxOverride: fn(pTextures: *mut Texture, unTextureCount: u32) -> EVRCompositorError,
+    pub ClearSkyboxOverride: fn(),
+    pub CompositorBringToFront: fn(),
+    pub CompositorGoToBack: fn(),
+    pub CompositorQuit: fn(),
+    pub IsFullscreen: fn() -> bool,
+    pub GetCurrentSceneFocusProcess: fn() -> u32,
+    pub GetLastFrameRenderer: fn() -> u32,
+    pub CanRenderScene: fn() -> bool,
+    pub ShowMirrorWindow: fn(),
+    pub HideMirrorWindow: fn(),
+    pub IsMirrorWindowVisible: fn() -> bool,
+    pub CompositorDumpImages: fn(),
+    pub ShouldAppRenderWithLowResources: fn() -> bool,
+    pub ForceInterleavedReprojectionOn: fn(bOverride: bool),
+}
+
+pub struct IVRExtendedDisplay {
+    pub GetWindowBounds: fn(pnX: *mut i32, pnY: *mut i32, pnWidth: *mut u32, pnHeight: *mut u32),
+    pub GetEyeOutputViewport: fn(eEye: EVREye, pnX: *mut u32, pnY: *mut u32, pnWidth: *mut u32, pnHeight: *mut u32),
+    pub GetDXGIOutputInfo: fn(pnAdapterIndex: *mut i32, pnAdapterOutputIndex: *mut i32),
+}
+
+pub struct IVRNotifications {
+    pub CreateNotification: fn(ulOverlayHandle: VROverlayHandle, ulUserValue: u64, ty: EVRNotificationType, pchText: *const c_char, style: EVRNotificationStyle, pImage: *mut NotificationBitmap, pNotificationId: *mut VRNotificationId) -> EVRNotificationError,
+    pub RemoveNotification: fn(notificationId: VRNotificationId) -> EVRNotificationError,
+}
+
+pub struct IVROverlay {
+    pub FindOverlay: fn(pchOverlayKey: *const c_char, pOverlayHandle: *mut VROverlayHandle) -> EVROverlayError,
+    pub CreateOverlay: fn(pchOverlayKey: *const c_char, pchOverlayFriendlyName: *const c_char, pOverlayHandle: *mut VROverlayHandle) -> EVROverlayError,
+    pub DestroyOverlay: fn(ulOverlayHandle: VROverlayHandle) -> EVROverlayError,
+    pub SetHighQualityOverlay: fn(ulOverlayHandle: VROverlayHandle) -> EVROverlayError,
+    pub GetHighQualityOverlay: fn() -> VROverlayHandle,
+    pub GetOverlayKey: fn(ulOverlayHandle: VROverlayHandle, pchValue: *mut c_char, unBufferSize: u32, pError: *mut EVROverlayError) -> u32,
+    pub GetOverlayName: fn(ulOverlayHandle: VROverlayHandle, pchValue: *mut c_char, unBufferSize: u32, pError: *mut EVROverlayError) -> u32,
+    pub GetOverlayImageData: fn(ulOverlayHandle: VROverlayHandle, pvBuffer: *mut c_void, unBufferSize: u32, punWidth: *mut u32, punHeight: *mut u32) -> EVROverlayError,
+    pub GetOverlayErrorNameFromEnum: fn(error: EVROverlayError) -> *const c_char,
+    pub SetOverlayRenderingPid: fn(ulOverlayHandle: VROverlayHandle, unPID: u32) -> EVROverlayError,
+    pub GetOverlayRenderingPid: fn(ulOverlayHandle: VROverlayHandle) -> u32,
+    pub SetOverlayFlag: fn(ulOverlayHandle: VROverlayHandle, eOverlayFlag: VROverlayFlags, bEnabled: bool) -> EVROverlayError,
+    pub GetOverlayFlag: fn(ulOverlayHandle: VROverlayHandle, eOverlayFlag: VROverlayFlags, pbEnabled: *mut bool) -> EVROverlayError,
+    pub SetOverlayColor: fn(ulOverlayHandle: VROverlayHandle, fRed: f32, fGreen: f32, fBlue: f32) -> EVROverlayError,
+    pub GetOverlayColor: fn(ulOverlayHandle: VROverlayHandle, pfRed: *mut f32, pfGreen: *mut f32, pfBlue: *mut f32) -> EVROverlayError,
+    pub SetOverlayAlpha: fn(ulOverlayHandle: VROverlayHandle, fAlpha: f32) -> EVROverlayError,
+    pub GetOverlayAlpha: fn(ulOverlayHandle: VROverlayHandle, pfAlpha: *mut f32) -> EVROverlayError,
+    pub SetOverlayWidthInMeters: fn(ulOverlayHandle: VROverlayHandle, fWidthInMeters: f32) -> EVROverlayError,
+    pub GetOverlayWidthInMeters: fn(ulOverlayHandle: VROverlayHandle, pfWidthInMeters: *mut f32) -> EVROverlayError,
+    pub SetOverlayAutoCurveDistanceRangeInMeters: fn(ulOverlayHandle: VROverlayHandle, fMinDistanceInMeters: f32, fMaxDistanceInMeters: f32) -> EVROverlayError,
+    pub GetOverlayAutoCurveDistanceRangeInMeters: fn(ulOverlayHandle: VROverlayHandle, pfMinDistanceInMeters: *mut f32, pfMaxDistanceInMeters: *mut f32) -> EVROverlayError,
+    pub SetOverlayTextureColorSpace: fn(ulOverlayHandle: VROverlayHandle, eTextureColorSpace: EColorSpace) -> EVROverlayError,
+    pub GetOverlayTextureColorSpace: fn(ulOverlayHandle: VROverlayHandle, peTextureColorSpace: *mut EColorSpace) -> EVROverlayError,
+    pub SetOverlayTextureBounds: fn(ulOverlayHandle: VROverlayHandle, pOverlayTextureBounds: *mut VRTextureBounds) -> EVROverlayError,
+    pub GetOverlayTextureBounds: fn(ulOverlayHandle: VROverlayHandle, pOverlayTextureBounds: *mut VRTextureBounds) -> EVROverlayError,
+    pub GetOverlayTransformType: fn(ulOverlayHandle: VROverlayHandle, peTransformType: *mut VROverlayTransformType) -> EVROverlayError,
+    pub SetOverlayTransformAbsolute: fn(ulOverlayHandle: VROverlayHandle, eTrackingOrigin: ETrackingUniverseOrigin, pmatTrackingOriginToOverlayTransform: *mut HmdMatrix34) -> EVROverlayError,
+    pub GetOverlayTransformAbsolute: fn(ulOverlayHandle: VROverlayHandle, peTrackingOrigin: *mut ETrackingUniverseOrigin, pmatTrackingOriginToOverlayTransform: *mut HmdMatrix34) -> EVROverlayError,
+    pub SetOverlayTransformTrackedDeviceRelative: fn(ulOverlayHandle: VROverlayHandle, unTrackedDevice: TrackedDeviceIndex, pmatTrackedDeviceToOverlayTransform: *mut HmdMatrix34) -> EVROverlayError,
+    pub GetOverlayTransformTrackedDeviceRelative: fn(ulOverlayHandle: VROverlayHandle, punTrackedDevice: *mut TrackedDeviceIndex, pmatTrackedDeviceToOverlayTransform: *mut HmdMatrix34) -> EVROverlayError,
+    pub SetOverlayTransformTrackedDeviceComponent: fn(ulOverlayHandle: VROverlayHandle, unDeviceIndex: TrackedDeviceIndex, pchComponentName: *const c_char) -> EVROverlayError,
+    pub GetOverlayTransformTrackedDeviceComponent: fn(ulOverlayHandle: VROverlayHandle, punDeviceIndex: *mut TrackedDeviceIndex, pchComponentName: *mut c_char, unComponentNameSize: u32) -> EVROverlayError,
+    pub ShowOverlay: fn(ulOverlayHandle: VROverlayHandle) -> EVROverlayError,
+    pub HideOverlay: fn(ulOverlayHandle: VROverlayHandle) -> EVROverlayError,
+    pub IsOverlayVisible: fn(ulOverlayHandle: VROverlayHandle) -> bool,
+    pub GetTransformForOverlayCoordinates: fn(ulOverlayHandle: VROverlayHandle, eTrackingOrigin: ETrackingUniverseOrigin, coordinatesInOverlay: HmdVector2, pmatTransform: *mut HmdMatrix34) -> EVROverlayError,
+    pub PollNextOverlayEvent: fn(ulOverlayHandle: VROverlayHandle, pEvent: *mut VREvent, uncbVREvent: u32) -> bool,
+    pub GetOverlayInputMethod: fn(ulOverlayHandle: VROverlayHandle, peInputMethod: *mut VROverlayInputMethod) -> EVROverlayError,
+    pub SetOverlayInputMethod: fn(ulOverlayHandle: VROverlayHandle, eInputMethod: VROverlayInputMethod) -> EVROverlayError,
+    pub GetOverlayMouseScale: fn(ulOverlayHandle: VROverlayHandle, pvecMouseScale: *mut HmdVector2) -> EVROverlayError,
+    pub SetOverlayMouseScale: fn(ulOverlayHandle: VROverlayHandle, pvecMouseScale: *mut HmdVector2) -> EVROverlayError,
+    pub ComputeOverlayIntersection: fn(ulOverlayHandle: VROverlayHandle, pParams: *mut VROverlayIntersectionParams, pResults: *mut VROverlayIntersectionResults) -> bool,
+    pub HandleControllerOverlayInteractionAsMouse: fn(ulOverlayHandle: VROverlayHandle, unControllerDeviceIndex: TrackedDeviceIndex) -> bool,
+    pub IsHoverTargetOverlay: fn(ulOverlayHandle: VROverlayHandle) -> bool,
+    pub GetGamepadFocusOverlay: fn() -> VROverlayHandle,
+    pub SetGamepadFocusOverlay: fn(ulNewFocusOverlay: VROverlayHandle) -> EVROverlayError,
+    pub SetOverlayNeighbor: fn(eDirection: EOverlayDirection, ulFrom: VROverlayHandle, ulTo: VROverlayHandle) -> EVROverlayError,
+    pub MoveGamepadFocusToNeighbor: fn(eDirection: EOverlayDirection, ulFrom: VROverlayHandle) -> EVROverlayError,
+    pub SetOverlayTexture: fn(ulOverlayHandle: VROverlayHandle, pTexture: *mut Texture) -> EVROverlayError,
+    pub ClearOverlayTexture: fn(ulOverlayHandle: VROverlayHandle) -> EVROverlayError,
+    pub SetOverlayRaw: fn(ulOverlayHandle: VROverlayHandle, pvBuffer: *mut c_void, unWidth: u32, unHeight: u32, unDepth: u32) -> EVROverlayError,
+    pub SetOverlayFromFile: fn(ulOverlayHandle: VROverlayHandle, pchFilePath: *const c_char) -> EVROverlayError,
+    pub GetOverlayTexture: fn(ulOverlayHandle: VROverlayHandle, pNativeTextureHandle: *mut *mut c_void, pNativeTextureRef: *mut c_void, pWidth: *mut u32, pHeight: *mut u32, pNativeFormat: *mut u32, pAPI: *mut EGraphicsAPIConvention, pColorSpace: *mut EColorSpace) -> EVROverlayError,
+    pub ReleaseNativeOverlayHandle: fn(ulOverlayHandle: VROverlayHandle, pNativeTextureHandle: *mut c_void) -> EVROverlayError,
+    pub CreateDashboardOverlay: fn(pchOverlayKey: *const c_char, pchOverlayFriendlyName: *const c_char, pMainHandle: *mut VROverlayHandle, pThumbnailHandle: *mut VROverlayHandle) -> EVROverlayError,
+    pub IsDashboardVisible: fn() -> bool,
+    pub IsActiveDashboardOverlay: fn(ulOverlayHandle: VROverlayHandle) -> bool,
+    pub SetDashboardOverlaySceneProcess: fn(ulOverlayHandle: VROverlayHandle, unProcessId: u32) -> EVROverlayError,
+    pub GetDashboardOverlaySceneProcess: fn(ulOverlayHandle: VROverlayHandle, punProcessId: *mut u32) -> EVROverlayError,
+    pub ShowDashboard: fn(pchOverlayToShow: *const c_char),
+    pub GetPrimaryDashboardDevice: fn() -> TrackedDeviceIndex,
+    pub ShowKeyboard: fn(eInputMode: EGamepadTextInputMode, eLineInputMode: EGamepadTextInputLineMode, pchDescription: *const c_char, unCharMax: u32, pchExistingText: *const c_char, bUseMinimalMode: bool, uUserValue: u64) -> EVROverlayError,
+    pub ShowKeyboardForOverlay: fn(ulOverlayHandle: VROverlayHandle, eInputMode: EGamepadTextInputMode, eLineInputMode: EGamepadTextInputLineMode, pchDescription: *const c_char, unCharMax: u32, pchExistingText: *const c_char, bUseMinimalMode: bool, uUserValue: u64) -> EVROverlayError,
+    pub GetKeyboardText: fn(pchText: *mut c_char, cchText: u32) -> u32,
+    pub HideKeyboard: fn(),
+    pub SetKeyboardTransformAbsolute: fn(eTrackingOrigin: ETrackingUniverseOrigin, pmatTrackingOriginToKeyboardTransform: *mut HmdMatrix34),
+    pub SetKeyboardPositionForOverlay: fn(ulOverlayHandle: VROverlayHandle, avoidRect: HmdRect2),
+}
+
+pub struct IVRRenderModels {
+    pub LoadRenderModel_Async: fn(pchRenderModelName: *const c_char, ppRenderModel: *mut *mut RenderModel) -> EVRRenderModelError,
+    pub FreeRenderModel: fn(pRenderModel: *mut RenderModel),
+    pub LoadTexture_Async: fn(textureId: TextureID, ppTexture: *mut *mut RenderModel_TextureMap) -> EVRRenderModelError,
+    pub FreeTexture: fn(pTexture: *mut RenderModel_TextureMap),
+    pub LoadTextureD3D11_Async: fn(textureId: TextureID, pD3D11Device: *mut c_void, ppD3D11Texture2D: *mut *mut c_void) -> EVRRenderModelError,
+    pub LoadIntoTextureD3D11_Async: fn(textureId: TextureID, pDstTexture: *mut c_void) -> EVRRenderModelError,
+    pub FreeTextureD3D11: fn(pD3D11Texture2D: *mut c_void),
+    pub GetRenderModelName: fn(unRenderModelIndex: u32, pchRenderModelName: *mut c_char, unRenderModelNameLen: u32) -> u32,
+    pub GetRenderModelCount: fn() -> u32,
+    pub GetComponentCount: fn(pchRenderModelName: *const c_char) -> u32,
+    pub GetComponentName: fn(pchRenderModelName: *const c_char, unComponentIndex: u32, pchComponentName: *mut c_char, unComponentNameLen: u32) -> u32,
+    pub GetComponentButtonMask: fn(pchRenderModelName: *const c_char, pchComponentName: *const c_char) -> u64,
+    pub GetComponentRenderModelName: fn(pchRenderModelName: *const c_char, pchComponentName: *const c_char, pchComponentRenderModelName: *mut c_char, unComponentRenderModelNameLen: u32) -> u32,
+    pub GetComponentState: fn(pchRenderModelName: *const c_char, pchComponentName: *const c_char, pControllerState: *mut VRControllerState, pState: *mut RenderModel_ControllerMode_State, pComponentState: *mut RenderModel_ComponentState) -> bool,
+    pub RenderModelHasComponent: fn(pchRenderModelName: *const c_char, pchComponentName: *const c_char) -> bool,
+}
+
+pub struct IVRSettings {
+    pub GetSettingsErrorNameFromEnum: fn(eError: EVRSettingsError) -> *const c_char,
+    pub Sync: fn(bForce: bool, peError: *mut EVRSettingsError) -> bool,
+    pub GetBool: fn(pchSection: *const c_char, pchSettingsKey: *const c_char, bDefaultValue: bool, peError: *mut EVRSettingsError) -> bool,
+    pub SetBool: fn(pchSection: *const c_char, pchSettingsKey: *const c_char, bValue: bool, peError: *mut EVRSettingsError),
+    pub GetInt32: fn(pchSection: *const c_char, pchSettingsKey: *const c_char, nDefaultValue: i32, peError: *mut EVRSettingsError) -> i32,
+    pub SetInt32: fn(pchSection: *const c_char, pchSettingsKey: *const c_char, nValue: i32, peError: *mut EVRSettingsError),
+    pub GetFloat: fn(pchSection: *const c_char, pchSettingsKey: *const c_char, flDefaultValue: f32, peError: *mut EVRSettingsError) -> f32,
+    pub SetFloat: fn(pchSection: *const c_char, pchSettingsKey: *const c_char, flValue: f32, peError: *mut EVRSettingsError),
+    pub GetString: fn(pchSection: *const c_char, pchSettingsKey: *const c_char, pchValue: *mut c_char, unValueLen: u32, pchDefaultValue: *const c_char, peError: *mut EVRSettingsError),
+    pub SetString: fn(pchSection: *const c_char, pchSettingsKey: *const c_char, pchValue: *const c_char, peError: *mut EVRSettingsError),
+    pub RemoveSection: fn(pchSection: *const c_char, peError: *mut EVRSettingsError),
+    pub RemoveKeyInSection: fn(pchSection: *const c_char, pchSettingsKey: *const c_char, peError: *mut EVRSettingsError),
+}
+
+pub struct IVRSystem {
+    pub GetRecommendedRenderTargetSize: fn(pnWidth: *mut u32, pnHeight: *mut u32),
+    pub GetProjectionMatrix: fn(eEye: EVREye, fNearZ: f32, fFarZ: f32, eProjType: EGraphicsAPIConvention) -> HmdMatrix44,
+    pub GetProjectionRaw: fn(eEye: EVREye, pfLeft: *mut f32, pfRight: *mut f32, pfTop: *mut f32, pfBottom: *mut f32),
+    pub ComputeDistortion: fn(eEye: EVREye, fU: f32, fV: f32) -> DistortionCoordinates,
+    pub GetEyeToHeadTransform: fn(eEye: EVREye) -> HmdMatrix34,
+    pub GetTimeSinceLastVsync: fn(pfSecondsSinceLastVsync: *mut f32, pulFrameCounter: *mut u64) -> bool,
+    pub GetD3D9AdapterIndex: fn() -> i32,
+    pub GetDXGIOutputInfo: fn(pnAdapterIndex: *mut i32),
+    pub IsDisplayOnDesktop: fn() -> bool,
+    pub SetDisplayVisibility: fn(bIsVisibleOnDesktop: bool) -> bool,
+    pub GetDeviceToAbsoluteTrackingPose: fn(eOrigin: ETrackingUniverseOrigin, fPredictedSecondsToPhotonsFromNow: f32, pTrackedDevicePoseArray: *mut TrackedDevicePose, unTrackedDevicePoseArrayCount: u32),
+    pub ResetSeatedZeroPose: fn(),
+    pub GetSeatedZeroPoseToStandingAbsoluteTrackingPose: fn() -> HmdMatrix34,
+    pub GetRawZeroPoseToStandingAbsoluteTrackingPose: fn() -> HmdMatrix34,
+    pub GetSortedTrackedDeviceIndicesOfClass: fn(eTrackedDeviceClass: ETrackedDeviceClass, punTrackedDeviceIndexArray: *mut TrackedDeviceIndex, unTrackedDeviceIndexArrayCount: u32, unRelativeToTrackedDeviceIndex: TrackedDeviceIndex) -> u32,
+    pub GetTrackedDeviceActivityLevel: fn(unDeviceId: TrackedDeviceIndex) -> EDeviceActivityLevel,
+    pub ApplyTransform: fn(pOutputPose: *mut TrackedDevicePose, pTrackedDevicePose: *mut TrackedDevicePose, pTransform: *mut HmdMatrix34),
+    pub GetTrackedDeviceIndexForControllerRole: fn(unDeviceType: ETrackedControllerRole) -> TrackedDeviceIndex,
+    pub GetControllerRoleForTrackedDeviceIndex: fn(unDeviceIndex: TrackedDeviceIndex) -> ETrackedControllerRole,
+    pub GetTrackedDeviceClass: fn(unDeviceIndex: TrackedDeviceIndex) -> ETrackedDeviceClass,
+    pub IsTrackedDeviceConnected: fn(unDeviceIndex: TrackedDeviceIndex) -> bool,
+    pub GetBoolTrackedDeviceProperty: fn(unDeviceIndex: TrackedDeviceIndex, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) -> bool,
+    pub GetFloatTrackedDeviceProperty: fn(unDeviceIndex: TrackedDeviceIndex, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) -> f32,
+    pub GetInt32TrackedDeviceProperty: fn(unDeviceIndex: TrackedDeviceIndex, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) -> i32,
+    pub GetUint64TrackedDeviceProperty: fn(unDeviceIndex: TrackedDeviceIndex, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) -> u64,
+    pub GetMatrix34TrackedDeviceProperty: fn(unDeviceIndex: TrackedDeviceIndex, prop: ETrackedDeviceProperty, pError: *mut ETrackedPropertyError) -> HmdMatrix34,
+    pub GetStringTrackedDeviceProperty: fn(unDeviceIndex: TrackedDeviceIndex, prop: ETrackedDeviceProperty, pchValue: *mut c_char, unBufferSize: u32, pError: *mut ETrackedPropertyError) -> u32,
+    pub GetPropErrorNameFromEnum: fn(error: ETrackedPropertyError) -> *const c_char,
+    pub PollNextEvent: fn(pEvent: *mut VREvent, uncbVREvent: u32) -> bool,
+    pub PollNextEventWithPose: fn(eOrigin: ETrackingUniverseOrigin, pEvent: *mut VREvent, uncbVREvent: u32, pTrackedDevicePose: *mut TrackedDevicePose) -> bool,
+    pub GetEventTypeNameFromEnum: fn(eType: EVREventType) -> *const c_char,
+    pub GetHiddenAreaMesh: fn(eEye: EVREye) -> HiddenAreaMesh,
+    pub GetControllerState: fn(unControllerDeviceIndex: TrackedDeviceIndex, pControllerState: *mut VRControllerState) -> bool,
+    pub GetControllerStateWithPose: fn(eOrigin: ETrackingUniverseOrigin, unControllerDeviceIndex: TrackedDeviceIndex, pControllerState: *mut VRControllerState, pTrackedDevicePose: *mut TrackedDevicePose) -> bool,
+    pub TriggerHapticPulse: fn(unControllerDeviceIndex: TrackedDeviceIndex, unAxisId: u32, usDurationMicroSec: u16),
+    pub GetButtonIdNameFromEnum: fn(eButtonId: EVRButtonId) -> *const c_char,
+    pub GetControllerAxisTypeNameFromEnum: fn(eAxisType: EVRControllerAxisType) -> *const c_char,
+    pub CaptureInputFocus: fn() -> bool,
+    pub ReleaseInputFocus: fn(),
+    pub IsInputFocusCapturedByAnotherProcess: fn() -> bool,
+    pub DriverDebugRequest: fn(unDeviceIndex: TrackedDeviceIndex, pchRequest: *const c_char, pchResponseBuffer: *mut c_char, unResponseBufferSize: u32) -> u32,
+    pub PerformFirmwareUpdate: fn(unDeviceIndex: TrackedDeviceIndex) -> EVRFirmwareError,
+    pub AcknowledgeQuit_Exiting: fn(),
+    pub AcknowledgeQuit_UserPrompt: fn(),
+}
+

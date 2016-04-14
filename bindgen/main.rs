@@ -174,29 +174,42 @@ fn main() {
         _ => panic!("expected array")
     }
 
+    fn emit_const(w: &mut Write, name: &str, ty: &str, value: &str) {
+        if name.contains("_Version") {
+            writeln!(w, "pub const {}_FnTable: &'static str = \"FnTable:{}\";",
+                name.replace("_Version", ""),
+                value
+            ).unwrap();
+        }
+
+        let value: String =
+            if ty == "const char *const" {
+                format!("\"{}\"", value)
+            } else {
+                value.into()
+            };
+        let ty =
+            if ty == "const char *const" {
+                "&'static str".into()
+            } else {
+                map_type(&ty.replace("const ", ""))
+            };
+
+        writeln!(w, "pub const {}: {} = {};",
+            name,
+            ty,
+            value
+        ).unwrap();
+    }
+
     match &obj["consts"] {
         &Json::Array(ref arr) => {
             for c in arr {
                 let ty = c["consttype"].as_string().unwrap();
                 let value = c["constval"].as_string().unwrap();
-                let value: String =
-                    if ty == "const char *const" {
-                        format!("\"{}\"", value)
-                    } else {
-                        value.into()
-                    };
-                let ty =
-                    if ty == "const char *const" {
-                        "&'static str".into()
-                    } else {
-                        map_type(&ty.replace("const ", ""))
-                    };
+                let name = c["constname"].as_string().unwrap();
 
-                writeln!(&mut w, "pub const {}: {} = {};",
-                    c["constname"].as_string().unwrap(),
-                    ty,
-                    value
-                ).unwrap();
+                emit_const(&mut w, name, ty, value);
             }
         }
         _ => panic!("expected array")
@@ -258,10 +271,11 @@ fn main() {
     for (classname, methods) in classes {
         let struct_name = classname.replace("vr::", "");
 
+        writeln!(&mut w, "#[repr(C)]").unwrap();
         writeln!(&mut w, "pub struct {} {{", struct_name).unwrap();
 
         for method in methods {
-            write!(&mut w, "    pub {}: fn(", method["methodname"].as_string().unwrap()).unwrap();
+            write!(&mut w, "    pub {}: extern \"C\" fn(", method["methodname"].as_string().unwrap()).unwrap();
             match method.find("params") {
                 Some(&Json::Array(ref params)) => {
                     write_method_params(&mut w, params);

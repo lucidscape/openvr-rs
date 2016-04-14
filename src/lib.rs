@@ -6,7 +6,8 @@ pub mod ffi;
 
 use std::mem;
 use ffi::*;
-use std::ffi::CStr;
+use std::ffi::{CString, CStr};
+use std::ptr;
 
 const MAX_TRACKED_DEVICE_COUNT: usize = 16;
 
@@ -27,6 +28,13 @@ pub struct VRCompositor {
 }
 
 impl VRCompositor {
+    fn new(vr_compositor: *mut IVRCompositor) -> Self {
+        assert!(vr_compositor as *const _ != ptr::null());
+        VRCompositor {
+            i:  vr_compositor
+        }
+    }
+
     /// Updated scene texture to display. If bounds is NULL the entire texture will be used.
     /// https://github.com/ValveSoftware/openvr/wiki/IVRCompositor::Submit
     pub fn submit(
@@ -69,11 +77,12 @@ pub struct VRSystem {
 }
 
 impl VRSystem {
-    // fn new(vr_system: IVRSystem) -> Self {
-    //     VRSystem {
-    //         i:  vr_system
-    //     }
-    // }
+    fn new(vr_system: *mut IVRSystem) -> Self {
+        assert!(vr_system as *const _ != ptr::null());
+        VRSystem {
+            i:  vr_system
+        }
+    }
 
     /// Provides the game with the minimum size that it should use for its offscreen render
     /// target to minimize pixel stretching. This size is matched with the projection matrix
@@ -201,10 +210,11 @@ impl std::error::Error for EVRInitError {
 }
 
 pub struct VRContext {
-    pub system:            VRSystem,
+    pub system:     VRSystem,
+    pub compositor: VRCompositor,
+
     // chaperone:         VRChaperone,
     // chaperone_setup:    IVRChaperoneSetup,
-    // compositor:         IVRCompositor,
     // overlay:            IVROverlay,
     // render_models:      IVRRenderModels,
     // IVRExtendedDisplay: *mut IVRExtendedDisplay,
@@ -228,12 +238,22 @@ pub fn initialize() -> Result<VRContext, EVRInitError> {
             Err(err)
         } else {
 
-            let system = VRSystem {
-                i: VR_GetGenericInterface(IVRSystem_Version.as_ptr() as *const i8, &mut err) as *mut _
-            };
+            let system = VR_GetGenericInterface(CString::new(IVRSystem_FnTable).unwrap().as_ptr(), &mut err) as *mut IVRSystem;
+            if err != EVRInitError::None {
+                return Err(err);
+            }
+            let system = VRSystem::new(system);
+
+            let compositor = VR_GetGenericInterface(CString::new(IVRCompositor_FnTable).unwrap().as_ptr(), &mut err) as *mut IVRCompositor;
+            if err != EVRInitError::None {
+                return Err(err);
+            }
+            let compositor = VRCompositor::new(compositor);
+
 
             Ok(VRContext {
-                system: system
+                system:     system,
+                compositor: compositor
             })
         }
     }

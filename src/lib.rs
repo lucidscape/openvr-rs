@@ -9,8 +9,6 @@ use ffi::*;
 use std::ffi::{CString, CStr};
 use std::ptr;
 
-const MAX_TRACKED_DEVICE_COUNT: usize = 16;
-
 #[link(name = "openvr_api", kind="static")]
 extern "C" {
     pub fn VR_InitInternal(peError: *mut EVRInitError, eType: EVRApplicationType) -> usize;
@@ -39,13 +37,13 @@ impl VRCompositor {
     /// https://github.com/ValveSoftware/openvr/wiki/IVRCompositor::Submit
     pub fn submit(
         &mut self,
-        eye:            Eye,
+        eye:            EVREye,
         texture:        *mut Texture,
         bounds:         *mut VRTextureBounds,
         submit_flags:   EVRSubmitFlags
     ) -> EVRCompositorError {
         unsafe {
-            ((*self.i).Submit)(eye.into(), texture, bounds, submit_flags)
+            ((*self.i).Submit)(eye, texture, bounds, submit_flags)
         }
     }
 
@@ -53,9 +51,9 @@ impl VRCompositor {
     /// https://github.com/ValveSoftware/openvr/wiki/IVRCompositor::WaitGetPoses
     pub fn wait_get_poses(
         &mut self,
-    ) -> [TrackedDevicePose; MAX_TRACKED_DEVICE_COUNT] {
+    ) -> [TrackedDevicePose; k_unMaxTrackedDeviceCount as usize] {
         unsafe {
-            let mut render_poses = [TrackedDevicePose::default(); MAX_TRACKED_DEVICE_COUNT];
+            let mut render_poses = [TrackedDevicePose::default(); k_unMaxTrackedDeviceCount as usize];
             ((*self.i).WaitGetPoses)(
                 (&mut render_poses[..]).as_mut_ptr(),
                 render_poses.len() as u32,
@@ -97,37 +95,17 @@ impl VRSystem {
         }
     }
 
-
-    // /// Returns the viewport in pixels in display space that the game should render into for
-    // /// the specified eye - (x, y, width, height).
-    // pub fn get_eye_output_viewport(&self, eye: Eye) -> (u32, u32, u32, u32) {
-    //     unsafe {
-    //         let mut x = 0;
-    //         let mut y = 0;
-    //         let mut width = 0;
-    //         let mut height = 0;
-    //         self.i.GetEyeOutputViewport(
-    //             eye.into(),
-    //             &mut x,
-    //             &mut y,
-    //             &mut width,
-    //             &mut height);
-    //
-    //         (x, y, width, height)
-    //     }
-    // }
-
     /// Returns the projection matrix to use for the specified eye.
     pub fn get_projection_matrix(
         &self,
-        eye:                Eye,
+        eye:                EVREye,
         near_z:             f32,
         far_z:              f32,
         api:                EGraphicsAPIConvention
     ) -> HmdMatrix44 {
         unsafe {
             ((*self.i).GetProjectionMatrix)(
-                eye.into(),
+                eye,
                 near_z,
                 far_z,
                 api
@@ -136,9 +114,9 @@ impl VRSystem {
     }
 
     /// Returns the transform between the view space and eye space.
-    pub fn get_eye_to_head_transform(&self, eye: Eye) -> HmdMatrix34 {
+    pub fn get_eye_to_head_transform(&self, eye: EVREye) -> HmdMatrix34 {
         unsafe {
-            ((*self.i).GetEyeToHeadTransform)(eye.into())
+            ((*self.i).GetEyeToHeadTransform)(eye)
         }
     }
 
@@ -159,19 +137,16 @@ impl VRSystem {
             )
         }
     }
-}
 
-#[derive(Clone, Copy, PartialEq)]
-#[repr(i32)]
-pub enum Eye {
-    Left = 0,
-    Right = 1,
-}
-
-impl Into<EVREye> for Eye {
-    fn into(self) -> EVREye {
+    pub fn reset_seated_zero_pose(&self) {
         unsafe {
-            mem::transmute(self)
+            ((*self.i).ResetSeatedZeroPose)()
+        }
+    }
+
+    pub fn get_tracked_device_class(&self, device_index: usize) -> ETrackedDeviceClass {
+        unsafe {
+            ((*self.i).GetTrackedDeviceClass)(device_index as TrackedDeviceIndex)
         }
     }
 }
@@ -225,7 +200,7 @@ pub struct VRContext {
 impl Drop for VRContext {
     fn drop(&mut self) {
         unsafe {
-            VR_ShutdownInternal();
+            // VR_ShutdownInternal();
         }
     }
 }

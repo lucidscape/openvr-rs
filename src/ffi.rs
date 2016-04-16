@@ -785,7 +785,7 @@ pub const k_pch_audio_VIVEHDMIGain: &'static str = "viveHDMIGain";
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdMatrix34 {
-    m: [[f32; 4]; 3],
+    pub m: [[f32; 4]; 3],
 }
 
 impl Default for HmdMatrix34 {
@@ -797,7 +797,7 @@ impl Default for HmdMatrix34 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdMatrix44 {
-    m: [[f32; 4]; 4],
+    pub m: [[f32; 4]; 4],
 }
 
 impl Default for HmdMatrix44 {
@@ -809,7 +809,7 @@ impl Default for HmdMatrix44 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdVector3 {
-    v: [f32; 3],
+    pub v: [f32; 3],
 }
 
 impl Default for HmdVector3 {
@@ -821,7 +821,7 @@ impl Default for HmdVector3 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdVector4 {
-    v: [f32; 4],
+    pub v: [f32; 4],
 }
 
 impl Default for HmdVector4 {
@@ -833,7 +833,7 @@ impl Default for HmdVector4 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdVector3d {
-    v: [f64; 3],
+    pub v: [f64; 3],
 }
 
 impl Default for HmdVector3d {
@@ -845,7 +845,7 @@ impl Default for HmdVector3d {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdVector2 {
-    v: [f32; 2],
+    pub v: [f32; 2],
 }
 
 impl Default for HmdVector2 {
@@ -857,10 +857,10 @@ impl Default for HmdVector2 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdQuaternion {
-    w: f64,
-    x: f64,
-    y: f64,
-    z: f64,
+    pub w: f64,
+    pub x: f64,
+    pub y: f64,
+    pub z: f64,
 }
 
 impl Default for HmdQuaternion {
@@ -872,10 +872,10 @@ impl Default for HmdQuaternion {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdColor {
-    r: f32,
-    g: f32,
-    b: f32,
-    a: f32,
+    pub r: f32,
+    pub g: f32,
+    pub b: f32,
+    pub a: f32,
 }
 
 impl Default for HmdColor {
@@ -887,7 +887,7 @@ impl Default for HmdColor {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdQuad {
-    vCorners: [HmdVector3; 4],
+    pub vCorners: [HmdVector3; 4],
 }
 
 impl Default for HmdQuad {
@@ -899,8 +899,8 @@ impl Default for HmdQuad {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HmdRect2 {
-    vTopLeft: HmdVector2,
-    vBottomRight: HmdVector2,
+    pub vTopLeft: HmdVector2,
+    pub vBottomRight: HmdVector2,
 }
 
 impl Default for HmdRect2 {
@@ -912,9 +912,9 @@ impl Default for HmdRect2 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct DistortionCoordinates {
-    rfRed: [f32; 2],
-    rfGreen: [f32; 2],
-    rfBlue: [f32; 2],
+    pub rfRed: [f32; 2],
+    pub rfGreen: [f32; 2],
+    pub rfBlue: [f32; 2],
 }
 
 impl Default for DistortionCoordinates {
@@ -926,9 +926,9 @@ impl Default for DistortionCoordinates {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct Texture {
-    handle: *mut c_void,
-    eType: EGraphicsAPIConvention,
-    eColorSpace: EColorSpace,
+    pub handle: *mut c_void,
+    pub eType: EGraphicsAPIConvention,
+    pub eColorSpace: EColorSpace,
 }
 
 impl Default for Texture {
@@ -940,12 +940,12 @@ impl Default for Texture {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct TrackedDevicePose {
-    mDeviceToAbsoluteTracking: HmdMatrix34,
-    vVelocity: HmdVector3,
-    vAngularVelocity: HmdVector3,
-    eTrackingResult: ETrackingResult,
-    bPoseIsValid: bool,
-    bDeviceIsConnected: bool,
+    pub mDeviceToAbsoluteTracking: HmdMatrix34,
+    pub vVelocity: HmdVector3,
+    pub vAngularVelocity: HmdVector3,
+    pub eTrackingResult: ETrackingResult,
+    pub bPoseIsValid: bool,
+    pub bDeviceIsConnected: bool,
 }
 
 impl Default for TrackedDevicePose {
@@ -957,10 +957,10 @@ impl Default for TrackedDevicePose {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VRTextureBounds {
-    uMin: f32,
-    vMin: f32,
-    uMax: f32,
-    vMax: f32,
+    pub uMin: f32,
+    pub vMin: f32,
+    pub uMax: f32,
+    pub vMax: f32,
 }
 
 impl Default for VRTextureBounds {
@@ -972,7 +972,7 @@ impl Default for VRTextureBounds {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Controller {
-    button: u32,
+    pub button: u32,
 }
 
 impl Default for VREvent_Controller {
@@ -984,9 +984,9 @@ impl Default for VREvent_Controller {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Mouse {
-    x: f32,
-    y: f32,
-    button: u32,
+    pub x: f32,
+    pub y: f32,
+    pub button: u32,
 }
 
 impl Default for VREvent_Mouse {
@@ -998,9 +998,9 @@ impl Default for VREvent_Mouse {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Scroll {
-    xdelta: f32,
-    ydelta: f32,
-    repeatCount: u32,
+    pub xdelta: f32,
+    pub ydelta: f32,
+    pub repeatCount: u32,
 }
 
 impl Default for VREvent_Scroll {
@@ -1012,12 +1012,12 @@ impl Default for VREvent_Scroll {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_TouchPadMove {
-    bFingerDown: bool,
-    flSecondsFingerDown: f32,
-    fValueXFirst: f32,
-    fValueYFirst: f32,
-    fValueXRaw: f32,
-    fValueYRaw: f32,
+    pub bFingerDown: bool,
+    pub flSecondsFingerDown: f32,
+    pub fValueXFirst: f32,
+    pub fValueYFirst: f32,
+    pub fValueXRaw: f32,
+    pub fValueYRaw: f32,
 }
 
 impl Default for VREvent_TouchPadMove {
@@ -1029,8 +1029,8 @@ impl Default for VREvent_TouchPadMove {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Notification {
-    ulUserValue: u64,
-    notificationId: u32,
+    pub ulUserValue: u64,
+    pub notificationId: u32,
 }
 
 impl Default for VREvent_Notification {
@@ -1042,9 +1042,9 @@ impl Default for VREvent_Notification {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Process {
-    pid: u32,
-    oldPid: u32,
-    bForced: bool,
+    pub pid: u32,
+    pub oldPid: u32,
+    pub bForced: bool,
 }
 
 impl Default for VREvent_Process {
@@ -1056,7 +1056,7 @@ impl Default for VREvent_Process {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Overlay {
-    overlayHandle: u64,
+    pub overlayHandle: u64,
 }
 
 impl Default for VREvent_Overlay {
@@ -1068,7 +1068,7 @@ impl Default for VREvent_Overlay {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Status {
-    statusState: u32,
+    pub statusState: u32,
 }
 
 impl Default for VREvent_Status {
@@ -1080,8 +1080,8 @@ impl Default for VREvent_Status {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Keyboard {
-    cNewInput: [c_char; 8],
-    uUserValue: u64,
+    pub cNewInput: [c_char; 8],
+    pub uUserValue: u64,
 }
 
 impl Default for VREvent_Keyboard {
@@ -1093,7 +1093,7 @@ impl Default for VREvent_Keyboard {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Ipd {
-    ipdMeters: f32,
+    pub ipdMeters: f32,
 }
 
 impl Default for VREvent_Ipd {
@@ -1105,8 +1105,8 @@ impl Default for VREvent_Ipd {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Chaperone {
-    m_nPreviousUniverse: u64,
-    m_nCurrentUniverse: u64,
+    pub m_nPreviousUniverse: u64,
+    pub m_nCurrentUniverse: u64,
 }
 
 impl Default for VREvent_Chaperone {
@@ -1118,8 +1118,8 @@ impl Default for VREvent_Chaperone {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Reserved {
-    reserved0: u64,
-    reserved1: u64,
+    pub reserved0: u64,
+    pub reserved1: u64,
 }
 
 impl Default for VREvent_Reserved {
@@ -1131,7 +1131,7 @@ impl Default for VREvent_Reserved {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_PerformanceTest {
-    m_nFidelityLevel: u32,
+    pub m_nFidelityLevel: u32,
 }
 
 impl Default for VREvent_PerformanceTest {
@@ -1143,7 +1143,7 @@ impl Default for VREvent_PerformanceTest {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_SeatedZeroPoseReset {
-    bResetBySystemMenu: bool,
+    pub bResetBySystemMenu: bool,
 }
 
 impl Default for VREvent_SeatedZeroPoseReset {
@@ -1155,20 +1155,20 @@ impl Default for VREvent_SeatedZeroPoseReset {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent_Data {
-    reserved: VREvent_Reserved,
-    controller: VREvent_Controller,
-    mouse: VREvent_Mouse,
-    scroll: VREvent_Scroll,
-    process: VREvent_Process,
-    notification: VREvent_Notification,
-    overlay: VREvent_Overlay,
-    status: VREvent_Status,
-    keyboard: VREvent_Keyboard,
-    ipd: VREvent_Ipd,
-    chaperone: VREvent_Chaperone,
-    performanceTest: VREvent_PerformanceTest,
-    touchPadMove: VREvent_TouchPadMove,
-    seatedZeroPoseReset: VREvent_SeatedZeroPoseReset,
+    pub reserved: VREvent_Reserved,
+    pub controller: VREvent_Controller,
+    pub mouse: VREvent_Mouse,
+    pub scroll: VREvent_Scroll,
+    pub process: VREvent_Process,
+    pub notification: VREvent_Notification,
+    pub overlay: VREvent_Overlay,
+    pub status: VREvent_Status,
+    pub keyboard: VREvent_Keyboard,
+    pub ipd: VREvent_Ipd,
+    pub chaperone: VREvent_Chaperone,
+    pub performanceTest: VREvent_PerformanceTest,
+    pub touchPadMove: VREvent_TouchPadMove,
+    pub seatedZeroPoseReset: VREvent_SeatedZeroPoseReset,
 }
 
 impl Default for VREvent_Data {
@@ -1180,10 +1180,10 @@ impl Default for VREvent_Data {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VREvent {
-    eventType: u32,
-    trackedDeviceIndex: TrackedDeviceIndex,
-    eventAgeSeconds: f32,
-    data: VREvent_Data,
+    pub eventType: u32,
+    pub trackedDeviceIndex: TrackedDeviceIndex,
+    pub eventAgeSeconds: f32,
+    pub data: VREvent_Data,
 }
 
 impl Default for VREvent {
@@ -1195,8 +1195,8 @@ impl Default for VREvent {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct HiddenAreaMesh {
-    pVertexData: *mut HmdVector2,
-    unTriangleCount: u32,
+    pub pVertexData: *mut HmdVector2,
+    pub unTriangleCount: u32,
 }
 
 impl Default for HiddenAreaMesh {
@@ -1208,8 +1208,8 @@ impl Default for HiddenAreaMesh {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VRControllerAxis {
-    x: f32,
-    y: f32,
+    pub x: f32,
+    pub y: f32,
 }
 
 impl Default for VRControllerAxis {
@@ -1221,10 +1221,10 @@ impl Default for VRControllerAxis {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VRControllerState001 {
-    unPacketNum: u32,
-    ulButtonPressed: u64,
-    ulButtonTouched: u64,
-    rAxis: [VRControllerAxis; 5],
+    pub unPacketNum: u32,
+    pub ulButtonPressed: u64,
+    pub ulButtonTouched: u64,
+    pub rAxis: [VRControllerAxis; 5],
 }
 
 impl Default for VRControllerState001 {
@@ -1236,20 +1236,20 @@ impl Default for VRControllerState001 {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct Compositor_OverlaySettings {
-    size: u32,
-    curved: bool,
-    antialias: bool,
-    scale: f32,
-    distance: f32,
-    alpha: f32,
-    uOffset: f32,
-    vOffset: f32,
-    uScale: f32,
-    vScale: f32,
-    gridDivs: f32,
-    gridWidth: f32,
-    gridScale: f32,
-    transform: HmdMatrix44,
+    pub size: u32,
+    pub curved: bool,
+    pub antialias: bool,
+    pub scale: f32,
+    pub distance: f32,
+    pub alpha: f32,
+    pub uOffset: f32,
+    pub vOffset: f32,
+    pub uScale: f32,
+    pub vScale: f32,
+    pub gridDivs: f32,
+    pub gridWidth: f32,
+    pub gridScale: f32,
+    pub transform: HmdMatrix44,
 }
 
 impl Default for Compositor_OverlaySettings {
@@ -1261,8 +1261,8 @@ impl Default for Compositor_OverlaySettings {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct AppOverrideKeys {
-    pchKey: *const c_char,
-    pchValue: *const c_char,
+    pub pchKey: *const c_char,
+    pub pchValue: *const c_char,
 }
 
 impl Default for AppOverrideKeys {
@@ -1274,28 +1274,28 @@ impl Default for AppOverrideKeys {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct Compositor_FrameTiming {
-    m_nSize: u32,
-    m_nFrameIndex: u32,
-    m_nNumFramePresents: u32,
-    m_nNumDroppedFrames: u32,
-    m_flSystemTimeInSeconds: f64,
-    m_flSceneRenderGpuMs: f32,
-    m_flTotalRenderGpuMs: f32,
-    m_flCompositorRenderGpuMs: f32,
-    m_flCompositorRenderCpuMs: f32,
-    m_flCompositorIdleCpuMs: f32,
-    m_flClientFrameIntervalMs: f32,
-    m_flPresentCallCpuMs: f32,
-    m_flWaitForPresentCpuMs: f32,
-    m_flSubmitFrameMs: f32,
-    m_flWaitGetPosesCalledMs: f32,
-    m_flNewPosesReadyMs: f32,
-    m_flNewFrameReadyMs: f32,
-    m_flCompositorUpdateStartMs: f32,
-    m_flCompositorUpdateEndMs: f32,
-    m_flCompositorRenderStartMs: f32,
-    m_HmdPose: TrackedDevicePose,
-    m_nFidelityLevel: i32,
+    pub m_nSize: u32,
+    pub m_nFrameIndex: u32,
+    pub m_nNumFramePresents: u32,
+    pub m_nNumDroppedFrames: u32,
+    pub m_flSystemTimeInSeconds: f64,
+    pub m_flSceneRenderGpuMs: f32,
+    pub m_flTotalRenderGpuMs: f32,
+    pub m_flCompositorRenderGpuMs: f32,
+    pub m_flCompositorRenderCpuMs: f32,
+    pub m_flCompositorIdleCpuMs: f32,
+    pub m_flClientFrameIntervalMs: f32,
+    pub m_flPresentCallCpuMs: f32,
+    pub m_flWaitForPresentCpuMs: f32,
+    pub m_flSubmitFrameMs: f32,
+    pub m_flWaitGetPosesCalledMs: f32,
+    pub m_flNewPosesReadyMs: f32,
+    pub m_flNewFrameReadyMs: f32,
+    pub m_flCompositorUpdateStartMs: f32,
+    pub m_flCompositorUpdateEndMs: f32,
+    pub m_flCompositorRenderStartMs: f32,
+    pub m_HmdPose: TrackedDevicePose,
+    pub m_nFidelityLevel: i32,
 }
 
 impl Default for Compositor_FrameTiming {
@@ -1307,9 +1307,9 @@ impl Default for Compositor_FrameTiming {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VROverlayIntersectionParams {
-    vSource: HmdVector3,
-    vDirection: HmdVector3,
-    eOrigin: ETrackingUniverseOrigin,
+    pub vSource: HmdVector3,
+    pub vDirection: HmdVector3,
+    pub eOrigin: ETrackingUniverseOrigin,
 }
 
 impl Default for VROverlayIntersectionParams {
@@ -1321,10 +1321,10 @@ impl Default for VROverlayIntersectionParams {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct VROverlayIntersectionResults {
-    vPoint: HmdVector3,
-    vNormal: HmdVector3,
-    vUVs: HmdVector2,
-    fDistance: f32,
+    pub vPoint: HmdVector3,
+    pub vNormal: HmdVector3,
+    pub vUVs: HmdVector2,
+    pub fDistance: f32,
 }
 
 impl Default for VROverlayIntersectionResults {
@@ -1336,9 +1336,9 @@ impl Default for VROverlayIntersectionResults {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct RenderModel_ComponentState {
-    mTrackingToComponentRenderModel: HmdMatrix34,
-    mTrackingToComponentLocal: HmdMatrix34,
-    uProperties: VRComponentProperties,
+    pub mTrackingToComponentRenderModel: HmdMatrix34,
+    pub mTrackingToComponentLocal: HmdMatrix34,
+    pub uProperties: VRComponentProperties,
 }
 
 impl Default for RenderModel_ComponentState {
@@ -1350,9 +1350,9 @@ impl Default for RenderModel_ComponentState {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct RenderModel_Vertex {
-    vPosition: HmdVector3,
-    vNormal: HmdVector3,
-    rfTextureCoord: [f32; 2],
+    pub vPosition: HmdVector3,
+    pub vNormal: HmdVector3,
+    pub rfTextureCoord: [f32; 2],
 }
 
 impl Default for RenderModel_Vertex {
@@ -1364,9 +1364,9 @@ impl Default for RenderModel_Vertex {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct RenderModel_TextureMap {
-    unWidth: u16,
-    unHeight: u16,
-    rubTextureMapData: *const u8,
+    pub unWidth: u16,
+    pub unHeight: u16,
+    pub rubTextureMapData: *const u8,
 }
 
 impl Default for RenderModel_TextureMap {
@@ -1378,11 +1378,11 @@ impl Default for RenderModel_TextureMap {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct RenderModel {
-    rVertexData: *mut RenderModel_Vertex,
-    unVertexCount: u32,
-    rIndexData: *const u16,
-    unTriangleCount: u32,
-    diffuseTextureId: TextureID,
+    pub rVertexData: *mut RenderModel_Vertex,
+    pub unVertexCount: u32,
+    pub rIndexData: *const u16,
+    pub unTriangleCount: u32,
+    pub diffuseTextureId: TextureID,
 }
 
 impl Default for RenderModel {
@@ -1394,7 +1394,7 @@ impl Default for RenderModel {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct RenderModel_ControllerMode_State {
-    bScrollWheelVisible: bool,
+    pub bScrollWheelVisible: bool,
 }
 
 impl Default for RenderModel_ControllerMode_State {
@@ -1406,10 +1406,10 @@ impl Default for RenderModel_ControllerMode_State {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct NotificationBitmap {
-    bytes: *mut c_void,
-    width: i32,
-    height: i32,
-    depth: i32,
+    pub bytes: *mut c_void,
+    pub width: i32,
+    pub height: i32,
+    pub depth: i32,
 }
 
 impl Default for NotificationBitmap {
@@ -1421,15 +1421,15 @@ impl Default for NotificationBitmap {
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub struct COpenVRContext {
-    m_pVRSystem: *mut IVRSystem,
-    m_pVRChaperone: *mut IVRChaperone,
-    m_pVRChaperoneSetup: *mut IVRChaperoneSetup,
-    m_pVRCompositor: *mut IVRCompositor,
-    m_pVROverlay: *mut IVROverlay,
-    m_pVRRenderModels: *mut IVRRenderModels,
-    m_pVRExtendedDisplay: *mut IVRExtendedDisplay,
-    m_pVRSettings: *mut IVRSettings,
-    m_pVRApplications: *mut IVRApplications,
+    pub m_pVRSystem: *mut IVRSystem,
+    pub m_pVRChaperone: *mut IVRChaperone,
+    pub m_pVRChaperoneSetup: *mut IVRChaperoneSetup,
+    pub m_pVRCompositor: *mut IVRCompositor,
+    pub m_pVROverlay: *mut IVROverlay,
+    pub m_pVRRenderModels: *mut IVRRenderModels,
+    pub m_pVRExtendedDisplay: *mut IVRExtendedDisplay,
+    pub m_pVRSettings: *mut IVRSettings,
+    pub m_pVRApplications: *mut IVRApplications,
 }
 
 impl Default for COpenVRContext {

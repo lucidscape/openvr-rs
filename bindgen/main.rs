@@ -231,7 +231,7 @@ fn main() {
                 match &st["fields"] {
                     &Json::Array(ref arr) => {
                         for field in arr {
-                            writeln!(&mut w, "    {}: {},",
+                            writeln!(&mut w, "    pub {}: {},",
                                 field["fieldname"].as_string().unwrap(),
                                 map_type(&field["fieldtype"].as_string().unwrap())
                             ).unwrap();

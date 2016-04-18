@@ -1,0 +1,13 @@
+[package]
+name = "openvr-example"
+version = "0.0.1"
+authors = [ "Lucidscape Technologies Inc." ]
+
+[[bin]]
+name = "example"
+path = "main.rs"
+
+[dependencies]
+glutin = "*"
+gl = "*"
+openvr = {path="../"}

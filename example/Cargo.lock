@@ -199,6 +199,11 @@ version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "lazy_static"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "libc"
 version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -248,6 +253,10 @@ dependencies = [
 [[package]]
 name = "openvr"
 version = "0.1.1"
+dependencies = [
+ "lazy_static 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libloading 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "osmesa-sys"

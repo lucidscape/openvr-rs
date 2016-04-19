@@ -5,4 +5,7 @@ authors = [
     "Lucidscape Technologies Inc.",
     "Braden Evans <braden@lucidscape.com>"
 ]
-build = "build.rs"
+
+[dependencies]
+libloading = "0.2.*"
+lazy_static = "0.2.*"

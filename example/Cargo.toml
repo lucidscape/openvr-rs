@@ -2,6 +2,7 @@
 name = "openvr-example"
 version = "0.0.1"
 authors = [ "Lucidscape Technologies Inc." ]
+build = "build.rs"
 
 [[bin]]
 name = "example"

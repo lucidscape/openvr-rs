@@ -1,3 +1,6 @@
+extern crate libloading;
+#[macro_use]
+extern crate lazy_static;
 
 #[allow(non_camel_case_types)]
 #[allow(non_snake_case)]
@@ -8,17 +11,42 @@ use std::mem;
 use ffi::*;
 use std::ffi::{CString, CStr};
 use std::ptr;
+use libloading::Library;
 
-#[link(name = "openvr_api", kind="static")]
-extern "C" {
-    pub fn VR_InitInternal(peError: *mut EVRInitError, eType: EVRApplicationType) -> usize;
-    pub fn VR_ShutdownInternal();
-    pub fn VR_IsHmdPresent() -> ::std::os::raw::c_char;
-    pub fn VR_GetStringForHmdError(error: EVRInitError) -> *mut ::std::os::raw::c_char;
-    pub fn VR_GetGenericInterface(pchInterfaceVersion: *const ::std::os::raw::c_char, peError: *mut EVRInitError) -> usize;
-    pub fn VR_IsRuntimeInstalled() -> ::std::os::raw::c_char;
-    pub fn VR_GetVRInitErrorAsSymbol(error: EVRInitError) -> *const ::std::os::raw::c_char;
-    pub fn VR_GetVRInitErrorAsEnglishDescription(error: EVRInitError) -> *const ::std::os::raw::c_char;
+#[allow(non_snake_case)]
+#[allow(dead_code)]
+struct ApiFunctions {
+    VR_InitInternal:            extern fn (peError: *mut EVRInitError, eType: EVRApplicationType) -> usize,
+    VR_ShutdownInternal:        extern fn (),
+    VR_IsHmdPresent:            extern fn () -> ::std::os::raw::c_char,
+    VR_GetStringForHmdError:    extern fn (error: EVRInitError) -> *mut ::std::os::raw::c_char,
+    VR_GetGenericInterface:     extern fn (pchInterfaceVersion: *const ::std::os::raw::c_char, peError: *mut EVRInitError) -> usize,
+    VR_IsRuntimeInstalled:      extern fn () -> ::std::os::raw::c_char,
+    VR_GetVRInitErrorAsSymbol:  extern fn (error: EVRInitError) -> *const ::std::os::raw::c_char,
+    VR_GetVRInitErrorAsEnglishDescription:  extern fn (error: EVRInitError) -> *const ::std::os::raw::c_char,
+    lib: Library,
+}
+
+unsafe impl Sync for ApiFunctions {}
+
+lazy_static! {
+    static ref API: ApiFunctions = {
+        let lib = Library::new("openvr_api.dll").unwrap();
+
+        unsafe {
+            ApiFunctions {
+                VR_InitInternal:            *lib.get(b"VR_InitInternal\0").unwrap(),
+                VR_ShutdownInternal:        *lib.get(b"VR_ShutdownInternal\0").unwrap(),
+                VR_IsHmdPresent:            *lib.get(b"VR_IsHmdPresent\0").unwrap(),
+                VR_GetStringForHmdError:    *lib.get(b"VR_GetStringForHmdError\0").unwrap(),
+                VR_GetGenericInterface:     *lib.get(b"VR_GetGenericInterface\0").unwrap(),
+                VR_IsRuntimeInstalled:      *lib.get(b"VR_IsRuntimeInstalled\0").unwrap(),
+                VR_GetVRInitErrorAsSymbol:  *lib.get(b"VR_GetVRInitErrorAsSymbol\0").unwrap(),
+                VR_GetVRInitErrorAsEnglishDescription: *lib.get(b"VR_GetVRInitErrorAsEnglishDescription\0").unwrap(),
+                lib: lib,
+            }
+        }
+    };
 }
 
 pub struct VRCompositor {
@@ -172,7 +200,7 @@ impl Into<TrackedDeviceClass> for TrackedDeviceType {
 impl std::fmt::Display for EVRInitError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         unsafe {
-            let err = CStr::from_ptr(VR_GetVRInitErrorAsEnglishDescription(*self));
+            let err = CStr::from_ptr((API.VR_GetVRInitErrorAsEnglishDescription)(*self));
             write!(f, "{}", err.to_string_lossy())
         }
     }
@@ -199,53 +227,46 @@ pub struct VRContext {
 
 impl Drop for VRContext {
     fn drop(&mut self) {
-        unsafe {
-            // VR_ShutdownInternal();
-        }
+        // VR_ShutdownInternal();
     }
 }
 
 pub fn initialize() -> Result<VRContext, EVRInitError> {
-    unsafe {
-        let mut err = EVRInitError::None;
-        let _hmd = VR_InitInternal(&mut err, EVRApplicationType::VRApplication_Scene);
+    let mut err = EVRInitError::None;
+    println!("{:?}", API.VR_InitInternal as usize);
+    let _hmd = (API.VR_InitInternal)(&mut err, EVRApplicationType::VRApplication_Scene);
+    if err != EVRInitError::None {
+        Err(err)
+    } else {
+
+        let system = (API.VR_GetGenericInterface)(CString::new(IVRSystem_FnTable).unwrap().as_ptr(), &mut err) as *mut IVRSystem;
         if err != EVRInitError::None {
-            Err(err)
-        } else {
-
-            let system = VR_GetGenericInterface(CString::new(IVRSystem_FnTable).unwrap().as_ptr(), &mut err) as *mut IVRSystem;
-            if err != EVRInitError::None {
-                return Err(err);
-            }
-            let system = VRSystem::new(system);
-
-            let compositor = VR_GetGenericInterface(CString::new(IVRCompositor_FnTable).unwrap().as_ptr(), &mut err) as *mut IVRCompositor;
-            if err != EVRInitError::None {
-                return Err(err);
-            }
-            let compositor = VRCompositor::new(compositor);
-
-
-            Ok(VRContext {
-                system:     system,
-                compositor: compositor
-            })
+            return Err(err);
         }
+        let system = VRSystem::new(system);
+
+        let compositor = (API.VR_GetGenericInterface)(CString::new(IVRCompositor_FnTable).unwrap().as_ptr(), &mut err) as *mut IVRCompositor;
+        if err != EVRInitError::None {
+            return Err(err);
+        }
+        let compositor = VRCompositor::new(compositor);
+
+
+        Ok(VRContext {
+            system:     system,
+            compositor: compositor
+        })
     }
 }
 
 /// Returns true if the system believes that an HMD is present on the system.
 pub fn is_hmd_present() -> bool {
-    unsafe {
-        VR_IsHmdPresent() != 0
-    }
+    (API.VR_IsHmdPresent)() != 0
 }
 
 /// Returns true if the SteamVR runtime is installed.
 pub fn is_runtime_installed() -> bool {
-    unsafe {
-        VR_IsRuntimeInstalled() != 0
-    }
+    (API.VR_IsRuntimeInstalled)() != 0
 }
 
 #[cfg(test)]

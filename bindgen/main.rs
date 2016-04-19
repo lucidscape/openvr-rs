@@ -109,7 +109,7 @@ fn write_method_params(w: &mut Write, params: &[Json]) {
 fn main() {
     // let mut w   = &mut io::stdout();
     let mut w   = File::create("../src/ffi.rs").unwrap();
-    let data    = Json::from_str(include_str!("openvr_api.json")).expect("failed to parse");
+    let data    = Json::from_str(include_str!("../openvr/headers/openvr_api.json")).expect("failed to parse");
     let obj     = data.as_object().expect("is object");
 
     writeln!(&mut w, "{}", include_str!("ffi_header.rs")).unwrap();

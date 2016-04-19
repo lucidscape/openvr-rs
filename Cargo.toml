@@ -11,6 +11,12 @@ license = "Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/lucidscape/openvr-rs"
 #documentation = ""
+exclude = [
+    "openvr/lib/*",
+    "openvr/samples/*",
+    "openvr/unity_package/*",
+]
+
 
 [dependencies]
 libloading = "0.2.*"

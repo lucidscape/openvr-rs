@@ -5,6 +5,12 @@ authors = [
     "Lucidscape Technologies Inc.",
     "Braden Evans <braden@lucidscape.com>"
 ]
+description = "Rust bindings to the OpenVR library."
+keywords = ["OpenVR", "VR", "Vive", "Oculus"]
+license = "Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/lucidscape/openvr-rs"
+#documentation = ""
 
 [dependencies]
 libloading = "0.2.*"

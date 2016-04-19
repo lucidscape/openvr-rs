@@ -233,7 +233,6 @@ impl Drop for VRContext {
 
 pub fn initialize() -> Result<VRContext, EVRInitError> {
     let mut err = EVRInitError::None;
-    println!("{:?}", API.VR_InitInternal as usize);
     let _hmd = (API.VR_InitInternal)(&mut err, EVRApplicationType::VRApplication_Scene);
     if err != EVRInitError::None {
         Err(err)

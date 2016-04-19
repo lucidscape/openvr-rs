@@ -3,7 +3,6 @@ extern crate glutin;
 extern crate openvr;
 
 use std::os::raw::c_void;
-use std::ptr;
 use openvr::ffi;
 
 fn main() {
@@ -25,41 +24,50 @@ fn main() {
 
         let (tex_width, tex_height) = context.system.get_recommended_render_target_size();
 
+        let mut textures = [0; 2];
+        gl::GenTextures(2, textures.as_mut_ptr());
+
+        for i in 0..2 {
+            gl::BindTexture(gl::TEXTURE_2D, textures[i]);
+
+            // Not generating mips
+            gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAX_LEVEL, 0);
+
+            let pixel =
+                if i == 0 {
+                    0xff0000ffu32
+                } else {
+                    0xff00ff00u32
+                };
+
+            let texture_data = vec![pixel; (tex_width * tex_height) as usize];
+
+            gl::TexImage2D(
+                gl::TEXTURE_2D,
+                0,
+                gl::RGBA8 as i32,
+                tex_width as i32,
+                tex_height as i32,
+                0,
+                gl::RGBA,
+                gl::UNSIGNED_BYTE,
+                texture_data.as_ptr() as *const _
+            );
+        }
+
         'main_loop: loop {
             // get poses --------------------------------------------------------------------------
-            let _ = context.compositor.wait_get_poses();
+            let _poses = context.compositor.wait_get_poses();
 
             // submit each eye --------------------------------------------------------------------
             for eye in &[ffi::EVREye::Eye_Left, ffi::EVREye::Eye_Right] {
-                // "render" the sceen for each eye
-                let pixel =
-                    if *eye == ffi::EVREye::Eye_Left {
-                        0xff0000ffu32
-                    } else {
-                        0xff00ff00u32
-                    };
+                let eye_index = *eye as usize;
 
-                let texture_data = vec![pixel; (tex_width * tex_height) as usize];
+                // "render" the scene for each eye
 
-                let mut texture = 0;
-
-                gl::GenTextures(1, &mut texture);
-                gl::BindTexture(gl::TEXTURE_2D, texture);
-
-                gl::TexImage2D(
-                    gl::TEXTURE_2D,
-                    0,
-                    gl::RGBA8 as i32,
-                    tex_width as i32,
-                    tex_height as i32,
-                    0,
-                    gl::RGBA,
-                    gl::UNSIGNED_BYTE,
-                    texture_data.as_ptr() as *const _
-                );
 
                 let mut desc = ffi::Texture {
-                    handle:         texture as *mut ::std::os::raw::c_void,
+                    handle:         textures[eye_index] as *mut ::std::os::raw::c_void,
                     eType:          ffi::EGraphicsAPIConvention::API_OpenGL,
                     eColorSpace:    ffi::EColorSpace::Gamma
                 };
@@ -68,15 +76,18 @@ fn main() {
                 let error = context.compositor.submit(
                     *eye,
                     &mut desc,
-                    ptr::null::<ffi::VRTextureBounds>() as *mut _,
+                    &mut ffi::VRTextureBounds {
+                        uMin:   0.0,
+                        vMin:   0.0,
+                        uMax:   1.0,
+                        vMax:   1.0,
+                    },
                     ffi::EVRSubmitFlags::Submit_Default
                 );
 
                 if error != ffi::EVRCompositorError::None {
                     println!("[openvr] compositor error: {:?}", error);
                 }
-
-                gl::DeleteTextures(1, &mut texture);
             }
 
             // process window events --------------------------------------------------------------

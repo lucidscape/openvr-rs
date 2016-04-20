@@ -7,14 +7,17 @@ extern crate lazy_static;
 #[allow(non_upper_case_globals)]
 pub mod ffi;
 
+use std::os::raw::{c_char};
 use std::ffi::{CString, CStr};
 use std::ptr;
+use std::mem;
 use libloading::Library;
 
 use ffi::{
     IVRCompositor,
     IVRSystem,
     IVRChaperone,
+    IVRRenderModels,
     IVRCompositor_FnTable,
     IVRSystem_FnTable,
     // IVRChaperone_FnTable,
@@ -22,6 +25,7 @@ use ffi::{
 
 pub use ffi::{
     Texture,
+    TextureID,
     TrackedDevicePose,
     HmdMatrix34,
     HmdMatrix44,
@@ -36,6 +40,7 @@ pub use ffi::{
     VRTextureBounds as TextureBounds,
     ETrackedDeviceClass as TrackedDeviceClass,
     ETrackedControllerRole as TrackedControllerRole,
+    EVRRenderModelError as RenderModelError,
     k_unMaxTrackedDeviceCount as MAX_TRACKED_DEVICE_COUNT
 };
 
@@ -122,6 +127,57 @@ impl VRCompositor {
 
 pub struct VRChaperone {
     _i: *mut IVRChaperone
+}
+
+pub struct RenderModel {
+}
+
+pub struct VRRenderModels {
+    i: *mut IVRRenderModels
+}
+
+impl VRRenderModels {
+    pub fn load_render_model_async(
+        &mut self,
+        render_model_name: *const c_char
+    ) -> Result<ffi::RenderModel, RenderModelError> {
+        unsafe {
+            let render_model: *mut *mut ffi::RenderModel = mem::zeroed();
+            let error = ((*self.i).LoadRenderModel_Async)(render_model_name, render_model);
+            if error == RenderModelError::None {
+                Ok(**render_model)
+            } else {
+                Err(error)
+            }
+        }
+    }
+
+    pub fn free_render_model(&mut self, render_model: &mut ffi::RenderModel) {
+        unsafe {
+            ((*self.i).FreeRenderModel)(render_model)
+        }
+    }
+
+    pub fn load_texture_async(
+        &mut self,
+        texture_id: TextureID
+    ) -> Result<ffi::RenderModel_TextureMap, RenderModelError> {
+        unsafe {
+            let texture: *mut *mut ffi::RenderModel_TextureMap = mem::zeroed();
+            let error = ((*self.i).LoadTexture_Async)(texture_id, texture);
+            if error == RenderModelError::None {
+                Ok(**texture)
+            } else {
+                Err(error)
+            }
+        }
+    }
+
+    pub fn free_texture(&mut self, texture: &mut ffi::RenderModel_TextureMap) {
+        unsafe {
+            ((*self.i).FreeTexture)(texture)
+        }
+    }
 }
 
 pub struct VRSystem {

@@ -7,23 +7,49 @@ extern crate lazy_static;
 #[allow(non_upper_case_globals)]
 pub mod ffi;
 
-use std::mem;
-use ffi::*;
 use std::ffi::{CString, CStr};
 use std::ptr;
 use libloading::Library;
 
+use ffi::{
+    IVRCompositor,
+    IVRSystem,
+    IVRChaperone,
+    IVRCompositor_FnTable,
+    IVRSystem_FnTable,
+    // IVRChaperone_FnTable,
+};
+
+pub use ffi::{
+    Texture,
+    TrackedDevicePose,
+    HmdMatrix34,
+    HmdMatrix44,
+    EVREye as Eye,
+    EVRInitError as InitError,
+    EVRApplicationType as ApplicationType,
+    EGraphicsAPIConvention as GraphicsAPIConvention,
+    EVRSubmitFlags as SubmitFlags,
+    EVRCompositorError as CompositorError,
+    ETrackingUniverseOrigin as TrackingUniverseOrigin,
+    EColorSpace as ColorSpace,
+    VRTextureBounds as TextureBounds,
+    ETrackedDeviceClass as TrackedDeviceClass,
+    ETrackedControllerRole as TrackedControllerRole,
+    k_unMaxTrackedDeviceCount as MAX_TRACKED_DEVICE_COUNT
+};
+
 #[allow(non_snake_case)]
 #[allow(dead_code)]
 struct ApiFunctions {
-    VR_InitInternal:            extern fn (peError: *mut EVRInitError, eType: EVRApplicationType) -> usize,
+    VR_InitInternal:            extern fn (peError: *mut InitError, eType: ApplicationType) -> usize,
     VR_ShutdownInternal:        extern fn (),
     VR_IsHmdPresent:            extern fn () -> ::std::os::raw::c_char,
-    VR_GetStringForHmdError:    extern fn (error: EVRInitError) -> *mut ::std::os::raw::c_char,
-    VR_GetGenericInterface:     extern fn (pchInterfaceVersion: *const ::std::os::raw::c_char, peError: *mut EVRInitError) -> usize,
+    VR_GetStringForHmdError:    extern fn (error: InitError) -> *mut ::std::os::raw::c_char,
+    VR_GetGenericInterface:     extern fn (pchInterfaceVersion: *const ::std::os::raw::c_char, peError: *mut InitError) -> usize,
     VR_IsRuntimeInstalled:      extern fn () -> ::std::os::raw::c_char,
-    VR_GetVRInitErrorAsSymbol:  extern fn (error: EVRInitError) -> *const ::std::os::raw::c_char,
-    VR_GetVRInitErrorAsEnglishDescription:  extern fn (error: EVRInitError) -> *const ::std::os::raw::c_char,
+    VR_GetVRInitErrorAsSymbol:  extern fn (error: InitError) -> *const ::std::os::raw::c_char,
+    VR_GetVRInitErrorAsEnglishDescription:  extern fn (error: InitError) -> *const ::std::os::raw::c_char,
     lib: Library,
 }
 
@@ -65,11 +91,11 @@ impl VRCompositor {
     /// https://github.com/ValveSoftware/openvr/wiki/IVRCompositor::Submit
     pub fn submit(
         &mut self,
-        eye:            EVREye,
+        eye:            Eye,
         texture:        *mut Texture,
-        bounds:         *mut VRTextureBounds,
-        submit_flags:   EVRSubmitFlags
-    ) -> EVRCompositorError {
+        bounds:         *mut TextureBounds,
+        submit_flags:   SubmitFlags
+    ) -> CompositorError {
         unsafe {
             ((*self.i).Submit)(eye, texture, bounds, submit_flags)
         }
@@ -79,9 +105,9 @@ impl VRCompositor {
     /// https://github.com/ValveSoftware/openvr/wiki/IVRCompositor::WaitGetPoses
     pub fn wait_get_poses(
         &mut self,
-    ) -> [TrackedDevicePose; k_unMaxTrackedDeviceCount as usize] {
+    ) -> [TrackedDevicePose; ffi::k_unMaxTrackedDeviceCount as usize] {
         unsafe {
-            let mut render_poses = [TrackedDevicePose::default(); k_unMaxTrackedDeviceCount as usize];
+            let mut render_poses = [TrackedDevicePose::default(); ffi::k_unMaxTrackedDeviceCount as usize];
             ((*self.i).WaitGetPoses)(
                 (&mut render_poses[..]).as_mut_ptr(),
                 render_poses.len() as u32,
@@ -126,10 +152,10 @@ impl VRSystem {
     /// Returns the projection matrix to use for the specified eye.
     pub fn get_projection_matrix(
         &self,
-        eye:                EVREye,
+        eye:                Eye,
         near_z:             f32,
         far_z:              f32,
-        api:                EGraphicsAPIConvention
+        api:                GraphicsAPIConvention
     ) -> HmdMatrix44 {
         unsafe {
             ((*self.i).GetProjectionMatrix)(
@@ -142,7 +168,7 @@ impl VRSystem {
     }
 
     /// Returns the transform between the view space and eye space.
-    pub fn get_eye_to_head_transform(&self, eye: EVREye) -> HmdMatrix34 {
+    pub fn get_eye_to_head_transform(&self, eye: Eye) -> HmdMatrix34 {
         unsafe {
             ((*self.i).GetEyeToHeadTransform)(eye)
         }
@@ -152,7 +178,7 @@ impl VRSystem {
     /// https://github.com/ValveSoftware/openvr/wiki/IVRSystem::GetDeviceToAbsoluteTrackingPose
     pub fn get_device_to_absolute_tracking_pose(
         &self,
-        origin: ETrackingUniverseOrigin,
+        origin: TrackingUniverseOrigin,
         predicted_seconds_to_photons_from_now:  f32,
         tracked_device_pose_array: &mut [TrackedDevicePose]
     ) {
@@ -172,32 +198,20 @@ impl VRSystem {
         }
     }
 
-    pub fn get_tracked_device_class(&self, device_index: usize) -> ETrackedDeviceClass {
+    pub fn get_tracked_device_class(&self, device_index: usize) -> TrackedDeviceClass {
         unsafe {
-            ((*self.i).GetTrackedDeviceClass)(device_index as TrackedDeviceIndex)
+            ((*self.i).GetTrackedDeviceClass)(device_index as ffi::TrackedDeviceIndex)
+        }
+    }
+
+    pub fn get_controller_role_for_tracked_device_index(&self, device_index: usize) -> TrackedControllerRole {
+        unsafe {
+            ((*self.i).GetControllerRoleForTrackedDeviceIndex)(device_index as ffi::TrackedDeviceIndex)
         }
     }
 }
 
-#[derive(Clone, Copy)]
-#[repr(i32)]
-pub enum TrackedDeviceType {
-    Invalid = 0,
-    HMD = 1,
-    Controller = 2,
-    TrackingReference = 4,
-    Other = 1000,
-}
-
-impl Into<TrackedDeviceClass> for TrackedDeviceType {
-    fn into(self) -> TrackedDeviceClass {
-        unsafe {
-            mem::transmute(self)
-        }
-    }
-}
-
-impl std::fmt::Display for EVRInitError {
+impl std::fmt::Display for InitError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         unsafe {
             let err = CStr::from_ptr((API.VR_GetVRInitErrorAsEnglishDescription)(*self));
@@ -206,7 +220,7 @@ impl std::fmt::Display for EVRInitError {
     }
 }
 
-impl std::error::Error for EVRInitError {
+impl std::error::Error for InitError {
     fn description(&self) -> &str {
         "init error"
     }
@@ -231,21 +245,21 @@ impl Drop for VRContext {
     }
 }
 
-pub fn initialize() -> Result<VRContext, EVRInitError> {
-    let mut err = EVRInitError::None;
-    let _hmd = (API.VR_InitInternal)(&mut err, EVRApplicationType::VRApplication_Scene);
-    if err != EVRInitError::None {
+pub fn initialize() -> Result<VRContext, InitError> {
+    let mut err = InitError::None;
+    let _hmd = (API.VR_InitInternal)(&mut err, ApplicationType::VRApplication_Scene);
+    if err != InitError::None {
         Err(err)
     } else {
 
         let system = (API.VR_GetGenericInterface)(CString::new(IVRSystem_FnTable).unwrap().as_ptr(), &mut err) as *mut IVRSystem;
-        if err != EVRInitError::None {
+        if err != InitError::None {
             return Err(err);
         }
         let system = VRSystem::new(system);
 
         let compositor = (API.VR_GetGenericInterface)(CString::new(IVRCompositor_FnTable).unwrap().as_ptr(), &mut err) as *mut IVRCompositor;
-        if err != EVRInitError::None {
+        if err != InitError::None {
             return Err(err);
         }
         let compositor = VRCompositor::new(compositor);

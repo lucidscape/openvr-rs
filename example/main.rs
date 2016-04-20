@@ -3,7 +3,7 @@ extern crate glutin;
 extern crate openvr;
 
 use std::os::raw::c_void;
-use openvr::ffi;
+use openvr::{Eye, SubmitFlags, Texture, TextureBounds, GraphicsAPIConvention, ColorSpace, CompositorError};
 
 fn main() {
     unsafe {
@@ -60,32 +60,32 @@ fn main() {
             let _poses = context.compositor.wait_get_poses();
 
             // submit each eye --------------------------------------------------------------------
-            for eye in &[ffi::EVREye::Eye_Left, ffi::EVREye::Eye_Right] {
+            for eye in &[Eye::Eye_Left, Eye::Eye_Right] {
                 let eye_index = *eye as usize;
 
                 // "render" the scene for each eye
 
 
-                let mut desc = ffi::Texture {
+                let mut desc = Texture {
                     handle:         textures[eye_index] as *mut ::std::os::raw::c_void,
-                    eType:          ffi::EGraphicsAPIConvention::API_OpenGL,
-                    eColorSpace:    ffi::EColorSpace::Gamma
+                    eType:          GraphicsAPIConvention::API_OpenGL,
+                    eColorSpace:    ColorSpace::Gamma
                 };
 
                 // submit to the compositor
                 let error = context.compositor.submit(
                     *eye,
                     &mut desc,
-                    &mut ffi::VRTextureBounds {
+                    &mut TextureBounds {
                         uMin:   0.0,
                         vMin:   0.0,
                         uMax:   1.0,
                         vMax:   1.0,
                     },
-                    ffi::EVRSubmitFlags::Submit_Default
+                    SubmitFlags::Submit_Default
                 );
 
-                if error != ffi::EVRCompositorError::None {
+                if error != CompositorError::None {
                     println!("[openvr] compositor error: {:?}", error);
                 }
             }

@@ -41,6 +41,8 @@ pub use ffi::{
     ETrackedDeviceClass as TrackedDeviceClass,
     ETrackedControllerRole as TrackedControllerRole,
     EVRRenderModelError as RenderModelError,
+    EVRControllerAxisType as ControllerAxisType,
+    VRControllerState as ControllerState,
     k_unMaxTrackedDeviceCount as MAX_TRACKED_DEVICE_COUNT
 };
 
@@ -130,6 +132,11 @@ pub struct VRChaperone {
 }
 
 pub struct RenderModel {
+    ptr: *mut ffi::RenderModel
+}
+
+pub struct RenderModelTexture {
+    ptr: *mut ffi::RenderModel_TextureMap
 }
 
 pub struct VRRenderModels {
@@ -140,42 +147,46 @@ impl VRRenderModels {
     pub fn load_render_model_async(
         &mut self,
         render_model_name: *const c_char
-    ) -> Result<ffi::RenderModel, RenderModelError> {
+    ) -> Result<RenderModel, RenderModelError> {
         unsafe {
             let render_model: *mut *mut ffi::RenderModel = mem::zeroed();
             let error = ((*self.i).LoadRenderModel_Async)(render_model_name, render_model);
             if error == RenderModelError::None {
-                Ok(**render_model)
+                Ok(RenderModel {
+                    ptr:    *render_model
+                })
             } else {
                 Err(error)
             }
         }
     }
 
-    pub fn free_render_model(&mut self, render_model: &mut ffi::RenderModel) {
+    pub fn free_render_model(&mut self, render_model: RenderModel) {
         unsafe {
-            ((*self.i).FreeRenderModel)(render_model)
+            ((*self.i).FreeRenderModel)(render_model.ptr)
         }
     }
 
     pub fn load_texture_async(
         &mut self,
         texture_id: TextureID
-    ) -> Result<ffi::RenderModel_TextureMap, RenderModelError> {
+    ) -> Result<RenderModelTexture, RenderModelError> {
         unsafe {
             let texture: *mut *mut ffi::RenderModel_TextureMap = mem::zeroed();
             let error = ((*self.i).LoadTexture_Async)(texture_id, texture);
             if error == RenderModelError::None {
-                Ok(**texture)
+                Ok(RenderModelTexture {
+                    ptr: *texture
+                })
             } else {
                 Err(error)
             }
         }
     }
 
-    pub fn free_texture(&mut self, texture: &mut ffi::RenderModel_TextureMap) {
+    pub fn free_texture(&mut self, texture: RenderModelTexture) {
         unsafe {
-            ((*self.i).FreeTexture)(texture)
+            ((*self.i).FreeTexture)(texture.ptr)
         }
     }
 }
@@ -263,6 +274,14 @@ impl VRSystem {
     pub fn get_controller_role_for_tracked_device_index(&self, device_index: usize) -> TrackedControllerRole {
         unsafe {
             ((*self.i).GetControllerRoleForTrackedDeviceIndex)(device_index as ffi::TrackedDeviceIndex)
+        }
+    }
+
+    pub fn get_controller_state(&self, device_index: usize) -> ControllerState {
+        unsafe {
+            let mut state = ControllerState::default();
+            ((*self.i).GetControllerState)(device_index as ffi::TrackedDeviceIndex, &mut state);
+            state
         }
     }
 }

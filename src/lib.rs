@@ -11,6 +11,7 @@ use std::os::raw::{c_char};
 use std::ffi::{CString, CStr};
 use std::ptr;
 use std::mem;
+use std::slice;
 use libloading::Library;
 
 use ffi::{
@@ -20,6 +21,7 @@ use ffi::{
     IVRRenderModels,
     IVRCompositor_FnTable,
     IVRSystem_FnTable,
+    IVRRenderModels_FnTable,
     // IVRChaperone_FnTable,
 };
 
@@ -40,6 +42,8 @@ pub use ffi::{
     VRTextureBounds as TextureBounds,
     ETrackedDeviceClass as TrackedDeviceClass,
     ETrackedControllerRole as TrackedControllerRole,
+    ETrackedDeviceProperty as TrackedDeviceProperty,
+    ETrackedPropertyError as TrackedPropertyError,
     EVRRenderModelError as RenderModelError,
     EVRControllerAxisType as ControllerAxisType,
     VRControllerState as ControllerState,
@@ -142,6 +146,32 @@ pub struct RenderModel {
     ptr: *mut ffi::RenderModel
 }
 
+impl RenderModel {
+    pub fn vertices(&self) -> &[ffi::RenderModel_Vertex] {
+        unsafe {
+            slice::from_raw_parts((*self.ptr).rVertexData, (*self.ptr).unVertexCount as usize)
+        }
+    }
+
+    pub fn indices(&self) -> &[u16] {
+        unsafe {
+            slice::from_raw_parts((*self.ptr).rIndexData, (*self.ptr).unTriangleCount as usize * 3)
+        }
+    }
+
+    pub fn triangle_count(&self) -> usize {
+        unsafe {
+            (*self.ptr).unTriangleCount as usize
+        }
+    }
+
+    pub fn texture_id(&self) -> TextureID {
+        unsafe {
+            (*self.ptr).diffuseTextureId
+        }
+    }
+}
+
 pub struct RenderModelTexture {
     ptr: *mut ffi::RenderModel_TextureMap
 }
@@ -151,16 +181,24 @@ pub struct VRRenderModels {
 }
 
 impl VRRenderModels {
+    fn new(render_models: *mut IVRRenderModels) -> Self {
+        assert!(render_models as *const _ != ptr::null());
+        VRRenderModels {
+            i:  render_models
+        }
+    }
+
     pub fn load_render_model_async(
         &mut self,
-        render_model_name: *const c_char
+        render_model_name: String
     ) -> Result<RenderModel, RenderModelError> {
         unsafe {
-            let render_model: *mut *mut ffi::RenderModel = mem::zeroed();
-            let error = ((*self.i).LoadRenderModel_Async)(render_model_name, render_model);
+            let render_model_name = CString::from_vec_unchecked(render_model_name.into());
+            let mut render_model: *mut ffi::RenderModel = mem::zeroed();
+            let error = ((*self.i).LoadRenderModel_Async)(render_model_name.as_ptr(), &mut render_model);
             if error == RenderModelError::None {
                 Ok(RenderModel {
-                    ptr:    *render_model
+                    ptr:    render_model
                 })
             } else {
                 Err(error)
@@ -291,6 +329,44 @@ impl VRSystem {
             state
         }
     }
+
+    pub fn get_string_tracked_device_property(
+        &self,
+        device_index:   usize,
+        prop:           TrackedDeviceProperty
+    ) -> Result<String, TrackedPropertyError> {
+        unsafe {
+            let mut error = TrackedPropertyError::TrackedProp_Success;
+
+            let buffer_length = ((*self.i).GetStringTrackedDeviceProperty)(
+                device_index as ffi::TrackedDeviceIndex,
+                prop,
+                ptr::null::<c_char>() as *mut _,
+                0,
+                &mut error
+            );
+
+            assert!(buffer_length > 0);
+
+            let mut str_data = Vec::<u8>::with_capacity(buffer_length as usize);
+
+            ((*self.i).GetStringTrackedDeviceProperty)(
+                device_index as ffi::TrackedDeviceIndex,
+                prop,
+                str_data.as_mut_ptr() as *mut _,
+                buffer_length,
+                &mut error
+            );
+
+            str_data.set_len(buffer_length as usize - 1);
+
+            if error == TrackedPropertyError::TrackedProp_Success {
+                Ok(String::from_utf8_unchecked(str_data))
+            } else {
+                Err(error)
+            }
+        }
+    }
 }
 
 impl std::fmt::Display for InitError {
@@ -309,13 +385,13 @@ impl std::error::Error for InitError {
 }
 
 pub struct VRContext {
-    pub system:     VRSystem,
-    pub compositor: VRCompositor,
+    pub system:         VRSystem,
+    pub compositor:     VRCompositor,
+    pub render_models:  VRRenderModels
 
     // chaperone:         VRChaperone,
     // chaperone_setup:    IVRChaperoneSetup,
     // overlay:            IVROverlay,
-    // render_models:      IVRRenderModels,
     // IVRExtendedDisplay: *mut IVRExtendedDisplay,
     // IVRSettings: *mut IVRSettings,
     // IVRApplications: *mut IVRApplications,
@@ -347,9 +423,17 @@ pub fn initialize() -> Result<VRContext, InitError> {
         let compositor = VRCompositor::new(compositor);
 
 
+        let render_models = (API.VR_GetGenericInterface)(CString::new(IVRRenderModels_FnTable).unwrap().as_ptr(), &mut err) as *mut IVRRenderModels;
+        if err != InitError::None {
+            return Err(err);
+        }
+        let render_models = VRRenderModels::new(render_models);
+
+
         Ok(VRContext {
-            system:     system,
-            compositor: compositor
+            system:         system,
+            compositor:     compositor,
+            render_models:  render_models
         })
     }
 }

@@ -43,8 +43,15 @@ pub use ffi::{
     EVRRenderModelError as RenderModelError,
     EVRControllerAxisType as ControllerAxisType,
     VRControllerState as ControllerState,
+    EVRButtonId as ButtonId,
     k_unMaxTrackedDeviceCount as MAX_TRACKED_DEVICE_COUNT
 };
+
+impl ButtonId {
+    pub fn mask(self) -> u64 {
+        1 << self as usize
+    }
+}
 
 #[allow(non_snake_case)]
 #[allow(dead_code)]

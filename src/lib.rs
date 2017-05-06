@@ -1,3 +1,5 @@
+#![feature(untagged_unions)]
+
 extern crate libloading;
 #[macro_use]
 extern crate lazy_static;
@@ -5,7 +7,9 @@ extern crate lazy_static;
 #[allow(non_camel_case_types)]
 #[allow(non_snake_case)]
 #[allow(non_upper_case_globals)]
-pub mod ffi;
+pub mod ffi {
+    include!(concat!(env!("OUT_DIR"), "/ffi.rs"));
+}
 
 use std::os::raw::{c_char};
 use std::ffi::{CString, CStr};
@@ -34,7 +38,6 @@ pub use ffi::{
     EVREye as Eye,
     EVRInitError as InitError,
     EVRApplicationType as ApplicationType,
-    EGraphicsAPIConvention as GraphicsAPIConvention,
     EVRSubmitFlags as SubmitFlags,
     EVRCompositorError as CompositorError,
     ETrackingUniverseOrigin as TrackingUniverseOrigin,
@@ -266,15 +269,13 @@ impl VRSystem {
         &self,
         eye:                Eye,
         near_z:             f32,
-        far_z:              f32,
-        api:                GraphicsAPIConvention
+        far_z:              f32
     ) -> HmdMatrix44 {
         unsafe {
             ((*self.i).GetProjectionMatrix)(
                 eye,
                 near_z,
-                far_z,
-                api
+                far_z
             )
         }
     }
@@ -325,7 +326,7 @@ impl VRSystem {
     pub fn get_controller_state(&self, device_index: usize) -> ControllerState {
         unsafe {
             let mut state = ControllerState::default();
-            ((*self.i).GetControllerState)(device_index as ffi::TrackedDeviceIndex, &mut state);
+            ((*self.i).GetControllerState)(device_index as ffi::TrackedDeviceIndex, &mut state, mem::size_of_val(&state) as u32);
             state
         }
     }

@@ -3,10 +3,5 @@ name = "openvr-bindgen"
 version = "0.0.1"
 authors = [ "Lucidscape Technologies Inc." ]
 
-[[bin]]
-name = "bindgen"
-path = "main.rs"
-
 [dependencies]
-libc = "*"
-rustc-serialize = "*"
+rustc-serialize = "0.3"

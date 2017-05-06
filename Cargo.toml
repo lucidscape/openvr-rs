@@ -16,7 +16,10 @@ exclude = [
     "openvr/samples/*",
     "openvr/unity_package/*",
 ]
+build = "build.rs"
 
+[build-dependencies]
+openvr-bindgen = { path = "bindgen" }
 
 [dependencies]
 libloading = "0.2.*"

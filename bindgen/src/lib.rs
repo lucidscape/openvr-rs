@@ -1,14 +1,38 @@
 use std::collections::BTreeMap;
-use std::io::Write;
+use std::path::Path;
+use std::io::{self, Write};
 use std::fs::File;
 
 // use std::ffi::CString;
 // use std::os::raw::c_char;
 
-extern crate libc;
 extern crate rustc_serialize;
 
 use rustc_serialize::json::Json;
+
+fn map_name(n: &str) -> String {
+    const KEYWORDS: [&'static str; 52] = [
+        "abstract", "alignof", "as", "become", "box",
+        "break", "const", "continue", "crate", "do",
+        "else", "enum", "extern", "false", "final",
+        "fn", "for", "if", "impl", "in",
+        "let", "loop", "macro", "match", "mod",
+        "move", "mut", "offsetof", "override", "priv",
+        "proc", "pub", "pure", "ref", "return",
+        "Self", "self", "sizeof", "static", "struct",
+        "super", "trait", "true", "type", "typeof",
+        "unsafe", "unsized", "use", "virtual", "where",
+        "while", "yield",
+    ];
+
+    if KEYWORDS.iter().any(|&x| x == n) {
+        let mut out: String = n.into();
+        out.push('_');
+        out
+    } else {
+        n.into()
+    }
+}
 
 fn map_type(ty: &str) -> String {
 
@@ -106,30 +130,27 @@ fn write_method_params(w: &mut Write, params: &[Json]) {
     }
 }
 
-fn main() {
-    // let mut w   = &mut io::stdout();
-    let mut w   = File::create("../src/ffi.rs").unwrap();
-    let data    = Json::from_str(include_str!("../openvr/headers/openvr_api.json")).expect("failed to parse");
+pub fn generate(definition: &Path, output: &Path) -> io::Result<()> {
+    let mut w   = File::create(output)?;
+    let data    = Json::from_reader(&mut File::open(definition)?).expect("failed to parse");
     let obj     = data.as_object().expect("is object");
 
-    writeln!(&mut w, "{}", include_str!("ffi_header.rs")).unwrap();
+    writeln!(&mut w, "{}", include_str!("ffi_header.rs"))?;
 
     match &obj["typedefs"] {
         &Json::Array(ref arr) => {
             for t in arr {
                 let typedef = t["typedef"].as_string().unwrap().replace("vr::", "").replace("_t", "");
 
-                // "the" union
-                if typedef == "VREvent_Data" {
+                let ty = map_type(&t["type"].as_string().unwrap());
+                if ty == typedef {
                     continue;
                 }
-
-                let ty = map_type(&t["type"].as_string().unwrap());
 
                 writeln!(&mut w, "pub type {} = {};",
                     typedef,
                     ty
-                ).unwrap();
+                )?;
             }
         }
         _ => panic!("expected array")
@@ -139,9 +160,9 @@ fn main() {
         &Json::Array(ref arr) => {
             for en in arr {
                 let enum_name = en["enumname"].as_string().unwrap().replace("vr::", "");
-                writeln!(&mut w, "#[repr(C)]").unwrap();
-                writeln!(&mut w, "#[derive(Clone, Copy, Debug, PartialEq)]").unwrap();
-                writeln!(&mut w, "pub enum {} {{", enum_name).unwrap();
+                writeln!(&mut w, "#[repr(C)]")?;
+                writeln!(&mut w, "#[derive(Clone, Copy, Debug, PartialEq)]")?;
+                writeln!(&mut w, "pub enum {} {{", enum_name)?;
                 match &en["values"] {
                     &Json::Array(ref arr) => {
                         for val in arr {
@@ -163,23 +184,23 @@ fn main() {
                             writeln!(&mut w, "    {} = {},",
                                 name,
                                 val["value"].as_string().unwrap()
-                            ).unwrap();
+                            )?;
                         }
                     }
                     _ => panic!("expected array of values")
                 }
-                writeln!(&mut w, "}}\n").unwrap();
+                writeln!(&mut w, "}}\n")?;
             }
         }
         _ => panic!("expected array")
     }
 
-    fn emit_const(w: &mut Write, name: &str, ty: &str, value: &str) {
+    fn emit_const(w: &mut Write, name: &str, ty: &str, value: &str) -> io::Result<()> {
         if name.contains("_Version") {
             writeln!(w, "pub const {}_FnTable: &'static str = \"FnTable:{}\";",
                 name.replace("_Version", ""),
                 value
-            ).unwrap();
+            )?;
         }
 
         let value: String =
@@ -199,7 +220,8 @@ fn main() {
             name,
             ty,
             value
-        ).unwrap();
+        )?;
+        Ok(())
     }
 
     match &obj["consts"] {
@@ -209,43 +231,43 @@ fn main() {
                 let value = c["constval"].as_string().unwrap();
                 let name = c["constname"].as_string().unwrap();
 
-                emit_const(&mut w, name, ty, value);
+                emit_const(&mut w, name, ty, value)?;
             }
         }
         _ => panic!("expected array")
     }
 
-    writeln!(&mut w, "\n").unwrap();
+    writeln!(&mut w, "\n")?;
 
     match &obj["structs"] {
         &Json::Array(ref arr) => {
             for st in arr {
-                let mut structname = st["struct"].as_string().unwrap().replace("vr::", "").replace("_t", "");
+                let structname = st["struct"].as_string().unwrap().replace("vr::", "").replace("_t", "");
                 if structname == "(anonymous)" {
-                    println!("WARNING: Not implementing union for VREvent_Data_t");
-                    structname = "VREvent_Data".into();
+                    println!("WARNING: Ignoring anonymous struct (probable union)");
+                    continue;
                 }
-                writeln!(&mut w, "#[repr(C)]").unwrap();
-                writeln!(&mut w, "#[derive(Clone, Copy)]").unwrap();
-                writeln!(&mut w, "pub struct {} {{", structname ).unwrap();
+                writeln!(&mut w, "#[repr(C)]")?;
+                writeln!(&mut w, "#[derive(Clone, Copy)]")?;
+                writeln!(&mut w, "pub struct {} {{", structname )?;
                 match &st["fields"] {
                     &Json::Array(ref arr) => {
                         for field in arr {
                             writeln!(&mut w, "    pub {}: {},",
-                                field["fieldname"].as_string().unwrap(),
+                                map_name(field["fieldname"].as_string().unwrap()),
                                 map_type(&field["fieldtype"].as_string().unwrap())
-                            ).unwrap();
+                            )?;
                         }
                     }
                     _ => panic!("expected array of values")
                 }
-                writeln!(&mut w, "}}\n").unwrap();
+                writeln!(&mut w, "}}\n")?;
 
-                writeln!(&mut w, "impl Default for {} {{", structname).unwrap();
-                writeln!(&mut w, "    fn default() -> {} {{", structname).unwrap();
-                writeln!(&mut w, "        unsafe {{ mem::zeroed() }}").unwrap();
-                writeln!(&mut w, "    }}").unwrap();
-                writeln!(&mut w, "}}\n").unwrap();
+                writeln!(&mut w, "impl Default for {} {{", structname)?;
+                writeln!(&mut w, "    fn default() -> {} {{", structname)?;
+                writeln!(&mut w, "        unsafe {{ mem::zeroed() }}")?;
+                writeln!(&mut w, "    }}")?;
+                writeln!(&mut w, "}}\n")?;
             }
         }
         _ => panic!("expected array")
@@ -271,11 +293,11 @@ fn main() {
     for (classname, methods) in classes {
         let struct_name = classname.replace("vr::", "");
 
-        writeln!(&mut w, "#[repr(C)]").unwrap();
-        writeln!(&mut w, "pub struct {} {{", struct_name).unwrap();
+        writeln!(&mut w, "#[repr(C)]")?;
+        writeln!(&mut w, "pub struct {} {{", struct_name)?;
 
         for method in methods {
-            write!(&mut w, "    pub {}: extern \"C\" fn(", method["methodname"].as_string().unwrap()).unwrap();
+            write!(&mut w, "    pub {}: extern \"C\" fn(", method["methodname"].as_string().unwrap())?;
             match method.find("params") {
                 Some(&Json::Array(ref params)) => {
                     write_method_params(&mut w, params);
@@ -285,12 +307,14 @@ fn main() {
 
             let returntype = method["returntype"].as_string().unwrap();
             if returntype == "void" {
-                writeln!(&mut w, "),").unwrap();
+                writeln!(&mut w, "),")?;
             } else {
-                writeln!(&mut w, ") -> {},", map_type(&returntype)).unwrap();
+                writeln!(&mut w, ") -> {},", map_type(&returntype))?;
             }
         }
 
-        writeln!(&mut w, "}}\n").unwrap();
+        writeln!(&mut w, "}}\n")?;
     }
+
+    Ok(())
 }

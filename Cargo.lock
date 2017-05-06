@@ -4,6 +4,7 @@ version = "0.1.1"
 dependencies = [
  "lazy_static 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "libloading 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "openvr-bindgen 0.0.1",
 ]
 
 [[package]]
@@ -36,6 +37,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "openvr-bindgen"
+version = "0.0.1"
+dependencies = [
+ "rustc-serialize 0.3.24 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "rustc-serialize"
+version = "0.3.24"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "winapi"
 version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -45,3 +58,11 @@ name = "winapi-build"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
+[metadata]
+"checksum kernel32-sys 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7507624b29483431c0ba2d82aece8ca6cdba9382bff4ddd0f7490560c056098d"
+"checksum lazy_static 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)" = "cf186d1a8aa5f5bee5fd662bc9c1b949e0259e1bcc379d1f006847b0080c7417"
+"checksum lazy_static 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "4f9e1e434b35b61b6422b19998d5c219f6b4a90aae841583444b44077adb953b"
+"checksum libloading 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "9bf296a78f7aa1c3ad23da173565367769c84e34af19c6e2d6f6b63da7189b9f"
+"checksum rustc-serialize 0.3.24 (registry+https://github.com/rust-lang/crates.io-index)" = "dcf128d1287d2ea9d80910b5f1120d0b8eede3fbf1abe91c40d39ea7d51e6fda"
+"checksum winapi 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "4dfaaa8fbdaa618fa6914b59b2769d690dd7521920a18d84b42d254678dd5fd4"
+"checksum winapi-build 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "2d315eee3b34aca4797b2da6b13ed88266e6d612562a0c46390af8299fc699bc"
